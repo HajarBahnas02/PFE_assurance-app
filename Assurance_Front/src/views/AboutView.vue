@@ -126,7 +126,7 @@ export default {
   },
   mounted() {
     axios
-      .get("/api/marques")
+      .get("http://127.0.0.1:8000/api/Marques")
       .then((response) => {
         this.marques = response.data;
         console.log(this.marques); // Vérifie que les données sont correctement récupérées

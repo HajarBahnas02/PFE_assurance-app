@@ -14,7 +14,7 @@
         <label for="marque">Marque :</label>
         <select v-model="selectedMarque" class="form-control" id="marque">
           <option value="" disabled selected>Choisissez une marque</option>
-          <option v-for="marque in marques" :key="marque.id" :value="marque.nomMarque">
+          <option v-for="marque in marques" :key="marque.id" :value="marque.id">
             {{ marque.nomMarque }}
           </option>
         </select>
@@ -126,15 +126,14 @@ export default {
   },
   mounted() {
     axios
-      .get("http://127.0.0.1:8000/Marques")
+      .get("http://127.0.0.1:8000/api/Marques")
       .then((response) => {
         this.marques = response.data;
-        console.log(response.data); // Vérifie que les données sont correctement récupérées
+        console.log(this.marques); // Vérifie que les données sont correctement récupérées
       })
       .catch((error) => {
         console.error("Erreur lors de la récupération des marques :", error);
       });
   },
 };
-console.log("marques", marques);
 </script>

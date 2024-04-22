@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../components/Home.vue';
-import About from '../components/About.vue';
+import About from '../components/AboutCompo.vue';
 import Ass_Auto_simulation from '../components/Ass_Auto_simulation.vue';
-import Header from '../views-home/Header.vue';
+
 import SousHeder from '../views-home/SousHeader.vue';
+
 //import Footer from '../views-home/Footer.vue';
-import Layout from '../views-home/Layout.vue';
 const routes = [
   
 //{path:'/', component: Layout,children:[
