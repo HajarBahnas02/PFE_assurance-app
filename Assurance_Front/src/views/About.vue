@@ -61,7 +61,7 @@ html {
   position: relative;
   z-index: 1;
   display: flex;
-  justify-content: space-between; /* Pour espacer les éléments horizontalement */
+  justify-content: space-between; 
 }
 
 .form-container {
@@ -121,19 +121,24 @@ export default {
   data() {
     return {
       marques: [],
-      selectedMarque: null,
+      selectedMarque: "",
     };
   },
   mounted() {
     axios
-      .get("http://127.0.0.1:8000/Marques")
+      .get("http://127.0.0.1:8000/api/Marques"),
+      {
+            headers: {
+              "Content-Type": "application/javascript",
+            },
+          }
       .then((response) => {
         this.marques = response.data;
         console.log(response.data); // Vérifie que les données sont correctement récupérées
       })
       .catch((error) => {
-        console.error("Erreur lors de la récupération des marques :", error);
-      });
+          console.error("Une erreur est survenue : ", error);
+        });
   },
 };
 console.log("marques", marques);
