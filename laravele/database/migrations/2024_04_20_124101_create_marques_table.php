@@ -34,6 +34,7 @@ return new class extends Migration
             'Tesla',
             'Lexus',
             'Mazda',
+            ''
         ];
 
         $now = now()->toDateTimeString();

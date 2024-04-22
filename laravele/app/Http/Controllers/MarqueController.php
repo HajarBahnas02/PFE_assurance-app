@@ -10,10 +10,8 @@ class MarqueController extends Controller
 {
     public function index()
     {
-
-       
         return  Marque::all(["id",'nomMarque']);
-      
+       
     }
    
           
