@@ -14,10 +14,29 @@
         <label for="marque">Marque :</label>
         <select v-model="selectedMarque" class="form-control" id="marque">
           <option value="" disabled selected>Choisissez une marque</option>
-          <option v-for="marque in marques" :key="marque.id" :value="marque.nomMarque">
+          <option v-for="marque in marques" :key="marque.id" :value="marque.id">
             {{ marque.nomMarque }}
           </option>
         </select>
+        <label for="marque">Ville :</label>
+        <select v-model="selectedVille" class="form-control" id="ville">
+          <option value="" disabled selected>Choisissez une ville</option>
+          <option v-for="ville in villes" :key="ville.id" :value="ville.id">
+            {{ ville.nomVille }}
+          </option>
+        </select>
+      
+      
+        <label for="puissanceFiscale">Puissance Fiscale:</label>
+                    <select id="puissanceFiscale" v-model="puissanceFiscale" required>
+                          <option value="">Sélectionnez une puissance fiscale</option>
+                          
+<!--<option v-for="value in options" :value="value">{{ value }}</option>!-->
+        </select>
+        <span v-if="!puissanceFiscale && submitted" class="error"
+          >Champs obligatoire à remplir</span
+        >
+        <button @click="submitForm">Submit</button>
       </div>
       <div class="contact-info">
         <h5>Besoin d'aide ?</h5>
@@ -61,7 +80,7 @@ html {
   position: relative;
   z-index: 1;
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
 }
 
 .form-container {
@@ -120,26 +139,35 @@ export default {
 export default {
   data() {
     return {
-      marques: [],
-      selectedMarque: "",
+      //marques: [],
+      //selectedMarque: "",
+      submitted: "false",
+      puissanceFiscale: '',
+      options: Array.from({ length: 100 }, (_, i) => i + 1)
     };
+  
+
   },
   mounted() {
     axios
-      .get("http://127.0.0.1:8000/api/Marques"),
+<<<<<<< HEAD:Assurance_Front/src/views/About.vue
+    .get("http://127.0.0.1:8000/api/Marques" )
+    .get("http://127.0.0.1:8000/api/Villes")
       {
             headers: {
               "Content-Type": "application/javascript",
             },
           }
+=======
+      .get("http://127.0.0.1:8000/api/Marques")
+>>>>>>> 01eb0e2585f2726cbe9f745b7f6026589dd862d7:Assurance_Front/src/views/AboutView.vue
       .then((response) => {
         this.marques = response.data;
-        console.log(response.data); // Vérifie que les données sont correctement récupérées
+        console.log(this.marques); // Vérifie que les données sont correctement récupérées
       })
       .catch((error) => {
           console.error("Une erreur est survenue : ", error);
         });
   },
 };
-console.log("marques", marques);
 </script>

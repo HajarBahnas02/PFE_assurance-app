@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="92px" viewBox="0 0 104 88" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>290AB0A9-628E-41A3-ABB2-C747E95C8002</title>
+    <defs>
+        <polygon id="path-1" points="0 0 63.8056019 0 63.8056019 48.6872046 0 48.6872046"></polygon>
+        <circle id="path-3" cx="20" cy="20" r="20"></circle>
+        <filter x="-62.5%" y="-50.0%" width="225.0%" height="225.0%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="0" dy="5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="7.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.0818607357 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Web-VenteEnligne" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="HP---Boutique---Rev-2" transform="translate(-1099.000000, -1125.000000)">
+            <g id="Group-10" transform="translate(1114.000000, 1135.000000)">
+                <g id="Group-28" transform="translate(6.000000, 13.000000)">
+                    <g id="Group-5" transform="translate(19.194398, 16.312795)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <g id="Clip-4"></g>
+                        <path d="M4.89838658,45.6520099 L0,15.0478808 L6.07205743,7.63727234 L7.93316405,9.16187474 L2.54729115,15.7361284 L7.27400648,45.2714848 C7.37385609,45.9046926 8.00023095,46.353267 8.63336256,46.2699567 L60.36547,39.0532385 C60.9553084,38.970929 61.3992513,38.4588087 61.3992513,37.8621272 C61.3992513,37.7963297 61.3934956,37.731783 61.3839861,37.6694879 L56.4715855,6.97704494 L49.060192,1.99669376 L50.4020306,0 L58.6830416,5.56527412 L63.7598562,37.2889628 C63.7903867,37.4755977 63.8056519,37.6669861 63.8056519,37.8621272 C63.8056519,39.6521716 62.4698193,41.1885325 60.6990528,41.4352108 L8.96469309,48.6519291 C8.79802683,48.6754461 8.63236156,48.6872046 8.46194155,48.6872046 C6.67841232,48.6872046 5.17916669,47.4105315 4.89838658,45.6520099 Z" id="Fill-3" fill="#172C51" mask="url(#mask-2)"></path>
+                    </g>
+                    <polygon id="Fill-6" fill="#0075C9" points="30.3163683 24.2577402 29.9850378 21.8757679 49.0200269 19.2210983 49.3513574 21.6030707"></polygon>
+                    <polygon id="Fill-8" fill="#0075C9" points="31.5194685 30.2717138 31.188138 27.8897414 59.7799109 23.9018579 60.1112414 26.2838302"></polygon>
+                    <polygon id="Fill-10" fill="#0075C9" points="29.1132181 18.2437917 28.7818875 15.8618193 47.758068 13.2154058 48.0893985 15.5973781"></polygon>
+                    <polygon id="Fill-12" fill="#0075C9" points="37.5950044 11.0469878 37.2636739 8.66501547 47.7581431 7.20145721 48.0894736 9.58342956"></polygon>
+                    <polygon id="Fill-14" fill="#172C51" points="30.3762531 59.1587013 30.0449225 56.7767289 40.5393917 55.3131707 40.8707222 57.695143"></polygon>
+                    <polygon id="Fill-16" fill="#0075C9" points="26.6599958 35.2179653 21.6960438 4.19778532 56.8050682 0 68.9444283 9.32023925 71.824051 28.5343826 69.4436763 28.8916409 66.709699 10.6359406 56.1166314 2.50406063 24.4663074 6.28879728 29.0356157 34.8374401"></polygon>
+                    <polygon id="Fill-18" fill="#0075C9" points="56.5571459 12.1746282 55.2658577 1.39533393 57.6557418 1.10862662 58.6697534 9.57399774 67.7212831 8.77992356 67.9327441 11.1761562"></polygon>
+                    <polygon id="Fill-20" fill="#F9AC19" points="0.388387452 41.5299043 0 39.1556876 16.3060167 36.5135271 16.6919017 38.887994"></polygon>
+                    <polygon id="Fill-22" fill="#F9AC19" points="1.99178699 48.7033162 1.60339954 46.3290995 17.9094163 43.686939 18.2953012 46.0614059"></polygon>
+                    <polygon id="Fill-24" fill="#F9AC19" points="3.64163286 56.3033116 3.25324541 53.9290949 19.5592621 51.2869344 19.9451471 53.6614013"></polygon>
+                    <polygon id="Fill-26" fill="#F9AC19" points="5.39338038 64.5465471 5.00499293 62.1723304 21.3110097 59.5301699 21.6968946 61.9046368"></polygon>
+                    <path d="M52.3203443,46.9581043 C51.7365118,46.9581043 51.1689456,46.8407695 50.6366646,46.6081012 L19.9735754,32.8018683 L20.9628123,30.6077818 L51.6118875,44.4080104 C52.2192434,44.6747032 53.0440662,44.5491124 53.5645855,44.0545048 L75.9211382,21.7323642 L77.6223353,23.4355957 L55.2447616,45.7777508 C54.4374563,46.5458062 53.4059272,46.9581043 52.3203443,46.9581043" id="Fill-1" fill="#172C51"></path>
+                </g>
+                <g id="Oval-Copy-8">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                    <use fill="#0075C9" fill-rule="evenodd" xlink:href="#path-3"></use>
+                </g>
+                <text id="4" font-family="HelveticaNeue-CondensedBlack, Helvetica Neue" font-size="24" font-style="condensed" font-weight="700" fill="#FFFFFF">
+                    <tspan x="14" y="29">4</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

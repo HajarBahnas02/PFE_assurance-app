@@ -4,55 +4,66 @@ import { RouterLink } from 'vue-router';
 <template>
     <div class="menue">
         <div class="paragraph">
-          <span class="citation">
-    <h1>Protégez ce qui compte le plus. Votre sécurité, notre priorité.
-    </h1></span>
-    <p>
-        Avec notre simulateur d'assurance, obtenez votre devis et souscrivez à votre contrat d'assurance, en 
-        moins de 5 minutes sans vous déplacer.
-    </p>
-    </div>
+          <span class="citation" id="typewriter">
+<!--         <h1>{{ animatedText }}</h1>-->   
+<h1 :class="{ 'white-text': showWhiteText }">{{ animatedText }}</h1>
+  </span>
+        </div>
+  <div clas="para">
+    <p  class="para-text">
+      Accédez à votre devis personnalisé et souscrivez à votre assurance en seulement 5 minutes
+      <br> et sans aucun déplacement requis.</p></div>
+  
   <div class="container">
     <div class="box">
-      <div class="ina">
-      <img src="../assets/automobile-icon.svg" alt="Image 1">
-    </div>
-      <div class="cla">
-      <h3>Assurance Auto</h3></div>
-    </div>
+      <routerLink to="/automobile-icon.vue" class="box">
+  <div class="ina">
+    <img src="../assets/automobile-icon.svg" alt="Image 1">
+  </div> 
+  <div class="cla">
+    <h3>Assurance Auto</h3>
+  </div></routerLink></div>
+ 
     <div class="box">
-      <div class="ina">
-      <img src="../assets/home-icon.svg" alt="Image 1">
-    </div>
-      <div class="cla">
-      <h3>Assurance Habitation</h3></div>
-    </div>
-     <!--<div   class="box">-->
-      <routerLink to="/Auto.vue" class="box">
+      <routerLink to="/AssHabitation.vue" class="box">
+  <div class="ina">
+    <img src="../assets/home-icon.svg" alt="Image 1">
+  </div> 
+  <div class="cla">
+    <h3>Assurance Habitation</h3>
+  </div></routerLink></div>
+    <div class="box">
+      <routerLink to="/AssSanteInter.vue" class="box">
   <div class="ina">
     <img src="../assets/health-insurance.svg" alt="Image 1">
-  </div>
+  </div> 
+  
   <div class="cla">
     <h3>Assurance santé Internationale</h3>
-  </div>
-</routerLink>
+  </div></routerLink></div>
+
   <div class="box">
-      <div class="ina">
-      <img src="../assets/health-care.svg" alt="Image 1">
-    </div>
-      <div class="cla">
-      <h3>Assurance santé individuelle</h3></div>
-    </div>
-    <div class="box">
-      <div class="ina">
-      <img src="../assets/prevoyance-icon.svg" alt="Image 1">
-    </div>
-      <div class="cla">
-      <h3>Assurance Prévoyance</h3></div>
-    </div>
+    <routerLink to="/AssSanteInter.vue" class="box">
+<div class="ina">
+  <img src="../assets/health-care.svg" alt="Image 1">
+</div> 
+<div class="cla">
+  <h3>Assurance santé individuelle</h3>
+</div></routerLink></div>
+<div class="box">
+  <routerLink to="/AssSanteInter.vue" class="box">
+<div class="ina">
+<img src="../assets/prevoyance-icon.svg" alt="Image 1">
+</div> 
+<div class="cla">
+<h3>Assurance Prévoyance</h3>
+</div></routerLink></div>
+  
+    
   </div>
+</div>
     <!-- Ajoutez autant de cartes que nécessaire -->
-  </div>
+ 
 <div class="frame">
   <h3 class="formule">
     Prêts à souscrire en ligne à nos assurances ?  </h3>
@@ -103,64 +114,111 @@ Simple et rapide, l'assurance en ligne Sanlam vous permet d'être couvert en que
     </div>
     </div>
   
-  </div>
   
+  
+  </div>
+  <div class="imf">
+    <div class="imageA">
+      <img src="../assets/acceuil.jpg">
+    </div>
+  <div class="conditions">
+    <div class="condition"> 
+      <img src="../assets/circle-check.svg" alt="">
+      <p> Offre de services complémentaires</p>
+    </div>
+    <div class="condition"> 
+      <img src="../assets/circle-check.svg" alt="">
+      <p> Offre de services complémentaires</p>
+    </div>
+
+  </div>
+  </div>
 </div>
 
 </template>
-<style >
 
+<style >
+.imf{
+  display: flex;
+  margin-top: 10px;
+}
+.conditions{
+  display: flex;
+  justify-content: center;
+  align-items: columns;
+  ;
+}
+.hajar {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.bouchra{
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.card-image {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.anas {
+  text-align: justify;
+}
+* {
+  margin: 0px;
+  padding: 0px;
+}
+#typewriter {
+  overflow: hidden; /* Pour cacher le texte restant */
+  border-right: .15em solid rgb(228, 216, 194); /* Curseur clignotant */
+  white-space: nowrap; /* Empêcher le saut de ligne */
+  margin: 0 auto; /* Pour centrer le texte */
+  animation: typeWriter 2s steps(20, end); /* Animation du type d'écriture */
+}
+@keyframes typeWriter {
+  from { width: 0 }
+  to { width: 100% }
+}
 .citation{
   font-family: 'Roboto', sans-serif;
     font-size: 30px;
     font-weight: bold;
-    color: rgb(251 173 27); 
+    color: #85B8CB; 
     text-align: center;
     margin-top: 10px; 
-    margin-bottom: 10px; 
-    position:relative;
-}
-.citation ::after{
-  position: absolute;
-  animation:typing 1.5s steps(40)infinite;
+    margin-bottom: 10px;
 }
 .paragraph{
-    text-align: center;
-    color: white;
-    text-align: center;
-    margin-bottom: 10px;
-    margin-top: 1%;
+  margin-left: 13%;
+  margin-right: 13%;
 }
-.paragraph > h1{
-  font-size: 30px;
-    line-height: 48px;
-    letter-spacing: 0px;
-    margin-bottom: 5px;
-    font-weight: 100 !important;
-    font-family: Roboto
+.para-text  {
+  font-family: 'Arial', sans-serif; /* Police de caractères */
+  font-size: 20px; /* Taille de la police */
+  line-height: 1.5; /* Hauteur de ligne pour une meilleure lisibilité */
+  color:#DC6B19; /* Couleur du texte */
+  text-align: center; 
 }
-.paragraph> p{
-  padding: 0px 20%;
-  font-size: 20px;
-    line-height: 30px;
-    letter-spacing: 0px;
-    margin-bottom: 10px;
-    font-family: Roboto;
-    display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    unicode-bidi: isolate;
+.para{
+  max-width: 800px; /* Pour limiter la largeur du texte */
+  margin: 0 auto; /* Pour centrer le texte horizontalement */
+  display: flex; /* Utiliser flexbox pour le centrage vertical */
+  justify-content: center; /* Alignement horizontal au centre */
+  align-items: center; 
+}
 
-}
 .box{
 		width: 200px;	
 		transition: 1s;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #e9f1fa;
+    background: #FFF8DC;
     box-shadow: 0 1px 1px 0 rgba(0,0,0,0.03), 0 0 24px 0 rgba(0,0,0,0.08);
     text-align: center;
     align-content: space-around;
@@ -185,6 +243,10 @@ Simple et rapide, l'assurance en ligne Sanlam vous permet d'être couvert en que
     margin: 0px;
     font-weight: bold;
     margin-top: 12%;
+    
+}
+.cla >h3{
+  text-decoration: none;
 }
 
 .parg {
@@ -208,10 +270,11 @@ Simple et rapide, l'assurance en ligne Sanlam vous permet d'être couvert en que
 
      }
 .menue{
-  background: linear-gradient(319.91deg, rgb(0, 25, 77) 0%, rgb(0, 117, 201) 100%);
+  background: linear-gradient(319.91deg, #6C0345 0%,#1D6A96 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 2%;
 }
 .menue > h1{
     font-size: 30px;
@@ -233,7 +296,7 @@ Simple et rapide, l'assurance en ligne Sanlam vous permet d'être couvert en que
 		justify-content: center;
   }
   .card{
-    background: #e9f1fa;
+    background: #85B8CB;
     height: 400px;
     width: 100%;
     margin: 10px;
@@ -263,7 +326,7 @@ padding-left: 20%;
  font-family: 'Montserrat', sans-serif; 
  font-size: 28px;
  font-weight: bold; 
- color:rgb(251 173 27);
+ color:#283B42;
  text-align: center; 
  margin-top: 10px;
  margin-bottom: 10px; 
@@ -276,6 +339,7 @@ padding-left: 20%;
 padding-left: 20%;
 padding-top: 1%;
 padding-right: 20%;
+background-color: #D1DDDB;
 }
 .frame p { 
   justify-content: center;
@@ -290,5 +354,65 @@ padding-right: 20%;
   color: black;
   font-weight: bold;
 }
+p{
+  color: #D1DDDB;
+  font-weight: bold;
+  font-size: 20px;
+  padding-left: -10px;
 
+
+}
+
+</style>
+
+<script>export default {
+  data() {
+    return {
+      text: "Protégez ce qui compte le plus. Votre sécurité notre priorité",
+      animatedText: "",
+      index: 0,
+      showWhiteText: false,
+      
+    };
+  },
+  mounted() {
+    // Démarrez l'animation une fois que le composant est monté
+    this.typeWriter();
+  },
+  methods: {
+    typeWriter() {
+      const interval = setInterval(() => {
+        // Ajouter un caractère à la fois
+        this.animatedText += this.text[this.index];
+        this.index++;
+        
+        // Si nous avons atteint la fin du texte, arrêtez l'animation
+        if (this.index === this.text.length) {
+          clearInterval(interval);
+          // Commencez à écrire en blanc
+          this.startWhiteText();
+        }
+      }, 100); // Délai entre chaque caractère (en millisecondes)
+    },
+    startWhiteText() {
+      setTimeout(() => {
+        // Commencez à écrire en blanc
+        this.showWhiteText = true;
+      }, 1000); // Délai avant le changement de couleur (en millisecondes)
+    }
+  },
+};
+</script>
+<style scoped>
+h1 {
+  overflow: hidden; /* Pour cacher le texte restant */
+  border-right: .15em solid rgb(210, 206, 200); /* Curseur clignotant */
+  white-space: nowrap; /* Empêcher le saut de ligne */
+  margin: 0 auto; /* Pour centrer le texte */
+}
+
+/* Style pour le texte en blanc */
+.white-text {
+  color: #54cdb9;
+}
 </style>

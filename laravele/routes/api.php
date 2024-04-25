@@ -60,5 +60,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::resource('Marques',MarqueController::class);
-Route::resource('ville', VilleController::class);
-Route::resource('TypeM', TypeMotorisationController::class);
+Route::resource('Villes', VilleController::class);
+Route::resource('Typem', TypeMotorisationController::class);
+Route::get('TypeM', [MarqueController::class, 'index']);

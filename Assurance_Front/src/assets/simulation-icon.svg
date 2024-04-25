@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="92px" viewBox="0 0 102 97" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>6754DC5A-7459-4602-B465-C5B89C07D020</title>
+    <defs>
+        <circle id="path-1" cx="20" cy="20" r="20"></circle>
+        <filter x="-62.5%" y="-50.0%" width="225.0%" height="225.0%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="7.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.0818607357 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Web-VenteEnligne" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="HP---Boutique---Rev-2" transform="translate(-224.000000, -1125.000000)">
+            <g id="Group-7" transform="translate(239.000000, 1135.000000)">
+                <path d="M54.59683,85 L22.0967776,85 C20.9393564,85 20,84.0606452 20,82.9032258 L20,22.0967742 C20,20.9393548 20.9393564,20 22.0967776,20 L67.1774954,20 C68.3349167,20 69.274273,20.9393548 69.274273,22.0967742 L69.274273,46.2096774" id="Stroke-1" stroke="#0075C9" stroke-width="2.0736" stroke-linecap="round" stroke-linejoin="round"></path>
+                <polyline id="Stroke-3" stroke="#0075C9" stroke-width="2.0736" stroke-linecap="round" stroke-linejoin="round" points="27.3387215 27.3387097 27.3387215 37.8225806 61.9355515 37.8225806 61.9355515 27.3387097"></polyline>
+                <path d="M48.3064973,78.7096774 L29.4354991,78.7096774 C28.2780779,78.7096774 27.3387215,77.7703226 27.3387215,76.6129032 L27.3387215,46.2096774 C27.3387215,45.0522581 28.2780779,44.1129032 29.4354991,44.1129032 L59.8387739,44.1129032 C60.9961952,44.1129032 61.9355515,45.0522581 61.9355515,46.2096774" id="Stroke-5" stroke="#F9AC19" stroke-width="2.0736" stroke-linecap="round" stroke-linejoin="round"></path>
+                <line x1="33.6290542" y1="55.6451613" x2="48.3064973" y2="55.6451613" id="Stroke-7" stroke="#F9AC19" stroke-width="2.0736" stroke-linecap="round" stroke-linejoin="round"></line>
+                <line x1="38.8709982" y1="44.1129032" x2="38.8709982" y2="78.7096774" id="Stroke-9" stroke="#F9AC19" stroke-width="2.0736" stroke-linecap="round" stroke-linejoin="round"></line>
+                <line x1="50.4032748" y1="44.1129032" x2="50.4032748" y2="47.2580645" id="Stroke-11" stroke="#F9AC19" stroke-width="2.0736" stroke-linecap="round" stroke-linejoin="round"></line>
+                <line x1="33.6290542" y1="67.1774194" x2="44.1129421" y2="67.1774194" id="Stroke-13" stroke="#F9AC19" stroke-width="2.0736" stroke-linecap="round" stroke-linejoin="round"></line>
+                <line x1="52.5000524" y1="25.2419355" x2="54.59683" y2="25.2419355" id="Stroke-15" stroke="#172C51" stroke-width="2.0736" stroke-linecap="round" stroke-linejoin="round"></line>
+                <line x1="52.5000524" y1="33.6290323" x2="54.59683" y2="33.6290323" id="Stroke-17" stroke="#172C51" stroke-width="2.0736" stroke-linecap="round" stroke-linejoin="round"></line>
+                <line x1="50.4032748" y1="26.2903226" x2="50.4032748" y2="28.3870968" id="Stroke-19" stroke="#172C51" stroke-width="2.0736" stroke-linecap="round" stroke-linejoin="round"></line>
+                <line x1="56.6936076" y1="26.2903226" x2="56.6936076" y2="28.3870968" id="Stroke-21" stroke="#172C51" stroke-width="2.0736" stroke-linecap="round" stroke-linejoin="round"></line>
+                <line x1="50.4032748" y1="30.483871" x2="50.4032748" y2="32.5806452" id="Stroke-23" stroke="#172C51" stroke-width="2.0736" stroke-linecap="round" stroke-linejoin="round"></line>
+                <line x1="56.6936076" y1="30.483871" x2="56.6936076" y2="32.5806452" id="Stroke-25" stroke="#172C51" stroke-width="2.0736" stroke-linecap="round" stroke-linejoin="round"></line>
+                <path d="M69.5404589,85 L68.8831192,84.0092742 L61.9343983,81.9198387 C61.6293171,81.8296774 61.3305263,81.7154032 61.0474614,81.568629 C58.2650375,80.1166129 55.8726143,77.8028226 54.1584986,75.2164516 L50.9997032,70.4295161 C50.0959921,69.0666129 49.4858298,67.8651613 50.9032515,66.9268548 C52.3206731,65.9864516 56.0445501,66.851371 56.9482612,68.2153226 L58.948587,71.2545968 L46.2987279,52.1425 C45.3950168,50.7785484 45.8154207,48.8956452 47.2328423,47.9562903 C48.6492156,47.0179839 50.5478477,47.365 51.4515588,48.7268548 L58.6393123,59.5944355 L57.2386649,57.4808871 C56.3349538,56.1169355 56.7553577,54.2329839 58.1727793,53.2946774 C59.590201,52.3553226 61.4877847,52.7023387 62.3925442,54.0662903 L64.4746443,57.2104032 L63.7061753,56.0487903 C62.8024642,54.6858871 63.2228681,52.8019355 64.6392414,51.863629 C66.0577114,50.9242742 67.9552951,51.2712903 68.8590062,52.6341935 L70.9945742,55.8569355 L70.1736858,54.6177419 C69.2689262,53.2548387 69.6903785,51.3708871 71.1067518,50.4315323 C72.5241734,49.4921774 74.4228055,49.8391935 75.3265167,51.2031452 L79.9247499,58.1434677 C82.2731408,61.6870161 83.6716914,65.5534677 84.4831443,69.7302419 C84.5680638,70.1695161 84.5890316,70.6224194 84.5533864,71.071129 L84.3426602,73.7644355 L85,74.7562097" id="Stroke-27" stroke="#172C51" stroke-width="2.0736" stroke-linecap="round" stroke-linejoin="round"></path>
+                <g id="Oval">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#0075C9" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
+                <text id="1" font-family="HelveticaNeue-CondensedBlack, Helvetica Neue" font-size="24" font-style="condensed" font-weight="700" fill="#FFFFFF">
+                    <tspan x="14" y="29">1</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

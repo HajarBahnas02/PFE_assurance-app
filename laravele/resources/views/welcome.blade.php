@@ -136,5 +136,11 @@
                 </div>
             </div>
         </div>
+        <!--Captcah-->
+        <!-- Make sure you load the vue-demi first -->
+<script src="https://unpkg.com/vue-demi@0.12.1/lib/index.iife.js"></script>
+
+<!-- Then load vue-recaptcha -->
+
     </body>
 </html>

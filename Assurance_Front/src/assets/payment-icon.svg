@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="92px" viewBox="0 0 105 98" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>DF6429A2-47FD-426E-ACCA-C75899550D66</title>
+    <defs>
+        <circle id="path-1" cx="20" cy="20" r="20"></circle>
+        <filter x="-62.5%" y="-50.0%" width="225.0%" height="225.0%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="7.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.0818607357 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Web-VenteEnligne" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="HP---Boutique---Rev-2" transform="translate(-514.000000, -1125.000000)">
+            <g id="Group-8" transform="translate(529.000000, 1135.000000)">
+                <path d="M84.7096774,86 L64.9677419,86 C63.1503871,86 61.6774194,84.5267581 61.6774194,82.7096774 L61.6774194,64.0645161 L88,64.0645161 L88,82.7096774 C88,84.5267581 86.5270323,86 84.7096774,86 Z" id="Stroke-1" stroke="#F9AC19" stroke-width="2.21184" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M66.0645161,64.0645161 L66.0645161,58.5806452 C66.0645161,53.7548387 70.0129032,49.8064516 74.8387097,49.8064516 C79.6645161,49.8064516 83.6129032,53.7548387 83.6129032,58.5806452 L83.6129032,64.0645161" id="Stroke-3" stroke="#F9AC19" stroke-width="2.21184" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M75.9354839,72.8387097 C75.9354839,73.4444032 75.4444032,73.9354839 74.8387097,73.9354839 C74.2330161,73.9354839 73.7419355,73.4444032 73.7419355,72.8387097 C73.7419355,72.2330161 74.2330161,71.7419355 74.8387097,71.7419355 C75.4444032,71.7419355 75.9354839,72.2330161 75.9354839,72.8387097 Z" id="Stroke-5" stroke="#F9AC19" stroke-width="2.21184" stroke-linecap="round" stroke-linejoin="round"></path>
+                <line x1="74.8387097" y1="78.3225806" x2="74.8387097" y2="73.9354839" id="Stroke-7" stroke="#F9AC19" stroke-width="2.21184" stroke-linecap="round" stroke-linejoin="round"></line>
+                <path d="M52.9032258,64.0645161 L24.3870968,64.0645161 C21.9640484,64.0645161 20,62.1001935 20,59.6774194 L20,22.3870968 C20,19.9643226 21.9640484,18 24.3870968,18 L79.2258065,18 C81.6488548,18 83.6129032,19.9643226 83.6129032,22.3870968 L83.6129032,44.3225806" id="Stroke-9" stroke="#0075C9" stroke-width="2.21184" stroke-linecap="round" stroke-linejoin="round"></path>
+                <line x1="28.7741935" y1="32.2580645" x2="83.6129032" y2="32.2580645" id="Stroke-11" stroke="#0075C9" stroke-width="2.21184" stroke-linecap="round" stroke-linejoin="round"></line>
+                <path d="M39.7419355,50.9032258 C39.7419355,53.9319677 37.2868065,56.3870968 34.2580645,56.3870968 C31.2293226,56.3870968 28.7741935,53.9319677 28.7741935,50.9032258 C28.7741935,47.8744839 31.2293226,45.4193548 34.2580645,45.4193548 C37.2868065,45.4193548 39.7419355,47.8744839 39.7419355,50.9032258 Z" id="Stroke-13" stroke="#172C51" stroke-width="2.21184" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M43.0322581,45.4193548 C46.061,45.4193548 48.516129,47.8744839 48.516129,50.9032258 C48.516129,53.9319677 46.061,56.3870968 43.0322581,56.3870968" id="Stroke-15" stroke="#172C51" stroke-width="2.21184" stroke-linecap="round" stroke-linejoin="round"></path>
+                <g id="Oval-Copy-5">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#0075C9" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
+                <text id="2" font-family="HelveticaNeue-CondensedBlack, Helvetica Neue" font-size="24" font-style="condensed" font-weight="700" fill="#FFFFFF">
+                    <tspan x="14" y="29">2</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

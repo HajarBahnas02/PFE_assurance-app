@@ -1,43 +1,44 @@
 <template>
   <header>
     <div class="left-div">
-      <router-link to="/about"> Professionnel</router-link>
+      <router-link id="link" to="/about"> Professionnel</router-link>
 
-      <router-link class="second-link" to="/corporate"><a> Corporate</a></router-link>
+      <router-link id="link" class="second-link" to="/corporate"><a> Corporate</a></router-link>
     </div>
 
     <div class="center-div">
       <router-link to="/facebook">
         <img
-          class="logo"
+          class="logoCenter"
           src="../assets/facebook-icon.svg"
           width="50px"
           alt="Facebook logo"
         />
       </router-link>
       <routerLink to="/youtube">
-        <img class="logo" src="../assets/yout-icon.svg" width="50px" alt="youtube logo" />
+        <img class="logoCenter" src="../assets/yout-icon.svg" width="50px" alt="youtube logo" />
       </routerLink>
 
-      <routerLink to="/youtube">
+      <routerLink to="/insta">
         <img
-          class="logo"
+          class="logoCenter"
           src="../assets/insta-icon.svg"
           width="50px"
-          alt="youtube logo"
+          alt="insta logoC"
         />
       </routerLink>
     </div>
     <div class="right-div">
       <div class="item">
-        <img src="../assets/location.svg" width="50px" class="logo" alt="Contact logo" />
-        <a>Localisation</a>
-      </div>
-    </div>
+        <img src="../assets/location.svg" width="50px"  height="40px" class="logon" alt="Contact logo" />
+        <router-link id="link"  to="/corporate"><a> Localisation</a></router-link>
+</div>
+     
+   
     <div class="item">
-      <img src="../assets/contact.svg" width="50px" class="logo" alt="Contact logo" />
-      <a>Contact</a>
-    </div>
+      <img src="../assets/location.svg" width="50px"  height="40px" class="logon" alt="Contact logo" />
+      <router-link id="link" to="/corporate"><a> Contact</a></router-link>
+    </div>  </div>
   </header>
 </template>
 <style scoped>
@@ -45,12 +46,18 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 60px;
+  height: 5%;
+  background-color: #F7C566;
 }
-.router-link {
-  color: violet;
+#link {
+  color: #283B42;
+  font-family: "pt-sans", sans-serif;
+  font-weight: 700;
+  background-color: none;
+}
+#link:hover {
+  color: #7cb9cf;
   text-decoration: none;
-  font-size: 1.2em;
 }
 .left-div {
   margin-left: 20%;
@@ -60,29 +67,29 @@ header {
 }
 
 .center-div {
-  /* Styles pour la div du centre */
   margin: 0 auto; /* Pour centrer horizontalement */
 }
 
 .right-div {
   display: flex;
   justify-content: center;
-  margin-left: 20%;
+  margin-right: 1%;
+ 
+
 }
 .item {
   display: flex;
   align-items: center;
+  margin-right: 10px;
 }
-.item:not(:last-child) {
-  margin-right: 30px;
-}
+
 .logo {
-  padding-right: 12px;
+  padding-right: 15px;
+  align-items: center;
 }
-.logo:last-child {
-  margin-right: 0;
+.logoCenter {
+  padding-right: 15px;
+  align-items: center;
 }
-.item:not(:last-child) {
-  margin-right: 20px; /* Ajouter un espace de 20px entre chaque paire de logo et titre */
-}
+
 </style>
