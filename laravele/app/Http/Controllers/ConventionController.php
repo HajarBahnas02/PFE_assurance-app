@@ -12,7 +12,7 @@ class ConventionController extends Controller
      */
     public function index()
     {
-        
+        return  Convention::all(['id','nom','surnom']);
     }
 
     /**
@@ -62,4 +62,5 @@ class ConventionController extends Controller
     {
         //
     }
+   
 }

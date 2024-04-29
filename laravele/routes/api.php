@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\MarqueController;
+use App\Http\Controllers\ModeleController;
+use App\Http\Controllers\PuissanceFiscaleController;
 use App\Http\Controllers\TypeMotorisationController;
+use App\Http\Controllers\VehiculeController;
 use App\Http\Controllers\VilleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -62,4 +65,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resource('Marques',MarqueController::class);
 Route::resource('Villes', VilleController::class);
 Route::resource('Typem', TypeMotorisationController::class);
+Route::resource('PuissanceFiscale', PuissanceFiscaleController::class);
+Route::get('Modele', [ModeleController::class, 'index']);
 Route::get('TypeM', [MarqueController::class, 'index']);
+Route::post('vehicules', 'VehiculeController@store');
+Route::post('vehicule', [VehiculeController::class, 'store']);

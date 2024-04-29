@@ -1,221 +1,170 @@
 <template>
   <Header />
   <div class="background">
-    <!--  <div class="containerTitre">
-        <h1 class="titleF">Obtenez votre devis d’assurance auto en 3 minutes        </h1>
-      </div>-->
-    <div class="content">
-      <form class="form-horizontal" @submit.prevent="validate" method="post">
-        <div class="test">
-          <label class="sousTitre">Quel est votre type de motorisation ?</label>
-          <div class="choixM">
-            <div
-              class="checkbox-wrapper"
-              v-for="motorisation in motorisations"
-              :key="motorisation.id"
-            >
-              <input
-                type="radio"
-                :id="'motorisation_' + motorisation.id"
-                :value="motorisation.id"
-                v-model="selectedMotorisation"
-              />
-              <label :for="'motorisation_' + motorisation.id">{{ motorisation.typeM }}</label>
-            </div>
-          </div>
-          <div v-show="!selectedMotorisation && motorisationTouched" class="error-message">
-            Veuillez sélectionner un type de motorisation.
-          </div>
-        </div>
-        <div class="inputs">
-          <div class="input-wrapper">
-            <label class="title" for="puissanceFiscale">Puissance Fiscale:</label>
-            <select id="puissanceFiscale" v-model="puissanceFiscale" required>
-              <option value="" disabled selected>Choisissez la puissance</option>
-              <option v-for="value in options" :value="value">{{ value }}</option>
-            </select>
-            <div v-if="!puissanceFiscale && valeurTouched" class="error-message">
-              Attention, veuillez sélectionner une valeur.
-            </div>
-          </div>
+    
+    <form class="form-horizontal" @submit.prevent="submitForm" method="post">
+        <!-- Champs insérés directement dans la table "véhicules" -->
+        <div
+        class="checkbox-wrapper"
+        v-for="motorisation in motorisations"
+        :key="motorisation.id"
+      >
+        <input
+          type="radio"
+          :id="'motorisation_' + motorisation.id"
+          :value="motorisation.id"
+          v-model="selectedMotorisation"
+        />
+        <label :for="'motorisation_' + motorisation.id">{{ motorisation.typeM }}</label>
+      </div>
+      <div v-show="!selectedMotorisation && motorisationTouched" class="error-message">
+        Veuillez sélectionner un type de motorisation.
+      </div>
 
-          <div class="input-wrapper">
-            <label for="example-input">Date de mise en Circulation</label>
-            <input type="date" name="bday" required pattern="\d{4}-\d{2}-\d{2}" />
-            <div v-if="!dateCirculation && valeurTouched" class="error-message">
-              Attention, veuillez sélectionner date de mise en circulation.
-            </div>
+      
+      <div class="input-wrapper">
 
-            <!--
-    <b-input-group class="mb-3">
-      <b-form-input
-        id="example-input"
-        v-model="value"
-        type="text"
-        placeholder="YYYY-MM-DD"
-        autocomplete="off"
-      ></b-form-input>
-      <b-input-group-append>
-        <b-form-datepicker
-          v-model="value"
-          button-only
-          right
-          locale="en-US"
-          aria-controls="example-input"
-          @context="onContext"
-        ></b-form-datepicker>
-      </b-input-group-append>
-    </b-input-group>
-    <p class="mb-1">Value: '{{ value }}'</p>
-    <p class="mb-1">Selected: '{{ selected }}'</p>
-    <p>Formatted: '{{ formatted }}'</p>
-  -->
-          </div>
+        <label for="puissFiscale">Puissance fiscale :</label>
+        <select v-model="selectedPuissFiscale" class="form-control" id="puissFiscale" required>
+            <option value="" disabled selected>Choisissez une puissance fiscale</option>
+            <option v-for="puissFiscal in puissFiscales" :key="puissFiscal.id" :value="puissFiscal.id">
+                {{ puissFiscal.PuissFiscale}}
+            </option>
+        </select>
+        <div v-if="!selectedPuissFiscale && valeurTouched" class="error-message">
+            Attention, veuillez sélectionner une puissance fiscale.
         </div>
-        <div class="inputs">
-          <div class="input-wrapper">
-            <label for="marque">Marque :</label>
-            <select v-model="selectedMarque" class="form-control" id="marque">
-              <option value="" disabled selected>Choisissez une marquz</option>
-              <option v-for="marque in marques" :key="marque.id" :value="marque.id">
-                {{ marque.nomMarque }}
-              </option>
-            </select>
-            <div v-if="!marque && valeurTouched" class="error-message">
-              Attention, veuillez sélectionner une marque.
-            </div>
-          </div>
-          <div class="input-wrapper">
-            <label for="marque">Modele :</label>
-            <select v-model="selectedMarque" class="form-control" id="marque">
-              <option value="" disabled selected>Choisissez une marque</option>
-              <option v-for="marque in marques" :key="marque.id" :value="marque.id">
-                {{ marque.nomMarque }}
-              </option>
-            </select>
-            <div v-if="!modele && valeurTouched" class="error-message">
-              Attention, veuillez sélectionner un modele.
-            </div>
-          </div>
-        </div>
-        <diV class="inputs">
-          <div class="input-wrapper">
-            <!--<label class="sousTitre">Quel est votre type de motorisation ?</label>-->
-            <label for="exampleInputEmail1">Valeur à nouveau</label>
-            <input
-              v-model="valeurNouvelle"
-              min="0"
-              type="number"
-              class="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              placeholder="Enter le prix "
-              required
-            />
-            <div v-show="valeurTouched && !valeurNouvelle" class="error-message">
-              La valeur à neuf est sous-estimée .
-            </div>
-          </div>
-          <div class="input-wrapper">
-            <label for="exampleInputEmail1">Valeur Vénale </label>
-            <input
-              v-model="valeurVenale"
-              min="0"
-              type="number"
-              class="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              placeholder="Enter email"
-            />
-            <div v-show="!valeurVenale && valeurTouched" class="error-message">
-              Valeur vénale doit être supérieure à 0 et inferieure ou égale à la valeur à neuf .
-            </div>
-          </div>
-        </diV>
-        <div class="inputs">
-          <div class="input-wrapper">
-            <label for="example-input">Date de mise en Circulation</label>
-            <input type="date" name="bday" required pattern="\d{4}-\d{2}-\d{2}" />
-            <div v-if="!dateNaissance && valeurTouched" class="error-message">
-              L'âge du conducteur doit être supérieur ou égal à 16 ans
-            </div>
-          </div>
-          <div class="input-wrapper">
-            <label for="marque">Ville :</label>
-            <select v-model="selectedVille" class="form-control" id="ville">
-              <option value="" disabled selected>Choisissez une ville</option>
-              <option v-for="ville in villes" :key="ville.id" :value="ville.id">
-                {{ ville.nomVille }}
-              </option>
-            </select>
-            <div v-if="!ville && valeurTouched" class="error-message">
-              Attention, veuillez sélectionner une ville.
-            </div>
-          </div>
-        </div>
-        <div>
-          <label>Depuis quand avez-vous votre permis de conduire?</label>
-          <div class="choixM">
-            <div class="checkbox-wrapper">
-              <input
-                type="radio"n
-                id="moins_de_5_ans"
-                name="experiencePermis"
-                value="Moins de 5 ans"
-                v-model="experiencePermis"
-                required
-              />
-              <label for="moins_de_5_ans">Moins de 5 ans</label>
-            </div>
-            <div class="checkbox-wrapper">
-              <input
-                type="radio"
-                id="de_5_a_20_ans"
-                name="experiencePermis"
-                value="De 5 à 20 ans"
-                v-model="experiencePermis"
-              />
-              <label class="" for="de_5_a_20_ans">De 5 à 20 ans</label>
-            </div>
-            <div class="checkbox-wrapper">
-              <input
-                type="radio"
-                id="plus_de_20_ans"
-                name="experiencePermis"
-                value="Plus de 20 ans"
-                v-model="experiencePermis"
-              />
-              <label for="plus_de_20_ans">Plus de 20 ans</label>
-            </div>
-          </div>
-          <!--
-        <vue-recaptcha @verify="onCaptchaVerified"></vue-recaptcha>
-        <input type="submit" value="Submit" class="fb9" />-->
-          <span v-if="!experiencePermis && submitted" class="error"
-            >Veuillez sélectionner votre expérience de permis de conduire</span
-          >
-        </div>
-        <div class="checkbox-wrapper">
-          <input type="checkbox" id="acceptTerms" required />
-          <label for="acceptTerms"
-            >J'accepte les conditions générales d'utilisation, notamment la mention relative à la
-            protection des données personnelles.</label
-          >
-        </div>
-        <div>
-          <!--
-      <vue-recaptcha
-      ref="recaptcha"
-      @verify="onCaptchaVerify"
-      @expired="onCaptchaExpired"
-      sitekey="VOTRE_SITE_KEY"
-    ></vue-recaptcha>-->
-        </div>
-        <!--
-    <vue-recaptcha ref="recaptcha" @verify="onVerify"></vue-recaptcha>-->
-        <button @click="validate">Valider</button>
-      </form>
     </div>
+       
+        <div class="input-wrapper">
+            <label for="exampleInputEmail1">Valeur à nouveau</label>
+            <input v-model="valeurNouvelle" min="0" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter le prix " required />
+            <div v-show="valeurTouched && !valeurNouvelle" class="error-message">
+                La valeur à neuf est sous-estimée .
+            </div>
+        </div>
+    
+        <div class="input-wrapper">
+            <label for="exampleInputEmail1">Valeur Vénale</label>
+            <input v-model="valeurVenale" min="0" max="valeurNouvelle" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required />
+            <div v-if="!valeurVenale && valeurTouched" class="error-message">
+                Donnez une valeur pour le prix vénal.
+            </div>
+          </div>
+        <div class="input-wrapper">
+            <label for="marque">Marque :</label>
+            <select v-model="selectedMarque" class="form-control" id="marque" required>
+                <option value="" disabled selected>Choisissez une marque</option>
+                <option v-for="marque in marques" :key="marque.id" :value="marque.id">
+                    {{ marque.nomMarque }}
+                </option>
+            </select>
+            <div v-if="!selectedMarque && valeurTouched" class="error-message">
+                Attention, veuillez sélectionner une marque.
+            </div>
+        </div>
+        <div class="input-wrapper">
+            <label for="modele">Modèle :</label>
+            <select v-model="selectedModele" class="form-control" id="modele" required>
+                <option v-for="modele in modeles" :key="modele.id" :value="modele.id">
+                    {{ modele.nomModele }}
+                </option>
+            </select>
+            <div v-if="!selectedModele && valeurTouched" class="error-message">
+                Attention, veuillez sélectionner un modèle.
+            </div>
+        </div>
+        <!-- <div class="input-wrapper">
+          <label for="valeurNouvelle">Valeur à nouveau</label>
+          <input v-model="valeurNouvelle" :max="valeurVenale" type="number" class="form-control" id="valeurNouvelle" aria-describedby="valeurNouvelleHelp" placeholder="Entrer le prix" required />
+          <div v-show="valeurTouched && (valeurNouvelle >= valeurVenale)" class="error-message">
+              La valeur à nouveau doit être inférieure à la valeur vénale.
+          </div>
+      </div>
+      
+      <div class="input-wrapper">
+          <label for="valeurVenale">Valeur Vénale</label>
+          <input v-model="valeurVenale" :min="valeurNouvelle" type="number" class="form-control" id="valeurVenale" aria-describedby="valeurVenaleHelp" placeholder="Entrer valeur vénale" required />
+          <div v-if="!valeurVenale && valeurTouched" class="error-message">
+              Donnez une valeur pour le prix vénal.
+          </div>
+      </div>-->
+            <div class="input-wrapper">
+            <label for="valeurVenale">Valeur Vénale</label>
+            <input v-model="valeurVenale" type="number" class="form-control" id="valeurVenale" placeholder="Entrez la valeur vénale" required />
+            <div v-if="valeurTouched && !valeurVenale" class="error-message">
+                La valeur vénale est requise.
+            </div>
+        </div>
+    
+    <div class="input-wrapper">
+        <label for="valeurVenale">Valeur Vénale</label>
+        <input v-model="valeurVenale" min="0" type="number" class="form-control" id="valeurVenale" aria-describedby="valeurVenaleHelp" placeholder="Entrer valeur vénale" required />
+        <div v-if="valeurTouched && !valeurVenale" class="error-message">
+          La valeur vénale est requise.
+      </div>
+    </div>
+        
+        <div class="input-wrapper">
+            <label for="dateCirculation">Date de mise en Circulation</label>
+            <input type="date" name="dateCirculation" v-model="dateCirculation" required pattern="\d{4}-\d{2}-\d{2}" />
+            <div v-if="!dateCirculation && valeurTouched" class="error-message">
+                Attention, veuillez sélectionner une date de mise en circulation.
+            </div>
+        </div>
+    
+        <!-- Champs non insérés dans la table "véhicules" -->
+        <div class="input-wrapper">
+            <label for="dateNaissance">Date de naissance du conducteur :</label>
+            <input type="date" name="dateNaissance" v-model="dateNaissance" required pattern="\d{4}-\d{2}-\d{2}" />
+            <div v-if="!dateNaissance && valeurTouched" class="error-message">
+                L'âge du conducteur doit être supérieur ou égal à 16 ans
+            </div>
+        </div>
+    
+        <div class="input-wrapper">
+            <label for="ville">Ville :</label>
+            <select v-model="selectedVille" class="form-control" id="ville" required>
+                <option value="" disabled selected>Choisissez une ville</option>
+                <option v-for="ville in villes" :key="ville.id" :value="ville.id">
+                    {{ ville.nomVille }}
+                </option>
+            </select>
+            <div v-if="!selectedVille && valeurTouched" class="error-message">
+                Attention, veuillez sélectionner une ville.
+            </div>
+        </div>
+    
+        <!-- Expérience de permis de conduire -->
+        <div>
+            <label>Depuis quand avez-vous votre permis de conduire?</label>
+            <div class="choixM">
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="moins_de_5_ans" name="experiencePermis" value="Moins de 5 ans" v-model="experiencePermis" required />
+                    <label for="moins_de_5_ans">Moins de 5 ans</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="de_5_a_20_ans" name="experiencePermis" value="De 5 à 20 ans" v-model="experiencePermis" />
+                    <label class="" for="de_5_a_20_ans">De 5 à 20 ans</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="plus_de_20_ans" name="experiencePermis" value="Plus de 20 ans" v-model="experiencePermis" />
+                    <label for="plus_de_20_ans">Plus de 20 ans</label>
+                </div>
+            </div>
+            <span v-if="!experiencePermis && submitted" class="error">Veuillez sélectionner votre expérience de permis de conduire</span>
+        </div>
+    
+        <!-- Acceptation des conditions générales -->
+        <div class="checkbox-wrapper">
+            <input type="checkbox" id="acceptTerms" required />
+            <label for="acceptTerms">J'accepte les conditions générales d'utilisation, notamment la mention relative à la protection des données personnelles.</label>
+        </div>
+        <!-- Bouton de soumission Tarificatio
+        <router-link id="link"  to="/tarification">n </router-link>-->
+
+        <button type="submit">Valider</button>
+    </form>
     <div class="contact">
       <h5>Besoin d'aide ?</h5>
       <h6>Contactez nous du lundi au vendredi de 9h à 18h</h6>
@@ -349,36 +298,29 @@ export default {
   },
   data() {
     return {
-      motorisations: [], // Assurez-vous de définir correctement vos données de motorisation
-      selectedMotorisation: null,
-      motorisationTouched: false,
-      valeurNouvelle: null,
-      valeurVenale: null,
-      valeurTouched: false,
-      nom: '',
-      nomTouched: false,
-      messages: {
-        nom: 'Le nom est un champ obligatoire.'
-      },
+      valeurNouvelle: '',
+      selectedPuissFiscale: '', 
       experiencePermis: '',
       villes: [],
+      valeurVenale: '',
+      valeurTouched: false ,
+      selectedPuissFiscale:null, puissancesFiscale: [],
       selectedVille: null,
       marques: [],
       selectedMarque: '',
       value: '',
       formatted: '',
       selected: '',
-      selectedMotorisation: '',
+      selectedMotorisations:'',  selectedMotorisations: [],
       submitted: false,
       motorisations: [],
       puissanceFiscale: '',
       submitted: false,
-      options: Array.from({ length: 100 }, (_, i) => i + 1)
+      errors: {} 
     }
   },
   mounted() {
-    axios
-      .get('/Typem')
+    axios.get('/Typem')
       .then((response) => {
         this.motorisations = response.data
         console.log(this.motorisations)
@@ -386,11 +328,15 @@ export default {
       .catch((error) => {
         console.error('Erreur lors du chargement des motorisations:', error)
       })
-    axios
-      .get('/Marques')
+    axios.get('/Marques')
       .then((response) => {
         this.marques = response.data
         console.log(this.marques) // Vérifie que les données sont correctement récupérées
+      })
+      axios.get('/Modele')
+      .then((response) => {
+        this.modeles = response.data
+        console.log(this.modeles) // Vérifie que les données sont correctement récupérées
       })
       .catch((error) => {
         console.error('Une erreur est survenue : ', error)
@@ -399,32 +345,46 @@ export default {
       this.villes = response.data
       console.log(this.villes) // Vérifie que les données sont correctement récupérées
     })
+    axios.get('/PuissanceFiscale')
+            .then(response => {
+                // Succès de la requête : mettre à jour le tableau puissFiscales avec les données reçues
+                this.puissFiscales = response.data;
+            })
+            .catch(error => {
+                // Erreur lors de la requête : afficher un message d'erreur dans la console
+                console.error('Erreur lors de la récupération des données de l\'API :', error);
+            })
   },
   methods: {
-    /* onContext(ctx) {
-        // The date formatted in the locale, or the `label-no-date-selected` string
-        this.formatted = ctx.selectedFormatted
-        // The following will be an empty string until a valid date is entered
-        this.selected = ctx.selectedYMD
-      },*/
-    validate() {
-      this.valeurTouched = true
-      this.motorisationTouched = true
-      this.nomTouched = true
+     submitForm() {
+    const formData = {
+    motorisationId: this.selectedMotorisation,
+    puissanceFiscale: this.selectedPuissFiscale,
+    valeurNouvelle: this.valeurNouvelle,
+    valeurVenale: this.valeurVenale,
+    marqueId: this.selectedMarque,
+    modeleId: this.selectedModele,
+    dateCirculation: this.dateCirculation,
+    villeId: this.selectedVille,
+    matricule : "matricule"
+                    };
+      console.log('Formulaire soumis avec les données suivantes :', formData)
+     axios.post('/vehicules', formData)
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    // Gérer les erreurs si nécessaire
+                    console.error('Erreur lors de l\'envoi des données :', error);
+                });
+       
 
-      // Autres logiques de soumission du formulaire ici
-    }
-
-    /*onCaptchaVerified(response) {
-      console.log('Captcha verified with response:', response);
-      // Vous pouvez envoyer le token de reCAPTCHA au backend pour vérification
-    },
-    submitForm() {
-      // Vous pouvez soumettre votre formulaire ici après la vérification du reCAPTCHA
-      console.log('Formulaire soumis');
-    }*/
+      
+}
   }
 }
+        
+  
 </script>
 
 <style>

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->date('dateMiseEnCirculation'); 
             $table->float('valeurNeuve');
             $table->float('valeurVenale');
-            // Clé étrangère pour la relation avec la table "modeles"
             $table->unsignedBigInteger('modele_id');
             $table->foreign('modele_id')->references('id')->on('modeles')->onDelete('cascade');    
             // Clé étrangère pour la relation avec la table "type_motorisations"

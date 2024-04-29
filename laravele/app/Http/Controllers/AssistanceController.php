@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\vehicule_rse;
-use App\Models\Vehicule;
+use App\Models\assistance;
 use Illuminate\Http\Request;
 
-class VehiculeController extends Controller
+class AssistanceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,17 +26,15 @@ class VehiculeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(vehicule_rse $request)
+    public function store(Request $request)
     {
-       Vehicule::create($request->post());
-
-       return response()->json(["message"=>"Vehicule enregistré avec succès"],201);
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Vehicule $vehicule)
+    public function show(assistance $assistance)
     {
         //
     }
@@ -45,7 +42,7 @@ class VehiculeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Vehicule $vehicule)
+    public function edit(assistance $assistance)
     {
         //
     }
@@ -53,7 +50,7 @@ class VehiculeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Vehicule $vehicule)
+    public function update(Request $request, assistance $assistance)
     {
         //
     }
@@ -61,7 +58,7 @@ class VehiculeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Vehicule $vehicule)
+    public function destroy(assistance $assistance)
     {
         //
     }

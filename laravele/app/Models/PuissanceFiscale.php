@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Convention extends Model
+class PuissanceFiscale extends Model
 {
     use HasFactory;
-    protected $table = 'coventions';
-    protected $fillable = ['nom','surnom'];
-    
-    
+    protected $table = 'puissance_fiscale';
 
+    protected $fillable = [
+        'PuissFiscale',
+    ];
 }

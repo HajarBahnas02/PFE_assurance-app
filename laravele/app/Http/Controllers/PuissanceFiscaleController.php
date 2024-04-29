@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\vehicule_rse;
-use App\Models\Vehicule;
+use App\Models\PuissanceFiscale;
 use Illuminate\Http\Request;
 
-class VehiculeController extends Controller
+class PuissanceFiscaleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
+  
+        public function index()
+        {
+            return PuissanceFiscale::all(['id','PuissFiscale']);
+
+        }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -27,17 +29,15 @@ class VehiculeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(vehicule_rse $request)
+    public function store(Request $request)
     {
-       Vehicule::create($request->post());
-
-       return response()->json(["message"=>"Vehicule enregistré avec succès"],201);
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Vehicule $vehicule)
+    public function show(PuissanceFiscale $puissanceFiscale)
     {
         //
     }
@@ -45,7 +45,7 @@ class VehiculeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Vehicule $vehicule)
+    public function edit(PuissanceFiscale $puissanceFiscale)
     {
         //
     }
@@ -53,7 +53,7 @@ class VehiculeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Vehicule $vehicule)
+    public function update(Request $request, PuissanceFiscale $puissanceFiscale)
     {
         //
     }
@@ -61,7 +61,7 @@ class VehiculeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Vehicule $vehicule)
+    public function destroy(PuissanceFiscale $puissanceFiscale)
     {
         //
     }

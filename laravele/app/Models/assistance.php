@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Convention extends Model
+class assistance extends Model
 {
     use HasFactory;
-    protected $table = 'coventions';
-    protected $fillable = ['nom','surnom'];
-    
-    
-
+    protected $fillable = [
+    'nomAssistance',
+    'OptionAssistance',
+    'description'];
 }

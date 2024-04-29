@@ -1,53 +1,43 @@
 <template>
-    <!--sous header style not yet !-->
-    <div class="bg-gray-900 text-gray-100 py-3.5">
-    <!-- <div class="flex">
-        <span class="text">
-          <i></i>
-        </span>
-      </div>-->
-      <ul class="md:flex md:items-center">
-      <li class="md:mx-4">
+  <nav class="navbar navbar-light" style="background-color: #D1E8FF;">
+   
+      <ul class="md:flex md:items-center" >
+      <li >
         <a> <img src="###" alt="logo"></a>
       </li>
-        <li class="md:mx-4">
-          <a :href="Links[0].link">{{ Links[0].name }}</a>
-        </li>
-        <li class="md:mx-4">
-          <a :href="Links[1].link">{{ Links[1].name }}</a>
-        </li>
-        <li class="md:mx-4">
-          <a :href="Links[2].link">{{ Links[2].name }}</a>
-        </li>
+      <li>
+      <router-link id="link" class="link" to="/corporate"> Produits</router-link> </li>
+      <li>
+        <router-link id="link" class="link" to="/corporate"> En cas de sinistre</router-link>
+      </li>
+      <li>
+        <router-link id="link" class="link" to="/corporate">Question fréquentes</router-link>
+      </li>
+
       </ul>
    <div class="right-liens">
     <div class="buttons"> 
-        <i>
-          <img src="../assets/left.svg">
-        </i>
-         <button>Site Particulier</button>
+         <button>
+          <i>
+            <img src="../assets/left.svg">
+          </i>Site Particulier</button>
        </div>
 <div class="buttons">
-<i><img src="../assets/user.svg"></i>
-<button>Espace Client</button>
+
+<button><i><img src="../assets/user.svg"></i>
+  Espace Client</button>
 </div>
 </div>
- </div>
+</nav>
   </template>
   <style>
+  
 a:hover {
-background-color: #5d76b3; /* Adjust this value to set the hover background color */
+background-color: #D1E8FF; /* Adjust this value to set the hover background color */
 color: #fff; /* Adjust this value to set the hover text color */
 }
-.bg-gray-900 {
-  height: 40px;
-background-color: #E9F1FA;
-display: flex; 
-justify-content:  center;
-padding-left: 10%;
-justify-content: center;
-align-self: center;
-}
+
+
 
 .text-gray-100 {
 color: black; 
@@ -57,17 +47,26 @@ font-size: 16px;
 font-family: 'Roboto', sans-serif;
 }
 
-
 .md\:flex {
 display: flex;
-
-
 }
 
 .md\:mx-4 {
 margin-right: 20px;
+background-color: antiquewhite;
+
 
 }
+.link{
+  display: flex;
+  align-items: center;
+  margin-right: 10px; 
+  color: black;
+  text-decoration: none;
+
+}
+ul >li{
+  list-style-type: none;}
 
 .right-liens{
   display: flex;
@@ -80,6 +79,26 @@ margin-right: 20px;
   display: flex;
   align-items: center;
   margin-right: 10px;
+}
+button i {
+  margin-right: 10px; /* Ajoute de l'espace entre l'icône et le texte */
+}
+button {
+  background-color: rgb(73, 73, 214); /* Couleur bleue pour le bouton */
+  color: white; /* Texte blanc sur fond bleu */
+  padding: 10px 10px; 
+  border: none; /* Pas de bordure */
+  cursor: pointer; /* Curseur de type pointer pour indiquer que le bouton est cliquable */
+}
+button img {
+  width: 20px; /* Ajuster la taille de l'image */
+  height: 20px;
+  vertical-align: middle; /* Aligner l'image verticalement au centre */
+}
+nav ul li {
+  padding-top:15px;
+  display: inline-block;
+  margin-right: 20px; /* Ajoute un espace entre les liens */
 }
 
 </style>

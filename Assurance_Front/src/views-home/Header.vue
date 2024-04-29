@@ -47,16 +47,17 @@ header {
   justify-content: space-between;
   align-items: center;
   height: 5%;
-  background-color: #F7C566;
+  background-color: #1C1DAB;
 }
 #link {
-  color: #283B42;
+  color: #F7F2EB;
   font-family: "pt-sans", sans-serif;
   font-weight: 700;
   background-color: none;
+  text-decoration: none;
 }
 #link:hover {
-  color: #7cb9cf;
+  color: #010e12;
   text-decoration: none;
 }
 .left-div {
