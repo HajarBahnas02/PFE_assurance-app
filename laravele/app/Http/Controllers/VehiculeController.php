@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\vehicule_rse;
+use App\Http\Requests\Vehicule_rse;
+use App\Http\Requests\VehiculeRse;
 use App\Models\Vehicule;
 use Illuminate\Http\Request;
 
@@ -27,9 +28,9 @@ class VehiculeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(vehicule_rse $request)
+    public function store(Vehicule_rse $request)
     {
-       Vehicule::create($request->post());
+       Vehicule::create($request->validated());
 
        return response()->json(["message"=>"Vehicule enregistré avec succès"],201);
     }
