@@ -18,13 +18,13 @@ return new class extends Migration
             $table->float('valeurNeuve');
             $table->float('valeurVenale');
             $table->unsignedBigInteger('modele_id');
-            $table->foreign('modele_id')->references('id')->on('modeles')->onDelete('cascade');    
+            $table->foreign('modele_id')->references('id')->on('modeles');    
             // Clé étrangère pour la relation avec la table "type_motorisations"
-            $table->unsignedBigInteger('type_motorisation_id');
-            $table->foreign('type_motorisation_id')->references('id')->on('type_motorisations')->onDelete('cascade');
+            $table->integer('type_motorisation_id');
+            $table->foreign('type_motorisation_id')->references('id')->on('type_motorisations');
            // Clé étrangère pour la relation avec la table "marques"
-           $table->unsignedBigInteger('marque_id');
-           $table->foreign('marque_id')->references('id')->on('marques')->onDelete('cascade');
+           $table->integer('marque_id');
+           $table->foreign('marque_id')->references('id')->on('marques');
             $table->timestamps();
         });
     }

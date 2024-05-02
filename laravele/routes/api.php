@@ -68,6 +68,4 @@ Route::resource('Typem', TypeMotorisationController::class);
 Route::resource('PuissanceFiscale', PuissanceFiscaleController::class);
 Route::get('Modele', [ModeleController::class, 'index']);
 Route::get('TypeM', [MarqueController::class, 'index']);
-//Route::post('vehicules', 'VehiculeController@store');
-//Route::post('vehicule', [VehiculeController::class, 'store']);
 Route::resource('vehicules', VehiculeController::class);
