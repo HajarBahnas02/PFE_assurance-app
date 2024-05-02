@@ -58,62 +58,84 @@ import { RouterLink } from 'vue-router'; /*
 
   <div class="frame">
     <div class="infos">
-    <h3 class="formule">Prêts à souscrire en ligne à nos assurances ?</h3>
-    <p class="assura">
-      Simple et rapide, notre assurance vous permet d'être couvert en quelques
-      clics. Aucun déplacement n'est nécessaire, tout se fait à distance !
-    </p></div>
+      <h3 class="formule">Prêts à souscrire en ligne à nos assurances ?</h3>
+      <p class="assura">
+        Simple et rapide, notre assurance vous permet d'être couvert en quelques clics.
+        Aucun déplacement n'est nécessaire, tout se fait à distance !
+      </p>
+    </div>
     <div class="cards-container">
       <div class="card">
-          <img class="card-img" src="../assets/simulation-icon.svg" alt="img simulation icon" />
-          <h3 class="card-title">Réalisez votre simulation</h3>
-          <p class="card-description">
-              Complétez notre formulaire de simulation d'assurance en ligne et choisissez les
-              garanties qui répondent le mieux à vos besoins, pour obtenir votre tarif en
-              moins de 2 minutes
-          </p>
+        <img
+          class="card-img"
+          src="../assets/simulation-icon.svg"
+          alt="img simulation icon"
+        />
+        <h3 class="card-title">Réalisez votre simulation</h3>
+        <p class="card-description">
+          Complétez notre formulaire de simulation d'assurance en ligne et choisissez les
+          garanties qui répondent le mieux à vos besoins, pour obtenir votre tarif en
+          moins de 2 minutes
+        </p>
       </div>
       <div class="card">
-        <img class="card-img" src="../assets/simulation-icon.svg" alt="img simulation icon" />
+        <img
+          class="card-img"
+          src="../assets/simulation-icon.svg"
+          alt="img simulation icon"
+        />
         <h3 class="card-title">Faites vous livrer votre attestation</h3>
         <p class="card-description">
-          Une fois le paiement effectué, vous êtes assurés, recevez instantanément une copie de votre attestation d'assurance
-          , qui vous sera également livrée à l'adresse que vous aurez indiquée
+          Une fois le paiement effectué, vous êtes assurés, recevez instantanément une
+          copie de votre attestation d'assurance , qui vous sera également livrée à
+          l'adresse que vous aurez indiquée
         </p>
-    </div> 
-      <div class="card">
-          <img class="card-img" src="../assets/simulation-icon.svg" alt="img simulation icon" />
-          <h3 class="card-title">Réalisez votre simulation</h3>
-          <p class="card-description">
-              Complétez notre formulaire de simulation d'assurance en ligne et choisissez les
-              garanties qui répondent le mieux à vos besoins, pour obtenir votre tarif en
-              moins de 2 minutes
-          </p>
       </div>
-    
       <div class="card">
-        <img  class="card-img" src="../assets/payment-icon.svg" alt="Image 1">
+        <img
+          class="card-img"
+          src="../assets/simulation-icon.svg"
+          alt="img simulation icon"
+        />
+        <h3 class="card-title">Réalisez votre simulation</h3>
+        <p class="card-description">
+          Complétez notre formulaire de simulation d'assurance en ligne et choisissez les
+          garanties qui répondent le mieux à vos besoins, pour obtenir votre tarif en
+          moins de 2 minutes
+        </p>
+      </div>
+
+      <div class="card">
+        <img class="card-img" src="../assets/payment-icon.svg" alt="Image 1" />
         <h3 class="card-title">Souscrivez en ligne ou en agence</h3>
-      <p class="card-description"> Validez votre devis et réglez votre souscription en optant pour un paiement en ligne totalement sécurisé ou par chèque à la livraison de votre 
-        contrat ou opter pour une souscription en agence> </p></div>
+        <p class="card-description">
+          Validez votre devis et réglez votre souscription en optant pour un paiement en
+          ligne totalement sécurisé ou par chèque à la livraison de votre contrat ou opter
+          pour une souscription en agence>
+        </p>
+      </div>
     </div>
     <div class="underPage">
       <div class="imgAss">
         <img src="../assets/acceuil.jpg" />
       </div>
       <div class="conditions">
-        <h1 class="titleAvantage">Découvrez les Avantages Exclusifs de Notre Agence d'Assurance</h1>
+        <h1 class="titleAvantage">
+          Découvrez les Avantages Exclusifs de Notre Agence d'Assurance
+        </h1>
         <div class="condition">
           <img class="verification-img" src="../assets/circle-check.svg" alt="" />
-          <p class="paragAvan"> la soumission en ligne à la gestion de compte 24/7,</p>
+          <p class="paragAvan">La soumission en ligne à la gestion de compte 24/7,</p>
         </div>
         <div class="condition">
           <img class="verification-img" src="../assets/circle-check.svg" alt="" />
-          <p class="paragAvan">gamme complète de produits pour répondre à tous vos besoins.</p>
+          <p class="paragAvan">
+            gamme complète de produits pour répondre à tous vos besoins.
+          </p>
         </div>
         <div class="condition">
           <img class="verification-img" src="../assets/circle-check.svg" alt="" />
-          <p class="paragAvan">tarifs compétitifs et options de paiement flexibles</p>
+          <p class="paragAvan">Tarifs compétitifs et options de paiement flexibles</p>
         </div>
         <div class="condition">
           <img class="verification-img" src="../assets/circle-check.svg" alt="" />
@@ -122,7 +144,8 @@ import { RouterLink } from 'vue-router'; /*
         <div class="condition">
           <img class="verification-img" src="../assets/circle-check.svg" alt="" />
           <p class="paragAvan">
-            La Livraison gratuite de votre attestation partout au Maroc</p>
+            La Livraison gratuite de votre attestation partout au Maroc
+          </p>
         </div>
       </div>
     </div>
@@ -130,7 +153,6 @@ import { RouterLink } from 'vue-router'; /*
 </template>
 
 <style>
-
 .image-devis {
   justify-content: center;
   display: flex;
@@ -166,7 +188,7 @@ import { RouterLink } from 'vue-router'; /*
 }
 .card {
   border: 1px solid #ccc;
- 
+
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -180,14 +202,13 @@ import { RouterLink } from 'vue-router'; /*
 
 .card-img {
   height: 84px;
-    width: 84px;
-   /* Pour centrer l'image horizontalement */
+  width: 84px;
+  /* Pour centrer l'image horizontalement */
 }
-
 
 .card-title {
   font-size: 15px;
-  color:white;
+  color: white;
   margin-top: 10px;
   margin-bottom: 5px;
 }
@@ -196,13 +217,13 @@ import { RouterLink } from 'vue-router'; /*
   color: #280019;
   font-size: 14px;
   text-align: left;
-    margin: 0px;
-        display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    unicode-bidi: isolate;
+  margin: 0px;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  unicode-bidi: isolate;
 }
 
 /* Pour rendre les cartes responsives */
@@ -214,14 +235,12 @@ import { RouterLink } from 'vue-router'; /*
 }
 .underPage {
   display: flex;
-  margin-top: 15px;
   width: 100%;
 }
 .imgAss {
   width: 50%;
   padding-left: 1%;
   margin-right: 2%;
-
 }
 
 .hajar {
@@ -235,8 +254,6 @@ import { RouterLink } from 'vue-router'; /*
   font-weight: bold;
   margin-bottom: 10px;
 }
-
-
 
 .anas {
   text-align: justify;
@@ -277,10 +294,9 @@ import { RouterLink } from 'vue-router'; /*
   font-family: "Arial", sans-serif; /* Police de caractères */
   font-size: 20px; /* Taille de la police */
   line-height: 1.5; /* Hauteur de ligne pour une meilleure lisibilité */
-  color: #FA9EBC; /* Couleur du texte */
+  color: #fa9ebc; /* Couleur du texte */
   text-align: center;
   font-weight: bold;
-
 }
 .para {
   max-width: 800px; /* Pour limiter la largeur du texte */
@@ -295,7 +311,7 @@ import { RouterLink } from 'vue-router'; /*
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #D0E3FF;
+  background: #d0e3ff;
   box-shadow: 0 1px 1px 0 rgba(214, 18, 18, 0.03), 0 0 24px 0 rgba(0, 0, 0, 0.08);
   text-align: center;
   align-content: space-around;
@@ -312,24 +328,24 @@ import { RouterLink } from 'vue-router'; /*
 }
 
 .box:hover {
-  transform: scale(1.3);
+  transform: scale(1.2);
   z-index: 2;
-  background-color: #F7F2EB;
+  background-color: rgb(73, 73, 214);
   text-decoration: none;
 }
 
-.titleAvantage{
-  color: BLACK;
-  font-size: 20px;
+.titleAvantage {
+  color: #1C1DAB;
+  font-size: 23px;
   font-weight: bold;
   font-style: oblique;
-  text-decoration: none !important;  
-  padding-top:4% ;
+  text-decoration: none !important;
+  padding-top: 4%;
 }
 .conditions {
   display: flex;
   flex-direction: column;
-  width:50%;
+  width: 50%;
 }
 .verification-img {
   height: 30px;
@@ -345,7 +361,6 @@ import { RouterLink } from 'vue-router'; /*
   margin: 10px;
   padding: 10px;
   justify-content: start;
-
 }
 .paragAvan {
   color: rgb(13, 13, 13);
@@ -353,12 +368,11 @@ import { RouterLink } from 'vue-router'; /*
   text-align: left;
   margin: 0px;
   font-size: 20px;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
-
 .menue {
-  background: linear-gradient(319.91deg, #7096DE 0%, #1d6a96 100%);
+  background: linear-gradient(319.91deg, #7096de 0%, #1d6a96 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -390,9 +404,8 @@ import { RouterLink } from 'vue-router'; /*
 
 .frame {
   display: block;
-  margin-bottom: 5px;
   padding-top: 1%;
-  background-color: #D1E8FF;
+  background-color: #d1e8ff;
 }
 .frame p {
   justify-content: center;
@@ -403,15 +416,15 @@ import { RouterLink } from 'vue-router'; /*
   margin-left: 10px !important;
   text-align: center;
 }
-.infos{
+.infos {
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 0px;
   margin: 0px;
   width: 100%;
-  padding-left:10%;
-  padding-right:12% ;
+  padding-left: 10%;
+  padding-right: 12%;
 }
 .assura {
   display: flex;
@@ -425,7 +438,7 @@ import { RouterLink } from 'vue-router'; /*
 export default {
   data() {
     return {
-      text: "Protégez ce qui compte le plus. Votre sécurité notre priorité",
+      text: "Protégez ce qui compte le plus.Votre sécurité notre priorité",
       animatedText: "",
       index: 0,
       showWhiteText: false,
@@ -461,16 +474,19 @@ export default {
 </script>
 <style scoped>
 h1 {
-  overflow: hidden; /* Pour cacher le texte restant */
+  overflow: hidden; 
   border-right: 0.15em solid rgb(210, 206, 200); /* Curseur clignotant */
-  white-space: nowrap; /* Empêcher le saut de ligne */
-  margin: 0 auto; /* Pour centrer le texte */
+  margin: 0 auto;
   text-decoration: none;
+  color: rgb(245, 245, 245);
+  font-weight: bold;
+  font-family: Comic Sans MS, Comic Sans, cursive;
 }
 
 /* Style pour le texte en blanc */
 .white-text {
-  color: WHITE;
-  font-weight: bold;
+  color: white;
+  font-weight: 300;
+  font-family: Comic Sans MS, Comic Sans, cursive;
 }
 </style>
