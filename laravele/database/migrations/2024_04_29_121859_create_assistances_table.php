@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+
 
 return new class extends Migration
 {
@@ -12,25 +14,23 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('assistances', function (Blueprint $table) {
-            $table->id()->p;
+            $table->id();
             $table->string('nomAssistance');
-            $table->string('OptionAssistance')->nullable();
-            $table->text('description')->nullable();
+          
             $table->timestamps();
         });
-        DB::table('assistances')->insert([
-            'id' => 1,'nomAssistance' => 'Assistance Complémantaire',
-            'id' => 2,'nomAssistance' => 'Assistance Complémantaire Prémium',
-        ]);
+          
+            $data=[
+                ['id' => 1,'nomAssistance' => 'Assistance Complémentaire'],
+                ['id' => 2,'nomAssistance' => 'Assistance Complémentaire Prémium']];
+            DB::table('assistances')->insert($data);
 
-    }
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
+    public function down(): void {
         Schema::dropIfExists('assistances');
-    }
+     }
 };
