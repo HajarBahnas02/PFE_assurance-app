@@ -11,7 +11,7 @@ class vehicule_rse extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,16 +21,9 @@ class vehicule_rse extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            "motorisationId"=>["required","integer"],
-            "puissanceFiscale"=>["required","integer"],
-            "valeurNouvelle"=>["required","numeric"],
-            "valeurVenale"=>["required","numeric"],
-            "marqueId"=>["required","integer"],
-            "modeleId"=>["required","integer"],
-            "dateCirculation"=>["required","date"],
-            "villeId"=>["required","integer"]
             
+        return [
+          
         ];
     }
 }

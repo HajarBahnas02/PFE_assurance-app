@@ -28,8 +28,11 @@ class MarqueController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        Marque::create($request->post());
+
+        return response()->json(["message"=>"Vehicule enregistré avec succès"],201);
+     }
+    
 
     /**
      * Display the specified resource.

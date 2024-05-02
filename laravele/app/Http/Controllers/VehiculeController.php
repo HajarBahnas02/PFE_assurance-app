@@ -13,7 +13,7 @@ class VehiculeController extends Controller
      */
     public function index()
     {
-        //
+        return  Vehicule::all(['matricule']);
     }
 
     /**

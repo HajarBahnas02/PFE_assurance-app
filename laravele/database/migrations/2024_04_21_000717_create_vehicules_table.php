@@ -17,14 +17,9 @@ return new class extends Migration
             $table->date('dateMiseEnCirculation'); 
             $table->float('valeurNeuve');
             $table->float('valeurVenale');
-            $table->unsignedBigInteger('modele_id');
-            $table->foreign('modele_id')->references('id')->on('modeles');    
-            // Clé étrangère pour la relation avec la table "type_motorisations"
-            $table->integer('type_motorisation_id');
-            $table->foreign('type_motorisation_id')->references('id')->on('type_motorisations');
-           // Clé étrangère pour la relation avec la table "marques"
-           $table->integer('marque_id');
-           $table->foreign('marque_id')->references('id')->on('marques');
+            $table->foreignId('modele_id')->constrained('modeles');
+            $table->foreignId('type_motorisation_id')->constrained('type_motorisations');
+            $table->foreignId('marque_id')->constrained('marques');
             $table->timestamps();
         });
     }

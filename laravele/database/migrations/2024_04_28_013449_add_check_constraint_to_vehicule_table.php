@@ -14,7 +14,6 @@ return new class extends Migration
     {
             Schema::table('vehicules', function (Blueprint $table) {
          
-                DB::statement('ALTER TABLE vehicules ADD CONSTRAINT check_valeur_a_nouveau_valeur_venale CHECK (valeurNeuve >= valeurVenale)');
             });
     }
 
