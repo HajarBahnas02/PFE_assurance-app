@@ -2,7 +2,7 @@
   <footer>
     <div class="footerContainer">
       <div class="footerNav" style="color: white">
-        <p>Copyright &copy;2024 Designed by <span class="designer"></span></p>
+        <p>Copyright &copy;2024 | Tous droits reservés          <span class="designer"></span></p>
       </div>
 
       <div class="footerNav">
@@ -34,7 +34,7 @@
   box-sizing: border-box;
 }
 footer {
-    background-color: #1C1DAB;
+    background-color: #035fa9;
 }
 .footerContainer {
   width: 100%;

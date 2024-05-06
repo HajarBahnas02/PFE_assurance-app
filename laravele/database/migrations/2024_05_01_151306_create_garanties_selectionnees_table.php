@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\GarantiesSelectionnees;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,9 +18,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('offre_id')->constrained('offres');
             $table->foreignId('garantie_id')->constrained('type_garanties');
+            $table->unique(['offre_id', 'garantie_id']);
             $table->timestamps();
         });
-
+        
+                            
         $associations = [
             1 => [1, 2, 3, 4], // Offre d'id 1 correspondant aux garanties 1, 2, 3, 4
             2 => [1, 2, 3, 4, 5, 6, 7, 8, 9], // Offre d'id 2 correspondant aux garanties 1 à 9
@@ -43,11 +46,10 @@ return new class extends Migration
         // Insérer les données dans la table garanties_selectionnees
         DB::table('garanties_selectionnees')->insert($data);
 
+   
+   
     }
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+   public function down(): void
     {
         Schema::dropIfExists('garanties_selectionnees');
     }

@@ -10,9 +10,26 @@ class TypeGarantie extends Model
 
     
     use HasFactory;
+    protected $fillable = [
+        'nomGarantie',
+        'description',
+        'prixGarantie',
+        'dureeGarantie'
+    ];
 
-    public function offres(){
-        return $this->belongsToMany(Offre::class)->withTimestamps();
+ /* hadi   public function garantiesSelectionnees()
+    {
+        return $this->hasMany(GarantiesSelectionnees::class, 'garantie_id');
     }
-
+    public function offres()
+    {
+        return $this->hasMany(GarantiesSelectionnees::class, 'garantie_id');
+    }*/
+    public function offres()
+    {
+        return $this->belongsToMany(Offre::class);
+    }
+   
+    
+   
 }

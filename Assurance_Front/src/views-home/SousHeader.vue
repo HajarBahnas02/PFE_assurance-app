@@ -1,9 +1,9 @@
 <template>
-  <nav class="navbar navbar-light" style="background-color: #D1E8FF;">
+  <nav class="navbar navbar-light" style="background-color: #f6f9fc;">
    
-      <ul class="md:flex md:items-center" >
+      <ul class="md:flex md:items-center"  >
       <li >
-        <a> <img src="###" alt="logo"></a>
+        <a> <img src="../assets/logo.png"  width="50px" height="50px" alt="logo"></a>
       </li>
       <li>
       <router-link id="link" class="link" to="/corporate"> Produits</router-link> </li>
@@ -11,7 +11,7 @@
         <router-link id="link" class="link" to="/corporate"> En cas de sinistre</router-link>
       </li>
       <li>
-        <router-link id="link" class="link" to="/corporate">Question fréquentes</router-link>
+        <router-link id="link" class="link" to="/corporate">Questions fréquentes</router-link>
       </li>
 
       </ul>
@@ -32,13 +32,11 @@
   </template>
   <style>
   
-a:hover {
-background-color: #D1E8FF; /* Adjust this value to set the hover background color */
-color: #fff; /* Adjust this value to set the hover text color */
-}
-
-
-
+  #link:hover {
+    color:RGB(32, 140, 217);
+    text-decoration: none;
+    background-color: inherit;
+  }
 .text-gray-100 {
 color: black; 
 align-items: center;
@@ -61,12 +59,16 @@ background-color: antiquewhite;
   display: flex;
   align-items: center;
   margin-right: 10px; 
-  color: black;
+  color: rgb(4, 0, 0);
   text-decoration: none;
+  padding-top:15px;
 
 }
+
 ul >li{
-  list-style-type: none;}
+  list-style-type: none;
+}
+
 
 .right-liens{
   display: flex;
@@ -84,7 +86,7 @@ button i {
   margin-right: 10px; /* Ajoute de l'espace entre l'icône et le texte */
 }
 button {
-  background-color: rgb(73, 73, 214); /* Couleur bleue pour le bouton */
+  background-color: rgb(41, 140, 197); /* Couleur bleue pour le bouton */
   color: white; /* Texte blanc sur fond bleu */
   padding: 10px 10px; 
   border: none; /* Pas de bordure */
@@ -96,24 +98,16 @@ button img {
   vertical-align: middle; /* Aligner l'image verticalement au centre */
 }
 nav ul li {
-  padding-top:15px;
+  padding-top:10px;
   display: inline-block;
-  margin-right: 20px; /* Ajoute un espace entre les liens */
+  margin-right: 20px; 
 }
 
 </style>
 
   <script>
   export default {
-    setup() {
-      let Links = [
-      
-        { name: "Produits", link: "/produits" },
-        { name: "En cas de sinistre", link: "https://www.google.ma" },
-        { name: "Questions fréquentes", link: "https://www.google.ma" }
-      ];
-      return { Links };
-    }
+    
   }
  </script>
 

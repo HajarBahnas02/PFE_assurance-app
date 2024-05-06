@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Offre;
 use Illuminate\Http\Request;
 
@@ -12,7 +11,13 @@ class OffreController extends Controller
      */
     public function index()
     {
-        //
+       // return Offre::all([ 'nomOffre', 'montant']);
+        //$offres = Offre::with('garanties')->get();
+        $offres = Offre::with('garanties')->get();
+
+        return response()->json(['offres' => $offres], 200);
+
+        // Retourner la liste des offres avec leurs garanties
     }
 
     /**

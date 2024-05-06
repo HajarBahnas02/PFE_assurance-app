@@ -264,19 +264,23 @@
     </style>
   </head>
   <body>
-    <div class="cont">
-      <div class="side"></div>
-      <div class="container">
-        <div class="card card-2">
-          <div class="header">
-            <h2>Pack Optimal</h2>
-            <center class="price price-optimal">2 814.21Dhs</center>
-            <div class="duration">
-              <button onclick="changePriceOptimal(2814.21)">1 an</button>
-              <button onclick="changePriceOptimal(1407.11)">6 mois</button>
+    
+      <div class="cont">
+        <div class="side"></div>
+        <div class="container">
+          <div class="card card-2">
+            <div class="header">
+              <h2>Pack Optimal</h2>
+              <center class="price price-optimal">{{ prixOptimal }} Dhs</center>
+              <div class="duration">
+                <button @click="changePriceOptimal(2814.21)">1 an</button>
+                <button @click="changePriceOptimal(1407.11)">6 mois</button>
+              </div>
             </div>
           </div>
-
+        </div>
+      </div>
+    
           <ul class="features">
             <li>
               <i class="fa-sharp fa-regular fa-circle-check"></i> Défense et

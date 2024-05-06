@@ -11,6 +11,15 @@ class Offre extends Model
     protected $fillable = [
         'nomOffre',
         'description'];
+   
+       /* public function garanties()
+        {
+            return $this->hasMany(TypeGarantie::class, 'offre_id');
+        } }*/
+        public function garantiesSelectionnees()
+        {
+            return $this->hasMany(GarantiesSelectionnees::class, 'offre_id');
+        }
         public function garanties(){
             return $this->belongsToMany(TypeGarantie::class)->withTimestamps();
         }

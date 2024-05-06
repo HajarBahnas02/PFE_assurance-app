@@ -1,11 +1,16 @@
 <?php
 
+use App\Http\Controllers\AssistanceController;
 use App\Http\Controllers\MarqueController;
 use App\Http\Controllers\ModeleController;
+use App\Http\Controllers\OffreController;
+use App\Http\Controllers\OptionAssistanceController;
 use App\Http\Controllers\PuissanceFiscaleController;
 use App\Http\Controllers\TypeMotorisationController;
 use App\Http\Controllers\VehiculeController;
 use App\Http\Controllers\VilleController;
+use App\Models\Offre;
+use App\Models\OptionAssistance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -68,4 +73,12 @@ Route::resource('Typem', TypeMotorisationController::class);
 Route::resource('PuissanceFiscale', PuissanceFiscaleController::class);
 Route::get('Modele', [ModeleController::class, 'index']);
 Route::get('TypeM', [MarqueController::class, 'index']);
+Route::get('Offres', [OffreController::class, 'index']);
 Route::resource('vehicules', VehiculeController::class);
+Route::get('/offres', function () {
+  $offres = Offre::with('garantiesSelectionnees.garantie')->get();
+  return $offres;
+
+});
+Route::get('assistances', [AssistanceController::class, 'index']);
+Route::get('optionsAssistances', [OptionAssistanceController::class, 'index']);

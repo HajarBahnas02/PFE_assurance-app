@@ -1,9 +1,9 @@
 <template>
-  <header>
+  <div class="header">
     <div class="left-div">
       <router-link id="link" to="/about"> Professionnel</router-link>
 
-      <router-link id="link" class="second-link" to="/corporate"><a> Corporate</a></router-link>
+      <router-link id="link" class="second-link" to="/corporate"> Corporate</router-link>
     </div>
 
     <div class="center-div">
@@ -31,34 +31,37 @@
     <div class="right-div">
       <div class="item">
         <img src="../assets/location.svg" width="50px"  height="40px" class="logon" alt="Contact logo" />
-        <router-link id="link"  to="/corporate"><a> Localisation</a></router-link>
+        <router-link id="link"  to="/corporate"> Localisation</router-link>
 </div>
      
    
     <div class="item">
       <img src="../assets/location.svg" width="50px"  height="40px" class="logon" alt="Contact logo" />
-      <router-link id="link" to="/corporate"><a> Contact</a></router-link>
+      <router-link id="link" to="/corporate"> Contact</router-link>
     </div>  </div>
-  </header>
+    </div>
 </template>
 <style scoped>
-header {
+.header {
+  border-bottom: 2px solid black; 
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 5%;
-  background-color: #1C1DAB;
+  background-color:rgb(187 225 250);
+  ;
+
 }
 #link {
-  color: #F7F2EB;
-  font-family: "pt-sans", sans-serif;
-  font-weight: 700;
   background-color: none;
+  color: black;
+  font-weight: 700;
   text-decoration: none;
 }
 #link:hover {
-  color: #010e12;
+  color:RGB(32, 140, 217);
   text-decoration: none;
+  background-color: inherit;
 }
 .left-div {
   margin-left: 20%;
@@ -68,7 +71,12 @@ header {
 }
 
 .center-div {
-  margin: 0 auto; /* Pour centrer horizontalement */
+  display: flex;
+}
+.center-div img{
+  margin-right: 13px; 
+  width: 50px; 
+  height: auto; 
 }
 
 .right-div {

@@ -1,15 +1,13 @@
-import { RouterLink } from 'vue-router'; /*
 <template>
   <div class="menue">
     <div class="paragraph">
       <span class="citation" id="typewriter">
-        <!--         <h1>{{ animatedText }}</h1>-->
         <h1 :class="{ 'white-text': showWhiteText }">{{ animatedText }}</h1>
       </span>
     </div>
     <div clas="para">
       <p class="para-text">
-        Accédez à votre devis personnalisé et souscrivez à votre assurance en seulement 5
+         Avec notre simulateur accédez à votre devis personnalisé et souscrivez à votre assurance en seulement 5
         minutes
         <br />
         et sans aucun déplacement requis.
@@ -17,36 +15,56 @@ import { RouterLink } from 'vue-router'; /*
     </div>
 
     <div class="container-devis">
-      <div class="box">
-        <routerLink to="/automobile-icon.vue" class="box">
+      <div v-if="showCardList" class="overlay" @click="hideCards"></div>
+
+      <div class="container-devis">
+        <div class="box" @click="showCards">
           <img class="image-devis" src="../assets/automobile-icon.svg" alt="Image 1" />
-
           <h3 class="title-devis">Assurance Auto</h3>
-        </routerLink>
+        </div>
+        <div v-if="showCardList" class="card-list">
+          <!-- Cartes ici -->
+          <div class="carde">
+            <img src="../assets/auto-insure.svg" alt="Image de la carte 1" />
+            <h3>Effectuer une simulation et souscrire un nouveau contrat​</h3>
+            <button @click="goToPage('/assuranceAutoSimulation')">Accéder</button>
+          </div>
+          <div class="carde">
+            <img src="../assets/auto-insure.svg" alt="Image de la carte 2" />
+            <h3>Renouveler mon contrat Automobile​</h3>
+            <button @click="goToPage('/page2')">Accéder</button>
+          </div>
+          <div class="carde">
+            <img src="../assets/auto-insure.svg" alt="Image de la carte 2" />
+            <h3>Demander votre carte verte en ligne</h3>
+            <button @click="goToPage('/page2')">Accéder</button>
+          </div>
+                </div>
       </div>
+   
 
-      <div class="box">
+      <div class="box" @click="showCards">
         <routerLink to="/AssHabitation.vue" class="box">
           <img class="image-devis" src="../assets/home-icon.svg" alt="Image 1" />
           <h3 class="title-devis">Assurance Habitation</h3>
         </routerLink>
       </div>
 
-      <div class="box">
+      <div class="box" @click="showCards">
         <routerLink to="/AssSanteInter.vue" class="box">
           <img class="image-devis" src="../assets/health-insurance.svg" alt="Image 1" />
           <h3 class="title-devis">Assurance Santé Internationale</h3>
         </routerLink>
       </div>
 
-      <div class="box">
+      <div class="box" @click="showCards">
         <routerLink to="/AssSanteInter.vue" class="box">
           <img class="image-devis" src="../assets/health-care.svg" alt="Image 1" />
 
           <h3 class="title-devis">Assurance Santé Individuelle</h3>
         </routerLink>
       </div>
-      <div class="box">
+      <div class="box" @click="showCards">
         <routerLink to="/AssSanteInter.vue" class="box">
           <img class="image-devis" src="../assets/prevoyance-icon.svg" alt="Image 1" />
           <h3 class="title-devis">Assurance Prévoyance</h3>
@@ -153,6 +171,78 @@ import { RouterLink } from 'vue-router'; /*
 </template>
 
 <style>
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Couleur grise semi-transparente */
+  z-index: 999; /* Assure que la superposition est au-dessus de tout autre contenu */
+}
+
+/* Ajoutez ce style pour empêcher les interactions avec les éléments sous-jacents */
+.overlay.active {
+  pointer-events: auto; /* L'utilisateur pourra interagir avec les éléments de la liste */
+}
+
+.card-list {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(246, 249, 252);
+  z-index: 1000; /* Assure que la liste est au-dessus de la superposition */
+  max-width: 70%;
+  background: linear-gradient(rgb(41, 140, 197) 160px, white 0%) rgb(255, 255, 255);
+}
+
+.carde {
+  height: 400px; 
+  text-align: center; 
+  width: max-content;
+  display: flex;
+  padding: 10px;
+  flex-basis: 25%;
+  box-shadow: rgba(0, 0, 0, 0.03) 0px 1px 1px 0px, rgba(0, 0, 0, 0.08) 0px 0px 24px 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center; 
+  background-color: rgb(255, 255, 255);
+  margin: 16px;
+
+}
+.carde img {
+  padding-top: 32px;
+  max-width: 100%; 
+  max-height: 100%; 
+}
+
+.carde h3 {
+  font-size: 17px;
+  font-weight: bold;
+  color: #000000;
+
+}
+.carde button {
+  background-color: rgb(41, 140, 197); /* Couleur de fond du bouton */
+  color: #ffffff; /* Couleur du texte du bouton */
+  border: none; /* Pas de bordure */
+  padding: 10px 20px; /* Espacement intérieur du bouton */
+  border-radius: 5px; /* Coins arrondis du bouton */
+  cursor: pointer; /* Curseur pointer au survol */
+  transition: background-color 0.3s ease; /* Animation de transition fluide */
+}
+
+.carde button:hover {
+  background-color: #0056b3; /* Couleur de fond du bouton au survol */
+}
 .image-devis {
   justify-content: center;
   display: flex;
@@ -170,9 +260,10 @@ import { RouterLink } from 'vue-router'; /*
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 2%;
+  position: relative;
 }
 .title-devis {
-  color: #6c0345;
+  color: black;
   font-size: 20px;
   font-weight: bold;
   font-style: oblique;
@@ -294,7 +385,7 @@ import { RouterLink } from 'vue-router'; /*
   font-family: "Arial", sans-serif; /* Police de caractères */
   font-size: 20px; /* Taille de la police */
   line-height: 1.5; /* Hauteur de ligne pour une meilleure lisibilité */
-  color: #fa9ebc; /* Couleur du texte */
+  color: white; /* Couleur du texte */
   text-align: center;
   font-weight: bold;
 }
@@ -311,7 +402,7 @@ import { RouterLink } from 'vue-router'; /*
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #d0e3ff;
+  background: #fff;
   box-shadow: 0 1px 1px 0 rgba(214, 18, 18, 0.03), 0 0 24px 0 rgba(0, 0, 0, 0.08);
   text-align: center;
   align-content: space-around;
@@ -330,7 +421,7 @@ import { RouterLink } from 'vue-router'; /*
 .box:hover {
   transform: scale(1.2);
   z-index: 2;
-  background-color: rgb(73, 73, 214);
+  background-color: rgb(187 225 250);
   text-decoration: none;
 }
 
@@ -372,7 +463,7 @@ import { RouterLink } from 'vue-router'; /*
 }
 
 .menue {
-  background: linear-gradient(319.91deg, #7096de 0%, #1d6a96 100%);
+  background-image: url("../assets/slider2x.png");
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -405,7 +496,7 @@ import { RouterLink } from 'vue-router'; /*
 .frame {
   display: block;
   padding-top: 1%;
-  background-color: #d1e8ff;
+  background-color: #f6f9fc;
 }
 .frame p {
   justify-content: center;
@@ -438,7 +529,8 @@ import { RouterLink } from 'vue-router'; /*
 export default {
   data() {
     return {
-      text: "Protégez ce qui compte le plus.Votre sécurité notre priorité",
+      showCardList: false ,// Pour contrôler l'affichage de la liste des cartes
+      text: "Protégez ce qui compte le plus, votre sécurité notre priorité",
       animatedText: "",
       index: 0,
       showWhiteText: false,
@@ -469,24 +561,34 @@ export default {
         this.showWhiteText = true;
       }, 1000); // Délai avant le changement de couleur (en millisecondes)
     },
+    showCards() {
+      this.showCardList = !this.showCardList; // Afficher ou masquer la liste des cartes lorsque l'utilisateur clique sur l'image
+    },
+    goToPage(route) {
+      this.$router.push(route); // Naviguer vers la page spécifiée par la route
+    },  
+    hideCards() {
+  this.showCardList = false;
+}
   },
 };
 </script>
 <style scoped>
 h1 {
-  overflow: hidden; 
-  border-right: 0.15em solid rgb(210, 206, 200); /* Curseur clignotant */
   margin: 0 auto;
-  text-decoration: none;
-  color: rgb(245, 245, 245);
+  text-decoration: none; 
   font-weight: bold;
-  font-family: Comic Sans MS, Comic Sans, cursive;
+  font-family: "Arial", sans-serif;
+  color: #1d2a5c;
+  font-size: 50px;
 }
 
 /* Style pour le texte en blanc */
 .white-text {
-  color: white;
-  font-weight: 300;
-  font-family: Comic Sans MS, Comic Sans, cursive;
+  font-family: "Arial", sans-serif;
+    color:RGB(54, 27, 38);
+  font-size: 45px;
+  display: inline-block;
+  padding-bottom: 10px;
 }
 </style>
