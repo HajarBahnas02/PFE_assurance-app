@@ -1,104 +1,87 @@
 <template>
-  <div class="header">
-    <div class="left-div">
-      <router-link id="link" to="/about"> Professionnel</router-link>
+    <nav class="navbar">
+      <div class="links" style="margin-left:3%">
+        <a href="#">Professionnel</a>
+        <a href="#">Corporate</a>
+      </div>
 
-      <router-link id="link" class="second-link" to="/corporate"> Corporate</router-link>
-    </div>
-
-    <div class="center-div">
-      <router-link to="/facebook">
-        <img
-          class="logoCenter"
-          src="../assets/facebook-icon.svg"
-          width="50px"
-          alt="Facebook logo"
-        />
-      </router-link>
-      <routerLink to="/youtube">
-        <img class="logoCenter" src="../assets/yout-icon.svg" width="50px" alt="youtube logo" />
-      </routerLink>
-
-      <routerLink to="/insta">
-        <img
-          class="logoCenter"
-          src="../assets/insta-icon.svg"
-          width="50px"
-          alt="insta logoC"
-        />
-      </routerLink>
-    </div>
-    <div class="right-div">
-      <div class="item">
-        <img src="../assets/location.svg" width="50px"  height="40px" class="logon" alt="Contact logo" />
-        <router-link id="link"  to="/corporate"> Localisation</router-link>
-</div>
+      <ul class="links">
+        <router-link to="/facebook">
+          <img class="logo" style="margin-top:8px" src="../assets/facebook-icon.svg" alt="Facebook logo" />
+        </router-link>
+        <router-link to="/youtube">
+          <img class="logo"  style="margin-top:8px" src="../assets/yout-icon.svg" alt="Youtube logo" />
+        </router-link>
+        <router-link to="/insta">
+          <img class="logo" style="margin-top:8px" src="../assets/insta-icon.svg" alt="Instagram logo" />
+        </router-link>
+      </ul>
+      <div class="buttons">
+       <router-link class="link" to="/location"> <img src="../assets/location.svg" class="logo" style="margin-right:3px" alt="Location logo" />
+        Localisation</router-link>
      
-   
-    <div class="item">
-      <img src="../assets/location.svg" width="50px"  height="40px" class="logon" alt="Contact logo" />
-      <router-link id="link" to="/corporate"> Contact</router-link>
-    </div>  </div>
-    </div>
+        
+        <router-link class="link" to="/contact">
+          <img src="../assets/contact.svg" class="logo"  style="margin-right:8px" alt="Location logo" />
+          Contact</router-link>
+          </div>
+    </nav>
 </template>
+
 <style scoped>
-.header {
-  border-bottom: 2px solid black; 
+.navbar{
+  background-color: rgb(187 225 250);
   display: flex;
+  align-items: center;
+  flex-direction:row;
   justify-content: space-between;
-  align-items: center;
-  height: 5%;
-  background-color:rgb(187 225 250);
-  ;
-
+  margin: 0 auto;
+  padding: 0 15px;
 }
-#link {
-  background-color: none;
+.navbar .logo a {
+  font-size: 1.8rem;
+  text-decoration: none;
   color: black;
-  font-weight: 700;
-  text-decoration: none;
 }
-#link:hover {
-  color:RGB(32, 140, 217);
-  text-decoration: none;
-  background-color: inherit;
-}
-.left-div {
-  margin-left: 20%;
-}
-.second-link {
-  margin-left: 15px;
-}
-
-.center-div {
-  display: flex;
-}
-.center-div img{
-  margin-right: 13px; 
-  width: 50px; 
-  height: auto; 
-}
-
-.right-div {
-  display: flex;
-  justify-content: center;
-  margin-right: 1%;
- 
-
-}
-.item {
+.navbar .links {
   display: flex;
   align-items: center;
-  margin-right: 10px;
+  list-style: none;
+  gap: 25px;
 }
+
 
 .logo {
-  padding-right: 15px;
-  align-items: center;
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
 }
-.logoCenter {
-  padding-right: 15px;
-  align-items: center;
+
+.navbar .links a {
+  font-weight: 500;
+  text-decoration: none;
+  color: black;
+  transition: 0.2s ease;
 }
+
+.navbar .links a:hover {
+  color: #47b2e4;
+}
+.navbar .buttons a {
+  text-decoration: none;
+  color: black;
+  font-size: 1rem;
+  padding: 10px 0;
+  transition: 0.2s ease;
+}
+.navbar .buttons a:hover {
+
+   color: #47b2e4;
+}
+.navbar .buttons a:not(:last-child) {
+  margin-right: 30px;
+}
+
+
 
 </style>

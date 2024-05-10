@@ -1,117 +1,134 @@
 <template>
-  <footer>
-    <div class="footerContainer">
-      <div class="footerNav" style="color: white">
-        <p>Copyright &copy;2024 | Tous droits reservés          <span class="designer"></span></p>
-      </div>
-
-      <div class="footerNav">
-        <ul>
-          <li><a href="">Mentions légales</a></li>
-          <li><a href="">CGU</a></li>
-          <li><a href="">Lexique</a></li>
-          <li><a href="">FAQ</a></li>
-          <li><a href="">Contactez-nous</a></li>
-        </ul>
-      </div>
-      <div class="socialIcons">
-        <a href=""><i class="fa-brands fa-facebook"></i></a>
-        <a href=""><i class="fa-brands fa-instagram"></i></a>
-        <a href=""><i class="fa-brands fa-twitter"></i></a>
-        <a href=""><i class="fa-brands fa-google-plus"></i></a>
-        <a href=""><i class="fa-brands fa-youtube"></i></a>
-      </div>
-      <div id="app">
-        <router-view />
-      </div>
+  <div class="footerContainer">
+    <div class="footerNav">
+      <p>Copyright &copy;2024 | Tous droits reservés <span class="designer"></span></p>
     </div>
-  </footer>
+
+    <div class="footerNav">
+      <ul>
+        <li><a href="">Mentions légales</a></li>
+        <li><a href="">CGU</a></li>
+        <li><a href="">Lexique</a></li>
+        <li><a href="">FAQ</a></li>
+        <li><a href="">Contactez-nous</a></li>
+      </ul>
+    </div>
+
+    <div class="footerNav icons">
+      <a href="#" class="fb"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="insta"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="yt"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
 </template>
+
 <style>
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-footer {
-    background-color: #035fa9;
-}
 .footerContainer {
   width: 100%;
-  padding: 20px 20px 0px;
-  display: flex;
-}
-.socialIcons {
   display: flex;
   justify-content: center;
+  align-items: center;
+  background-color: #035fa9;
 }
-.socialIcons a {
-  text-decoration: none;
-  padding: 10px;
-  background-color: white;
-  margin: 10px;
-  border-radius: 50%;
-}
-.socialIcons a i {
-  font-size: 2em;
-  color: black;
-  opacity: 0, 9;
-}
-/* Hover affect on social media icon */
-.socialIcons a:hover {
-  background-color: #111;
-  transition: 0.5s;
-}
-.socialIcons a:hover i {
-  color: white;
-  transition: 0.5s;
-}
+
 .footerNav {
-  margin: 0 0;
+  margin: 10px 0;
+  text-align: center;
 }
+
 .footerNav ul {
+  list-style-type: none;
   display: flex;
   justify-content: center;
-  list-style-type: none;
 }
+
 .footerNav ul li a {
   color: white;
-  margin: 20px;
+  margin: 0 10px;
   text-decoration: none;
-  font-size: 1.3em;
+  font-size: 1.1em;
   opacity: 0.7;
   transition: 0.5s;
 }
+
 .footerNav ul li a:hover {
   opacity: 1;
 }
-.footerBottom {
-  background-color: #000;
-  padding: 10px;
+
+.icons {
+  margin-top: 10px;
+  margin-left: 2%;
+  display: flex;
+  justify-content: center;
+}
+
+.icons a {
+  background: #ecf0f3;
+  position: relative;
+  height: 60px;
+  width: 60px;
+  margin: 0 10px;
+  display: inline-flex;
+  text-decoration: none;
+  border-radius: 50%;
+  transition: all 0.3s;
+  box-shadow: -3px -3px 7px #ffffff, 3px 3px 5px #ceced1;
+}
+
+.icons a:hover:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border-radius: 50%;
+  background: #ecf0f3;
+  box-shadow: inset -3px -3px 7px #ffffff, inset 3px 3px 5px #ceced1;
+}
+
+.icons a i {
+  z-index: 3;
   text-align: center;
+  width: 100%;
+  height: 100%;
+  font-size: 25px;
+  line-height: 60px;
 }
-.footerBottom p {
-  color: white;
+
+.icons a:hover i {
+  transform: scale(0.9);
 }
-.designer {
-  opacity: 0.7;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 100;
-  margin: 0px 5px;
+
+.icons a.fb i {
+  color: #4267b2;
 }
-@media (max-width: 400px) {
+
+.icons a.twitter i {
+  color: #1da1f2;
+}
+
+.icons a.insta i {
+  color: #e1306c;
+}
+
+
+.icons a.yt i {
+  color: #ff0000;
+}
+
+@media (max-width: 768px) {
   .footerNav ul {
     flex-direction: column;
   }
-  .footerNav ul li {
-    width: 100%;
-    text-align: center;
-    margin: 10px;
+
+  .icons {
+    flex-wrap: wrap;
   }
-  .socialIcons a {
-    padding: 8px;
-    margin: 4px;
+
+  .icons a {
+    margin: 10px;
   }
 }
 </style>

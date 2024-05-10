@@ -12,7 +12,8 @@ class OptionGarantieController extends Controller
      */
     public function index()
     {
-        //
+        return  OptionGarantie::all(["id",'nomOptionGarantie']);
+
     }
 
     /**

@@ -2,24 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\assistance;
+use App\Models\Client;
 use Illuminate\Http\Request;
 
-class AssistanceController extends Controller
+class ClientController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return  Assistance::all(["id",'nomAssistance']);
+        return  Client::all(["id",'nom','prenom','cin','email']);
+
     }
-    public function optionsAssistances($assistanceId)
-{
-    $assistance = Assistance::findOrFail($assistanceId);
-    $optionsAssistances = $assistance->optionsAssistances;
-    return response()->json($optionsAssistances);
-}
 
     /**
      * Show the form for creating a new resource.
@@ -40,7 +35,7 @@ class AssistanceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(assistance $assistance)
+    public function show(Client $client)
     {
         //
     }
@@ -48,7 +43,7 @@ class AssistanceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(assistance $assistance)
+    public function edit(Client $client)
     {
         //
     }
@@ -56,7 +51,7 @@ class AssistanceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, assistance $assistance)
+    public function update(Request $request, Client $client)
     {
         //
     }
@@ -64,7 +59,7 @@ class AssistanceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(assistance $assistance)
+    public function destroy(Client $client)
     {
         //
     }

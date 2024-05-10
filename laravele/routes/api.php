@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AssistanceController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MarqueController;
 use App\Http\Controllers\ModeleController;
 use App\Http\Controllers\OffreController;
@@ -9,11 +10,12 @@ use App\Http\Controllers\PuissanceFiscaleController;
 use App\Http\Controllers\TypeMotorisationController;
 use App\Http\Controllers\VehiculeController;
 use App\Http\Controllers\VilleController;
+use App\Http\Controllers\ClientController;
 use App\Models\Offre;
 use App\Models\OptionAssistance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use Symfony\Component\Mailer\Transport\Smtp\Auth\LoginAuthenticator;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,3 +84,9 @@ Route::get('/offres', function () {
 });
 Route::get('assistances', [AssistanceController::class, 'index']);
 Route::get('optionsAssistances', [OptionAssistanceController::class, 'index']);
+Route::get('/assistances/{assistanceId}/optionsAssistances', [AssistanceController::class, 'optionsAssistances']);
+Route::post('Login', [LoginController::class, 'check']);
+Route::get('optionsAssistances/{id}/description', [OptionAssistanceController::class, 'getDescription']);
+Route::get('clients', [ClientController::class, 'index']);
+Route::post('login', [LoginController::class, 'check']);
+

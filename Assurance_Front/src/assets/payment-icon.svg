@@ -21,8 +21,8 @@
                 <path d="M39.7419355,50.9032258 C39.7419355,53.9319677 37.2868065,56.3870968 34.2580645,56.3870968 C31.2293226,56.3870968 28.7741935,53.9319677 28.7741935,50.9032258 C28.7741935,47.8744839 31.2293226,45.4193548 34.2580645,45.4193548 C37.2868065,45.4193548 39.7419355,47.8744839 39.7419355,50.9032258 Z" id="Stroke-13" stroke="#172C51" stroke-width="2.21184" stroke-linecap="round" stroke-linejoin="round"></path>
                 <path d="M43.0322581,45.4193548 C46.061,45.4193548 48.516129,47.8744839 48.516129,50.9032258 C48.516129,53.9319677 46.061,56.3870968 43.0322581,56.3870968" id="Stroke-15" stroke="#172C51" stroke-width="2.21184" stroke-linecap="round" stroke-linejoin="round"></path>
                 <g id="Oval-Copy-5">
-                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
-                    <use fill="#0075C9" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    <use fill="black" fill-opacity="1" xlink:href="#path-1"></use>
+                    <use fill="black" fill-rule="evenodd" xlink:href="#path-1"></use>
                 </g>
                 <text id="2" font-family="HelveticaNeue-CondensedBlack, Helvetica Neue" font-size="24" font-style="condensed" font-weight="700" fill="#FFFFFF">
                     <tspan x="14" y="29">2</tspan>

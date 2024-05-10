@@ -44,9 +44,9 @@
           </div>
       </div>
 
-      <div class="frmu">
+      <div class="frm">
 
-     <div class="hajar">
+     <div class="form-log">
           <form @submit.prevent="loginData">
             <h2 align="center">Se connecter</h2>
 
@@ -67,7 +67,7 @@
               <a href="#">Forgot password?</a>
             </div>
             <button :disabled="loading" type="submit">
-              {{ loading ? "Connecting" : "Login" }}
+              {{ loading ? "Connecting" : "Se connecter" }}
             </button>
           </form>
         </div>
@@ -132,7 +132,7 @@ background-image: url("../assets/login_background.jpg");
     flex-direction: row; /* Disposition en ligne pour les écrans de taille moyenne et grande */
   }
 }
-.content-login, .frmu {
+.content-login, .frm {
   flex: 1; 
 }
 .content-login {
@@ -144,7 +144,7 @@ background-image: url("../assets/login_background.jpg");
   padding-bottom: 3%  !important;
 }
 
-.frmu {
+.frm {
 }
 .content-loginn .titre h2 {
   color: #630606;
@@ -164,8 +164,6 @@ background-image: url("../assets/login_background.jpg");
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 12%;
-
 }
 .item img {
   width: 50px;
@@ -225,35 +223,36 @@ svg {
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(8px); 
 }
-.hajar{
+.form-log {
+  width: 50%;
+  height: 70%;
+  margin-top: 8%;
+  margin-left: 30%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(8px); 
-  margin-top: 10%;
+  background-color: rgba(255, 255, 255, 0.5); /* Couleur de fond avec transparence */
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(8px); 
 }
 form h2 {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: #fff;
+  color: black;
 }
 .input-field {
   position: relative;
   border-bottom: 2px solid #ccc;
-  margin: 15px 0;
 }
 .input-field label {
   position: absolute;
   top: 50%;
   left: 0;
   transform: translateY(-50%);
-  color: #fff;
+  color: black;
   font-size: 16px;
   pointer-events: none;
   transition: 0.15s ease;
@@ -265,7 +264,9 @@ form h2 {
   border: none;
   outline: none;
   font-size: 16px;
-  color: #fff;
+  color: #171717;
+  font: 400 13.3333px Arial;
+  
 }
 
 .input-field input:focus ~ label,
@@ -287,20 +288,36 @@ form h2 {
 .forget a {
   color: #fff;
 }
-.hajar a {
+.form-log a {
   color: #efefef;
   text-decoration: none;
 }
 
-.hajar a:hover {
+.form a:hover {
   text-decoration: underline;
 }
-
+button {
+  background: #fff;
+  color: #000;
+  font-weight: 600;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 16px;
+  border: 2px solid transparent;
+  transition: 0.3s ease;
+}
+button:hover {
+  color: #fff;
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+}
 .containerHelp {
   position: fixed;
   height: 100%;
-  left: 90%;
-  bottom: 5%;
+  left: 91%;
+  bottom: 15%;
   display: flex;
   flex-direction: column-reverse;
 }

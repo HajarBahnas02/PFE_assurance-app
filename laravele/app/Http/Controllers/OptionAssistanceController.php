@@ -10,14 +10,21 @@ class OptionAssistanceController extends Controller
     /**
      * Display a listing of the resource.
      */
-        public function index($id_assistance)
-        {
-            // Récupérer les options d'Assistance en fonction de l'ID de l'Assistance
-            $optionsAssistance = OptionAssistance::where('id_assistance', $id_assistance)->get();
-    
-            return response()->json($optionsAssistance);
-        }    
+   
 
+        public function index()
+        {
+            return  OptionAssistance::all(["id",'nomOptionAssistance','description']);
+        }
+        
+        public function getDescription($id)
+        {
+            // Recherche de l'option d'assistance par son ID
+            $optionAssistance = OptionAssistance::findOrFail($id);
+        
+            // Renvoyer la description de l'option d'assistance
+            return response()->json(['description' => $optionAssistance->description]);
+        }
     /**
      * Show the form for creating a new resource.
      */
