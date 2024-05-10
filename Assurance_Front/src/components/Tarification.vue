@@ -48,7 +48,7 @@
               </div>
             </div>
           </div>
-          <center><button class="btn-sel">Sélectionner</button></center>
+          <button class="btn-sel" @click="selectOffre(offre)">Sélectionner</button>
         </div>
       </div>
     </div>
@@ -63,8 +63,21 @@
           <i class="fa-sharp fa-regular fa-circle-check"></i> {{ garantie }}
         </li>
       </ul>
+      <h3>Assistances sélectionnées :</h3>
+      <ul>
+        <li v-for="(assistance, index) in assistances" :key="index" v-if="selectedAssistanceIds[index] === selectedOffre.id">
+          {{ assistance.nomAssistance }}
+        </li>
+      </ul>
+      <!--
+      <h3>Options d'assistance sélectionnées :</h3>
+      <ul>
+        <li v-for="(description, index) in selectedOptionAssistanceDescriptions" :key="index" v-if="selectedOptionAssistanceIds[index] === selectedOffre.id">
+          <p>Description {{ index }} : {{ description }}</p>
+        </li>
+      </ul>-->
     </div>
-  </div>
+    </div>
 </template>
 <script>
 import axios from "../router/axios-config.js";
@@ -86,6 +99,9 @@ export default {
     this.fetchAssistances();
   },
   methods: {
+    selectOffre(offre) {
+    this.selectedOffre = offre;
+  },
     fetchOffres() {
       axios
         .get("/offres")
@@ -119,44 +135,52 @@ export default {
         .catch((error) => {
           console.error("Erreur lors de la récupération des assistances:", error);
         });
-    },
-    fetchOptionsAssistances(index, assistanceId) {
-      axios
-        .get(`/assistances/${assistanceId}/optionsAssistances`)
-        .then((response) => {
-          this.optionsAssistances.splice(index, 1, response.data);
-          if (this.optionsAssistances[index].length > 0) {
-            this.selectedOptionAssistanceIds.splice(
-              index,
-              1,
-              this.optionsAssistances[index][0].id
-            );
-            this.fetchOptionAssistanceDescription(
-              this.optionsAssistances[index][0].id,
-              index
-            );
-          }
-        })
-        .catch((error) => {
-          console.error(
-            "Erreur lors de la récupération des options d'assistance:",
-            error
-          );
-        });
-    },
-    fetchOptionAssistanceDescription(optionAssistanceId, index) {
-      axios
-        .get(`/optionsAssistances/${optionAssistanceId}/description`)
-        .then((response) => {
-          this.$set(this.selectedOptionAssistanceDescriptions, index, response.data);
-        })
-        .catch((error) => {
-          console.error(
-            "Erreur lors de la récupération de la description de l'option d'assistance:",
-            error
-          );
-        });
-    },
+    },fetchOptionsAssistances(index, assistanceId, selectedOptionAssistanceId) {
+    axios
+      .get(`/assistances/${assistanceId}/optionsAssistances`)
+      .then((response) => {
+        this.optionsAssistances.splice(index, 1, response.data);
+        // Vérifier si l'option d'assistance sélectionnée est définie et est dans la liste d'options
+        if (
+          selectedOptionAssistanceId &&
+          this.optionsAssistances[index].some(option => option.id === selectedOptionAssistanceId)
+        ) {
+          // Récupérer l'index de l'option d'assistance sélectionnée
+          const selectedOptionIndex = this.optionsAssistances[index].findIndex(option => option.id === selectedOptionAssistanceId);
+          // Mettre à jour l'index de l'option d'assistance sélectionnée dans le tableau
+          this.selectedOptionAssistanceIds.splice(index, 1, selectedOptionAssistanceId);
+          // Récupérer et afficher la description de l'option d'assistance sélectionnée
+          this.fetchOptionAssistanceDescription(selectedOptionAssistanceId, index);
+        } else {
+          // Si aucune option d'assistance n'est sélectionnée ou si elle n'est pas dans la liste d'options, afficher la description de la première option
+          const firstOptionId = this.optionsAssistances[index][0].id;
+          this.selectedOptionAssistanceIds.splice(index, 1, firstOptionId);
+          this.fetchOptionAssistanceDescription(firstOptionId, index);
+        }
+      })
+      .catch((error) => {
+        console.error(
+          "Erreur lors de la récupération des options d'assistance:",
+          error
+        );
+      });
+  },
+  fetchOptionAssistanceDescription(optionAssistanceId, index) {
+    axios
+      .get(`/optionsAssistances/${optionAssistanceId}/description`)
+      .then((response) => {
+        // Utilisation de l'opérateur d'assignation standard pour définir la propriété
+        this.selectedOptionAssistanceDescriptions[index] = response.data;
+        console.log(this.selectedOptionAssistanceDescriptions[index]);
+      })
+      .catch((error) => {
+        console.error(
+          "Erreur lors de la récupération de la description de l'option d'assistance:",
+          error
+        );
+      });
+  },
+
     handleRadioChange(index, selectedAssistanceId) {
       this.selectedAssistanceIds.splice(index, 1, selectedAssistanceId);
       this.fetchOptionsAssistances(index, selectedAssistanceId);
