@@ -64,7 +64,9 @@
             <span v-if="errors.wrong_password" class="error-message">{{ errors.wrong_password }}</span>   
             <div class="forget">
             
-              <a href="#">Forgot password?</a>
+              <p class="forgot-password text-right">
+                <router-link to="/mot-de-passe-oublié">
+                Forgot password?</router-link></p>
             </div>
             <button :disabled="loading" type="submit">
               {{ loading ? "Connecting" : "Se connecter" }}

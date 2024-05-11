@@ -85,8 +85,11 @@ Route::get('/offres', function () {
 Route::get('assistances', [AssistanceController::class, 'index']);
 Route::get('optionsAssistances', [OptionAssistanceController::class, 'index']);
 Route::get('/assistances/{assistanceId}/optionsAssistances', [AssistanceController::class, 'optionsAssistances']);
-Route::post('Login', [LoginController::class, 'check']);
 Route::get('optionsAssistances/{id}/description', [OptionAssistanceController::class, 'getDescription']);
 Route::get('clients', [ClientController::class, 'index']);
 Route::post('login', [LoginController::class, 'check']);
+Route::post('resetPassword', [LoginController::class, 'reset']);
+Route::post('/client/login', [LoginController::class, 'check']);
+Route::post('/admin/login', [LoginController::class, 'adminLogin']);
+
 

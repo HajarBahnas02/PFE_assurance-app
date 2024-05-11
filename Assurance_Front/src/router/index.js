@@ -6,6 +6,8 @@ import Tarification from '../components/Tarification.vue';
 import CompLogin from '../components/CompLogin.vue';
 import SousHeader from '../views-home/SousHeader.vue';
 import CompEspaceClient from '@/components/CompEspaceClient.vue';
+import CompForgotPassword from '@/components/CompForgotPassword.vue';
+import CompAdminLogin from '@/components/CompAdminLogin.vue';
 
 const routes = [
   
@@ -18,6 +20,8 @@ const routes = [
   { path: '/assuranceAutoSimulation', component: assuranceAutoSimulation, name: 'assuranceAutoSimulation' },
   { path: '/login', component: CompLogin, name: 'login' },
   { path: '/espace-client', component: CompEspaceClient, name: 'espace-client' },
+  { path: '/mot-de-passe-oublié', component: CompForgotPassword, name: 'mot-de-passe-oublié' },
+  { path: '/login-admin', component: CompAdminLogin, name: 'login-admin' },
 ];
 
 const router = createRouter({

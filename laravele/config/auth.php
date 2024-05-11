@@ -44,6 +44,10 @@ return [
             'driver' => 'session',
             'provider' => 'clients',
         ],
+        'administrateur' => [
+            'driver' => 'session',
+            'provider' => 'administrateurs',
+        ],
     ],
 
     /*
@@ -66,11 +70,15 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Client::class,
+            'model' => App\Models\User::class,
         ],
         'clients' => [
             'driver' => 'eloquent',
             'model' => App\Models\Client::class, // Chemin vers le modèle Client
+        ],
+        'administrateurs' => [
+            'driver' => 'eloquent', 
+            'model' => App\Models\Administrateur::class
         ],
 
         // 'users' => [

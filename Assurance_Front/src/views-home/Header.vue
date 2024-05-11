@@ -24,6 +24,9 @@
         <router-link class="link" to="/contact">
           <img src="../assets/contact.svg" class="logo"  style="margin-right:8px" alt="Location logo" />
           Contact</router-link>
+          <router-link class="link" to="/adminPanel">
+            <img src="../assets/admin.svg" class="logo"  style="margin-right:8px" alt="Location logo" />
+            Admin</router-link>
           </div>
     </nav>
 </template>

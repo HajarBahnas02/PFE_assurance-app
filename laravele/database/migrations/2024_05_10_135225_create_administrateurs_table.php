@@ -12,25 +12,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('administrateurs', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
+            $table->string('cin');
             $table->string('prenom');
-            $table->string('cin')->unique();
             $table->string('email')->unique();
             $table->string('telephone')->unique();
             $table->string('password');
+            $table->tinyInteger('role')->default(1);
             $table->timestamps();
-            $table->tinyInteger('role')->default(0);
         });
-        
-        DB::table('clients')->insert([
-            'nom' => 'user',
+        DB::table('administrateurs')->insert([
+            'nom' => 'administateur',
             'prenom' => 'admin',
-            'cin' => 'CB342881',
-            'email' => 'user@example.com',
+            'cin' => 'CB342882',
+            'email' => 'admin@example.com',
             'telephone' => '0123456789',
-            'password' => bcrypt('root'), 
+            'password' => bcrypt('tanjiro'), 
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -41,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('administrateurs');
     }
 };
