@@ -12,15 +12,27 @@ return new class extends Migration
         Schema::create('offres', function (Blueprint $table) {
             $table->id();
             $table->string('nomOffre');
-            $table->decimal('montant', 10, 2);
+            //$table->decimal('montant', 10, 2);
+
             $table->timestamps();
         });
+/*Schema::create('offres', function (Blueprint $table) {
+    $table->id();
+    $table->string('nomOffre');
+    $table->decimal('montant_initial', 10, 2)->default(0);
+    $table->decimal('montant_essentiel', 10, 2)->default(0);
+    $table->decimal('montant_premium', 10, 2)->default(0);
+    $table->timestamps();
+});*/
+
+
+
         DB::table('offres')->insert([
-            ['nomOffre' => 'Formule initiale', 'montant' => 0 ,   'created_at' => now(),
+            ['nomOffre' => 'Formule initiale' ,   'created_at' => now(),
             'updated_at' => now()],
-            ['nomOffre' => 'Formule essentielle', 'montant' => 0,'created_at' => now(),
+            ['nomOffre' => 'Formule essentielle', 'created_at' => now(),
             'updated_at' => now()],
-            ['nomOffre' => 'Formule premium', 'montant' => 0,'created_at' => now(),
+            ['nomOffre' => 'Formule premium','created_at' => now(),
             'updated_at' => now()],
         ]);
 

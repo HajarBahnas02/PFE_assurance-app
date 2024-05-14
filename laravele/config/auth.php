@@ -17,6 +17,7 @@ return [
         'guard' => 'web',
         'passwords' => 'clients',
     ],
+    
 
     /*
     |--------------------------------------------------------------------------
@@ -112,6 +113,11 @@ return [
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
+        ],
+        'clients' => [
+            'provider' => 'clients',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
         ],
     ],
 

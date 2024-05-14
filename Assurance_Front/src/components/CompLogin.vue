@@ -43,13 +43,10 @@
           </div>
           </div>
       </div>
-
       <div class="frm">
-
      <div class="form-log">
           <form @submit.prevent="loginData">
             <h2 align="center">Se connecter</h2>
-
             <div class="input-field">
               <input type="text" v-model="client.cin" placeholder="CIN" required />
               <label>CIN</label>

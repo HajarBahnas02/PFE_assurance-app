@@ -1,21 +1,24 @@
 <template>
-  <div class="container">
-    <div class="card-container">
-      <div class="card" v-for="(offre, index) in offres" :key="index">
+  <div class="tarification">
+    <Layout />
+  <div class="container-tarification">
+    <div class="cards-tarification">
+      <div class="card-tarification" v-for="(offre, index) in offres" :key="index">
         <div class="header">
           <h2>{{ offre.nomOffre }}</h2>
           <p class="price">Montant : {{ offre.montant }}</p>
           <h3>Garanties :</h3>
-          <ul>
+          <ul class="features">
             <li v-for="(garantie, key) in offre.garanties" :key="key">
               <i class="fa-sharp fa-regular fa-circle-check"></i> {{ garantie }}
             </li>
           </ul>
           <div>
-            <h1>Assistances</h1>
-            <ul>
+            <h3>Assistances</h3>
+            <ul class="features">
               <li v-for="assistance in assistances" :key="assistance.id">
                 <input
+                class="assistance-check"
                   type="radio"
                   :id="'assistance-' + assistance.id + '-' + index"
                   :name="'assistance-offre-' + index"
@@ -30,7 +33,7 @@
             </ul>
             <div v-if="selectedAssistanceIds[index]">
               <h2>Options d'assistance</h2>
-              <select
+              <select class="custom-select"
                 v-model="selectedOptionAssistanceIds[index]"
                 @change="handleOptionChange(index)"
               >
@@ -42,7 +45,7 @@
                   {{ optionAssistance.nomOptionAssistance }}
                 </option>
               </select>
-              <div v-if="selectedOptionAssistanceDescriptions[index]">
+              <div v-if="selectedOptionAssistanceDescriptions[index]" class="selected-offre">
                 <h3>Description de l'option d'assistance :</h3>
                 <p>{{ selectedOptionAssistanceDescriptions[index] }}</p>
               </div>
@@ -52,37 +55,46 @@
         </div>
       </div>
     </div>
-    <!-- Section pour afficher les détails de l'offre sélectionnée -->
-    <div v-if="selectedOffre">
+    <div v-if="selectedOffre" class="selected-offre">
       <h2>Détails de l'offre sélectionnée :</h2>
-      <p>Nom de l'offre : {{ selectedOffre.nomOffre }}</p>
-      <p>Montant : {{ selectedOffre.montant }}</p>
+      <h3 >Nom de l'offre : {{ selectedOffre.nomOffre }}</h3>
+      <h3>Montant : {{ selectedOffre.montant }}</h3>
       <h3>Garanties :</h3>
       <ul>
         <li v-for="(garantie, key) in selectedOffre.garanties" :key="key">
           <i class="fa-sharp fa-regular fa-circle-check"></i> {{ garantie }}
         </li>
+       
       </ul>
-      <h3>Assistances sélectionnées :</h3>
+    <!--  <h3>Assistances sélectionnées :</h3>
       <ul>
         <li v-for="(assistance, index) in assistances" :key="index" v-if="selectedAssistanceIds[index] === selectedOffre.id">
           {{ assistance.nomAssistance }}
         </li>
       </ul>
-      <!--
+     
       <h3>Options d'assistance sélectionnées :</h3>
       <ul>
         <li v-for="(description, index) in selectedOptionAssistanceDescriptions" :key="index" v-if="selectedOptionAssistanceIds[index] === selectedOffre.id">
           <p>Description {{ index }} : {{ description }}</p>
         </li>
       </ul>-->
+      <button class="vld-offre">valider</button>
+
     </div>
     </div>
+  <Footer/>
+</div>
 </template>
 <script>
 import axios from "../router/axios-config.js";
-
+import Footer from "../views-home/Footer.vue";
+import Layout from "../views-home/Layout.vue";
 export default {
+  components: {
+    Footer,
+    Layout,
+  },
   data() {
     return {
       offres: [],
@@ -194,29 +206,59 @@ export default {
   },
 };
 </script>
-<style scoped>
-.container {
+
+<style>
+.vld-offre button {
+  color: white;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  cursor: pointer;
+}
+
+:root {
+  --color: black;
+}
+h3 * {
+  color:"cornflowerblue";
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container-tarification {
+  display: flex;
+  background-color: #ccc;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+
+}
+.cards-tarification{
   width: 100%;
-
   display: flex;
-  justify-content: start;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.card-container {
-  display: flex;
-}
-.card {
-  display: flex;
-  margin: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  padding: 15px;
-  color: #333;
-  transition: transform 0.3s ease;
-  background-color: #f9f9f9;
+.card-tarification{
+    display: block;
+    background-color: aliceblue;
+    width: calc(26% - 20px);
+    margin: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 15px;
+    color: #333;
+    transition: transform 0.3s ease;
+    background-color: #f9f9f9;
 }
 
-.card:hover {
+.card-tarification:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
@@ -237,49 +279,37 @@ export default {
   color: red;
 }
 
-.duration {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.duration button {
-  background: red;
-  border: 1px solid white;
-  color: white;
-  padding: 5px 10px;
-  margin-right: 5px;
-  cursor: pointer;
-  text-align: center;
-}
-
-.duration button:first-child,
-.duration button:last-child {
-  border-radius: 25px;
-}
-
-.duration button:last-child {
-  margin-right: 0;
-}
-
 .features {
   list-style: none;
   padding: 0;
+  
+
 }
 
 .features li {
-  padding: 5px 0;
+  padding: 8px 0;
   border-bottom: 1px solid #eee;
+  
 }
 
 .features li:last-child {
   border-bottom: none;
 }
-
-.fa-sharp {
-  color: green;
+.custom-select{
+  margin-left: 70px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
-
+.fa-sharp {
+  color: rgb(0, 73, 128);
+  padding-right: 15px;
+}
+.features input{
+  width: 15px;
+  height: 15px;
+  margin-right: 12px;
+}
 .btn-sel {
   border: none;
   padding: 10px 20px;
@@ -297,16 +327,36 @@ export default {
   cursor: pointer;
 }
 
-.card-2 {
+.selected-offre {
   padding: 10px;
+  margin-bottom:12px;
+  margin-top:12px;
+  margin-left: 15%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #ececec; /* Couleur de fond ajoutée */
   border: 1px solid #ccc;
   box-shadow: none;
 }
+.selected-offre h2 {
+  color: white;
+  margin-top: 0;
+  align-items: center;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
 
+.selected-offre h3 {
+  color: rgb(0, 0, 0);
+  margin-left: 10%;
+  font-size: 24px;
+  margin-bottom: 10px;
+
+}
+.selected-offre li{
+  margin-left: 20%;
+  margin-bottom:3%;
+}
 .card-2 .header {
   background-color: #f3f3f3;
   padding: 10px;
@@ -373,6 +423,7 @@ export default {
   }
 }
 
+
 .container-v {
   width: 80%;
   margin: auto;
@@ -382,7 +433,7 @@ export default {
 }
 
 .card-v {
-  width: 90%;
+  width:90%;
   border: 1px solid #ccc;
   border-radius: 5px;
   margin-bottom: 10px;
@@ -399,6 +450,7 @@ export default {
 }
 
 .btn-verti {
+
   padding: 10px 20px;
   margin-left: 20px;
   background-color: #007bff;

@@ -11,6 +11,8 @@ use App\Http\Controllers\TypeMotorisationController;
 use App\Http\Controllers\VehiculeController;
 use App\Http\Controllers\VilleController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\MontantProposeController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Models\Offre;
 use App\Models\OptionAssistance;
 use Illuminate\Http\Request;
@@ -93,3 +95,17 @@ Route::post('/client/login', [LoginController::class, 'check']);
 Route::post('/admin/login', [LoginController::class, 'adminLogin']);
 
 
+// routes/api.php
+Route::post('client/password/email',[ForgotPasswordController::class, 'sendClientResetLinkEmail'])->name('client.password.email');
+Route::post('admin/password/email',[ForgotPasswordController::class, 'sendAdminResetLinkEmail'])->name('admin.password.email');
+
+
+Route::get('/vehicules/{id}', [VehiculeController::class, 'index']);
+Route::get('/vehicules/nontraites', [VehiculeController::class, 'getNonTraites']);
+
+
+Route::put('/vehicules/{id}', [VehiculeController::class, 'update']);
+
+Route::put('/montants_proposes/{id}', [MontantProposeController::class, 'update']);
+
+Route::apiResource('montants-proposes', MontantProposeController::class);

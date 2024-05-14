@@ -14,7 +14,33 @@ class VehiculeController extends Controller
      */
     public function index()
     {
-        return  Vehicule::all(['matricule']);
+        return  Vehicule::all([
+        'matricule',
+        'puissanceFiscale',
+        'dateMiseEnCirculation',
+        'valeurNeuve',
+        'valeurVenale',
+        'modele_id',
+        'type_motorisation_id',
+        'marque_id',
+        'statut',    ]);
+    }
+    public function getNonTraites()
+    {
+      /*  $vehiculesNonTraites = Vehicule::where("statut", "non-traitee")->get();
+            if ($vehiculesNonTraites->isEmpty()) {
+            return response()->json(['message' => 'Aucun véhicule non traité trouvé'], 404);
+        }
+    
+        return response()->json($vehiculesNonTraites);*/
+        return response()->json("success");
+    }
+
+    public function update(Request $request, $id)
+    {
+        $vehicule = Vehicule::findOrFail($id);
+        $vehicule->update($request->all());
+        return response()->json($vehicule, 200);
     }
 
     /**
@@ -54,11 +80,6 @@ class VehiculeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Vehicule $vehicule)
-    {
-        //
-    }
-
     /**
      * Remove the specified resource from storage.
      */
