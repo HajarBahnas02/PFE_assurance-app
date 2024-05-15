@@ -6,6 +6,7 @@ use App\Http\Requests\Vehicule_rse;
 use App\Http\Requests\VehiculeRse;
 use App\Models\Vehicule;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class VehiculeController extends Controller
 {
@@ -25,35 +26,47 @@ class VehiculeController extends Controller
         'marque_id',
         'statut',    ]);
     }
-    public function getNonTraites()
-    {
-      /*  $vehiculesNonTraites = Vehicule::where("statut", "non-traitee")->get();
-            if ($vehiculesNonTraites->isEmpty()) {
-            return response()->json(['message' => 'Aucun véhicule non traité trouvé'], 404);
-        }
+
+
+        public function getNonTraitees()
+        {
+            $vehicules = Vehicule::where('statut', 'non-traitee')
+                ->with('montantsProposes')
+                ->get();
     
-        return response()->json($vehiculesNonTraites);*/
-        return response()->json("success");
-    }
-
-    public function update(Request $request, $id)
+            return response()->json($vehicules);
+        }
+        public function getVehiculeByMatricule($matricule)
     {
-        $vehicule = Vehicule::findOrFail($id);
-        $vehicule->update($request->all());
-        return response()->json($vehicule, 200);
+        $vehicule = Vehicule::where('matricule', $matricule)->first();
+        return response()->json($vehicule);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+   
+
+        public function update($matricule)
+       {
+            $vehicule = Vehicule::where('matricule', $matricule)->first();
+            if ($vehicule) {
+                $vehicule->statut = 'traitee';
+                $vehicule->save();
+                return response()->json(['message' => 'Statut mis à jour avec succès.']);
+            }
+            return response()->json(['message' => 'Véhicule non trouvé.'], 404);
+        }
+        
     public function create()
     {
-        //
-    }
+        try {
+            $vehicules = Vehicule::where('statut', 'traitee')->get();
+            return response()->json($vehicules);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Aucun véhicule avec le statut "traite" trouvé.'], 404);
+        }
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    
+     
     public function store(Vehicule_rse $request)
     {
        Vehicule::create($request->validated());
@@ -61,12 +74,11 @@ class VehiculeController extends Controller
        return response()->json(["message"=>"Vehicule enregistré avec succès"],201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Vehicule $vehicule)
+    public function show($matricule)
     {
-        //
+        $vehicule = Vehicule::where('matricule', $matricule)->firstOrFail();
+        
+        return response()->json($vehicule);
     }
 
     /**

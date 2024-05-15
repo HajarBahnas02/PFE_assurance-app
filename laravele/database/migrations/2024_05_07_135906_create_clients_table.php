@@ -29,13 +29,52 @@ return new class extends Migration
             'prenom' => 'admin',
             'cin' => 'CB342881',
             'email' => 'user@example.com',
-            'telephone' => '0123456789',
+            'telephone' => '012345789',
+            'password' => bcrypt('root'), 
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('clients')->insert([
+            'nom' => 'tanjiro',
+            'prenom' => 'tan',
+            'cin' => 'CB342883',
+            'email' => 'tanjiro@example.com',
+            'telephone' => '06286328',
+            'password' => bcrypt('root'), 
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('clients')->insert([
+            'nom' => 'nezuko',
+            'prenom' => 'kam',
+            'cin' => 'CB342884',
+            'email' => 'user@gamil.com',
+            'telephone' => '0474723',
+            'password' => bcrypt('root'), 
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('clients')->insert([
+            'nom' => 'inuske',
+            'prenom' => 'hajar',
+            'cin' => 'CB342887',
+            'email' => 'bahnashajar@gmail.com',
+            'telephone' => '04747023',
+            'password' => bcrypt('root'), 
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('clients')->insert([
+            'nom' => 'bhs',
+            'prenom' => 'hajar',
+            'cin' => 'CB342888',
+            'email' => 'hajar.bahnas@usmba.ac.ma',
+            'telephone' => '04747909',
             'password' => bcrypt('root'), 
             'created_at' => now(),
             'updated_at' => now(),
         ]);
     }
-
     /**
      * Reverse the migrations.
      */

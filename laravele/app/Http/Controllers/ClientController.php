@@ -35,9 +35,12 @@ class ClientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Client $client)
+    public function show($id)
     {
-        //
+        // Récupérer les informations du véhicule spécifié par son ID
+        $vehicule = Client::findOrFail($id);
+        
+        return response()->json($vehicule);
     }
 
     /**

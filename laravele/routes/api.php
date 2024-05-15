@@ -3,14 +3,15 @@
 use App\Http\Controllers\AssistanceController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MarqueController;
+use App\Http\Controllers\VehiculeController;
 use App\Http\Controllers\ModeleController;
 use App\Http\Controllers\OffreController;
 use App\Http\Controllers\OptionAssistanceController;
 use App\Http\Controllers\PuissanceFiscaleController;
 use App\Http\Controllers\TypeMotorisationController;
-use App\Http\Controllers\VehiculeController;
 use App\Http\Controllers\VilleController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ContratController;
 use App\Http\Controllers\MontantProposeController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Models\Offre;
@@ -93,19 +94,21 @@ Route::post('login', [LoginController::class, 'check']);
 Route::post('resetPassword', [LoginController::class, 'reset']);
 Route::post('/client/login', [LoginController::class, 'check']);
 Route::post('/admin/login', [LoginController::class, 'adminLogin']);
-
-
 // routes/api.php
 Route::post('client/password/email',[ForgotPasswordController::class, 'sendClientResetLinkEmail'])->name('client.password.email');
 Route::post('admin/password/email',[ForgotPasswordController::class, 'sendAdminResetLinkEmail'])->name('admin.password.email');
-
-
 Route::get('/vehicules/{id}', [VehiculeController::class, 'index']);
-Route::get('/vehicules/nontraites', [VehiculeController::class, 'getNonTraites']);
+Route::get('/vehicules/nontraites', [VehiculeController::class,'getNonTraites']);
+Route::put('vehicules/{id}', [ContratController::class, 'update']);
+Route::get('vehicules/traitee', [VehiculeController::class, 'create']);
+Route::get('devisnontraites', [ContratController::class, 'devisNonTraites']);
+Route::get('/admin/clients-contrats-non-traités', [ContratController::class, 'getContratsNonTraites']);
+Route::get('/admin/clients-contrats-traités', [ContratController::class, 'getContratsTraites']);
+Route::get('/api/vehicule/{matricule}', [VehiculeController::class,'update']);
+
+Route::get('/vehicules/{matricule}', [VehiculeController::class, 'show']);
+Route::get('/clients/{id}', [ClientController::class, 'show']);
+Route::get('/marques/{id}', [MarqueController::class, 'show']);
+Route::post('/montants-proposes', [MontantProposeController::class, 'store']);
 
 
-Route::put('/vehicules/{id}', [VehiculeController::class, 'update']);
-
-Route::put('/montants_proposes/{id}', [MontantProposeController::class, 'update']);
-
-Route::apiResource('montants-proposes', MontantProposeController::class);

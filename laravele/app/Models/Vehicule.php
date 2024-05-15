@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Montant_Propose;
 class Vehicule extends Model
 {
     use HasFactory;
@@ -28,8 +28,12 @@ class Vehicule extends Model
   /*  public function montantsProposes()
     {
         return $this->hasMany(Montant_Propose::class);
-    }*/
+    }
     public function montantsProposes()
+    {
+    return $this->hasMany(Montant_Propose::class ,'vehicule_id', 'matricule');
+    }*/
+    public function montantPropose()
     {
         return $this->hasOne(Montant_Propose::class);
     }
@@ -46,5 +50,9 @@ class Vehicule extends Model
     public function marque()
     {
         return $this->belongsTo(Marque::class);
+    }
+    public function contrats()
+    {
+        return $this->hasMany(Contrat::class, 'vehicule_matricule', 'matricule');
     }
 }

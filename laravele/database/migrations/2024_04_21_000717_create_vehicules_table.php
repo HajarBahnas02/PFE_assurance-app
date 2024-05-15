@@ -50,6 +50,18 @@ return new class extends Migration
             'created_at' => now(),
             'updated_at' => now()
         ]);
+        DB::table('vehicules')->insert([
+            'matricule' => 'FGH123',
+            'puissanceFiscale' => 01,
+            'dateMiseEnCirculation' => '2023-05-14',
+            'valeurNeuve' => 3000.00,
+            'valeurVenale' => 2000.00,
+            'modele_id' => 1,
+            'type_motorisation_id' => 1,
+            'marque_id' => 1,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
     }
     /**
      * Reverse the migrations.

@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -8,23 +7,28 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('montants_proposes', function (Blueprint $table) {
+        Schema::create('montantsProposes', function (Blueprint $table) {
             $table->id();
-            $table->string('vehicule_id')->constrained('vehicules');
+            $table->string('matricule')->constrained();
             $table->decimal('montant_initial', 10, 2)->default(0);
             $table->decimal('montant_essentiel', 10, 2)->default(0);
             $table->decimal('montant_premium', 10, 2)->default(0);
+            $table->timestamps();
         });
     }
 
     /**
-     * Reverse the migrations.
+     * Reverse 
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('montant__proposes');
+        Schema::dropIfExists('montantsProposes');
     }
 };

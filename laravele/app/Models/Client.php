@@ -16,4 +16,9 @@ class Client extends Authenticatable implements CanResetPassword
     {
         $this->notify(new \App\Notifications\ResetPasswordNotification($token));
     }
+    public function contrats()
+    {
+        return $this->hasMany(Contrat::class);
+    }
+
 }
