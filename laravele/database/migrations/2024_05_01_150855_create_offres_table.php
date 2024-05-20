@@ -9,33 +9,15 @@ return new class extends Migration
  
     public function up(): void
     {
-        Schema::create('offres', function (Blueprint $table) {
-            $table->id();
-            $table->string('nomOffre');
-            //$table->decimal('montant', 10, 2);
-
-            $table->timestamps();
-        });
-/*Schema::create('offres', function (Blueprint $table) {
-    $table->id();
-    $table->string('nomOffre');
-    $table->decimal('montant_initial', 10, 2)->default(0);
-    $table->decimal('montant_essentiel', 10, 2)->default(0);
-    $table->decimal('montant_premium', 10, 2)->default(0);
-    $table->timestamps();
-});*/
-
-
-
-        DB::table('offres')->insert([
-            ['nomOffre' => 'Formule initiale' ,   'created_at' => now(),
-            'updated_at' => now()],
-            ['nomOffre' => 'Formule essentielle', 'created_at' => now(),
-            'updated_at' => now()],
-            ['nomOffre' => 'Formule premium','created_at' => now(),
-            'updated_at' => now()],
-        ]);
-
+       
+            Schema::create('offres', function (Blueprint $table) {
+                $table->id('id'); // Clé primaire
+                $table->string('nomOffre'); // Nom de l'offre
+                $table->decimal('montant_offre', 10, 2)->default("0"); // Montant de l'offre
+                $table->timestamps(); // Colonnes created_at et updated_at
+                });
+        
+    
     }
 
     /**

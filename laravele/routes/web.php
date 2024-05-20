@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SmtpTestController;
 
+use App\Http\Controllers\WhatsAppController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +20,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/test-smtp', [SmtpTestController::class, 'test']);
+Route::post('/send-whatsapp', [WhatsAppController::class, 'sendMessage']);

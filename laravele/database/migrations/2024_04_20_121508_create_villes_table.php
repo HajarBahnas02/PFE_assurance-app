@@ -15,7 +15,6 @@ return new class extends Migration
         Schema::create('villes', function (Blueprint $table) {
             $table->id();
             $table->string('nomVille');
-            $table->timestamps();
         });
         
         $villes = [
@@ -68,12 +67,9 @@ return new class extends Migration
             ["nomVille" => "Tiznit"]
         ];
 
-        $now = now()->toDateTimeString(); // Utilisez toDateTimeString() pour inclure également l'heure
-        $villesWithTimestamps = array_map(function ($ville) use ($now) {
+        $villesWithTimestamps = array_map(function ($ville) {
             return [
                 'nomVille' => $ville['nomVille'],
-                'created_at' => $now,
-                'updated_at' => $now,
             ];
         }, $villes);
 

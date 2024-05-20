@@ -9,7 +9,8 @@ import CompEspaceClient from '@/components/CompEspaceClient.vue';
 import CompForgotPassword from '@/components/CompForgotPassword.vue';
 import CompAdminLogin from '@/components/CompAdminLogin.vue';
 import CompEspaceAdmin from '@/components/CompEspaceAdmin.vue';
-
+import Modal from '@/components/Modal.vue';
+import CompDevis from '@/components/CompDevis.vue';
 const routes = [
   
     { path: '/', component: Home },
@@ -23,7 +24,10 @@ const routes = [
   { path: '/espace-client', component: CompEspaceClient, name: 'espace-client' },
   { path: '/mot-de-passe-oublié', component: CompForgotPassword, name: 'mot-de-passe-oublié' },
   { path: '/login-admin', component: CompAdminLogin, name: 'login-admin' },
-  { path: '/espace-admin', component: CompEspaceAdmin, name: 'espace-admin' }
+  { path: '/espace-admin', component: CompEspaceAdmin, name: 'espace-admin' },
+  {path: '/modal', component: Modal, name: 'modal'},
+  {path: '/devis', component: CompDevis, name: 'devis'}
+
 ];
 
 const router = createRouter({

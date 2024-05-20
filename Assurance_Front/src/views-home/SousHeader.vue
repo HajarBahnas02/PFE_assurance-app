@@ -36,6 +36,9 @@
   </nav>
 </template>
 <style>
+button{
+  text-decoration: none;
+}
 #link:hover {
   color:rgb(41, 140, 197) !important;
   text-decoration: none;

@@ -17,7 +17,7 @@
     <div class="container-devis">
       <div v-if="showCardList" class="overlay" @click="hideCards"></div>
 
-      <div class="container-devis">
+      <div class="box">
         <div class="box" @click="showCards">
           <router-link to="/" class="box">
             <img class="image-devis" src="../assets/automobile-icon.svg" alt="Image 1" />
@@ -85,51 +85,46 @@
       <div class="card">
         <img
           class="card-img"
-          src="../assets/simulation-icon.svg"
+          src="../assets/numero-un.png"
           alt="img simulation icon"
         />
         <h3 class="card-title">Réalisez votre simulation</h3>
         <p class="card-description">
-          Complétez notre formulaire de simulation d'assurance en ligne et choisissez les
-          garanties qui répondent le mieux à vos besoins, pour obtenir votre tarif en
-          moins de 2 minutes
+          Remplissez notre formulaire de simulation d'assurance en ligne et
+           sélectionnez les garanties adaptées à vos besoins pour obtenir votre tarif en moins de 2 minutes.
         </p>
       </div>
       <div class="card">
         <img
           class="card-img"
-          src="../assets/payment-icon.svg"
+          src="../assets/numero-2.png"
           alt="img simulation icon"
         />
         <h3 class="card-title">Souscrivez en ligne ou en agence</h3>
         <p class="card-description">
-          Validez votre devis et réglez votre souscription en optant pour un paiement en
-          ligne totalement sécurisé ou par chèque à la livraison de votre contrat ou opter
-          pour une souscription en agence
+          Confirmez votre devis et finalisez votre souscription en choisissant un paiement en ligne sécurisé ou en payant par chèque à la réception de votre contrat
         </p>
       </div>
       <div class="card">
-        <img class="card-img" src="../assets/trois.svg" alt="img simulation icon" />
+        <img class="card-img" src="../assets/image3.png" alt="img simulation icon" />
         <h3 class="card-title">Recevez votre attestation</h3>
         <p class="card-description">
-          Une fois le paiement effectué, vous êtes assurés, recevez instantanément une
-          copie de votre attestation d'assurance, qui vous sera également livrée à
-          l'adresse que vous aurez indiquée
+       
+         Après avoir effectué le paiement, vous serez automatiquement assuré(e) et recevrez instantanément une copie de votre attestation d'assurance livrée à l'adresse que vous avez indiquée.
         </p>
       </div>
 
       <div class="card">
-        <img class="card-img" src="../assets/quatre.svg" alt="Image 1" />
+        <img class="card-img" src="../assets/numero-quatre.png" alt="Image 1" />
         <h3 class="card-title">Accédez à votre espace client</h3>
         <p class="card-description">
-          Inscrivez-vous sur l'espace client Sanlam pour accéder à de nombreux services et
-          consulter tous les détails de votre contrat.
+          Inscrivez-vous sur l'espace client Shahed pour accéder à de nombreux services et consulter tous les détails de votre contrat 24h/24 et 7j/7 en ligne.
         </p>
       </div>
     </div>
     <div class="underPage">
       <div class="imgAss">
-        <img src="../assets/acceuil.jpg" />
+        <img src="../assets/acceuil.jpg"  width="100%"/>
       </div>
       <div class="conditions">
         <h2>
@@ -163,9 +158,352 @@
       </div>
     </div>
   </div>
+  <h3 class="formule">Quelques clics suffisent pour effectuer votre inscription
+  </h3>
+  <div class="container-flex">
+    <div class="floating-div">
+      <img src="../assets/Frau.png" alt="grid">
+      <b>Remplissez les informations en ligne</b>
+      <p>Afin que nous trouvions les tarifs qui vous conviennent à vous et à votre véhicule</p>
+    </div>
+  <div class="floating-div">
+      <img src="../assets/Frau.svg" alt="grid">
+      <b>Choisissez votre offre covenable </b>
+      <p>Chosissez l'offre qui vous conviennet en toute libérté</p>
+    </div>
+    <div class="floating-div">
+      <img src="../assets/paiFrau.png" alt="grid">
+      <b>Choix de mode de paiment</b>
+      <p>Cash, chèque ou espèce. Profitez de ce qui vous convient le mieux. </p>
+    </div>
+
+    
+  </div>
+  <h3 class="formule">Voici ce que disent nos clients à propos de Shahed assurance </h3>
+  <section id="testimonials">
+    <!--heading
+    <div class="testimonial-heading">
+        <span>Comments</span>
+        <h1>Clients Says</h1>
+    </div>--->
+    <!--testimonials-box-container------>
+    <div class="testimonial-box-container">
+        <!--BOX-1-------------->
+        <div class="testimonial-box">
+            <!--top------------------------->
+            <div class="box-top">
+                <!--profile----->
+                <div class="profile">
+                    <!--img---->
+                    <div class="profile-img">
+                        <img src="../assets/nezuko.jpg" />
+                    </div>
+                    <!--name-and-username-->
+                    <div class="name-user">
+                        <strong>Mohammed</strong>
+                        <span>@mohammed_kh</span>
+                    </div>
+                </div>
+                <!--reviews------>
+                <div class="reviews">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i><!--Empty star-->
+                </div>
+            </div>
+            <!--Comments---------------------------------------->
+            <div class="client-comment">
+                <p>Je suis ravi de mon expérience sur le site de Shahed. La facilité d'utilisation et la clarté des informations m'ont vraiment impressionné. C'est rare de trouver un site aussi intuitif et compréhensible</p>
+            </div>
+        </div>
+        <!--BOX-2-------------->
+        <div class="testimonial-box">
+            <!--top------------------------->
+            <div class="box-top">
+                <!--profile----->
+                <div class="profile">
+                    <!--img---->
+                    <div class="profile-img">
+                        <img src="../assets/nezuko.jpg" />
+                    </div>
+                    <!--name-and-username-->
+                    <div class="name-user">
+                        <strong>Bouchra </strong>
+                        <span>@bouchrabhs</span>
+                    </div>
+                </div>
+                <!--reviews------>
+                <div class="reviews">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i><!--Empty star-->
+                </div>
+            </div>
+            <!--Comments---------------------------------------->
+            <div class="client-comment">
+                <p>Je recommande vivement ce service à tous ceux qui recherchent une protection fiable à un prix raisonnable.</p>
+            </div>
+        </div>
+        <!--BOX-3-------------->
+        <div class="testimonial-box">
+            <!--top------------------------->
+            <div class="box-top">
+                <!--profile----->
+                <div class="profile">
+                    <!--img---->
+                    <div class="profile-img">
+                        <img src="../assets/nezuko.jpg" />
+                    </div>
+                    <!--name-and-username-->
+                    <div class="name-user">
+                        <strong>Ahmed</strong>
+                        <span>@Ahmed_ah</span>
+                    </div>
+                </div>
+                <!--reviews------>
+                <div class="reviews">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i><!--Empty star-->
+                </div>
+            </div>
+            <!--Comments---------------------------------------->
+            <div class="client-comment">
+                <p>J'ai reçu une assistance immédiate à toutes mes questions, ce qui m'a vraiment mis en confiance. Bravo pour votre professionnalisme et votre réactivité !"</p>
+            </div>
+        </div>
+        <!--BOX-4-------------->
+        <div class="testimonial-box">
+            <!--top------------------------->
+            <div class="box-top">
+                <!--profile----->
+                <div class="profile">
+                    <!--img---->
+                    <div class="profile-img">
+                        <img src="../assets/nezuko.jpg" />
+                    </div>
+                    <!--name-and-username-->
+                    <div class="name-user">
+                        <strong>Assia</strong>
+                        <span>@assia_MA</span>
+                    </div>
+                </div>
+                <!--reviews------>
+                <div class="reviews">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i><!--Empty star-->
+                </div>
+            </div>
+            <!--Comments---------------------------------------->
+            <div class="client-comment">
+                <p> Tout est clair, logique et cohérent. J'ai apprécié la transparence dans la manière dont les tarifs ont été calculés. Cela m'a permis de comprendre facilement ce pour quoi je payais. Un grand merci pour cette expérience utilisateur fluide et cohérente !"</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 </template>
 
 <style>
+*{
+  text-decoration: none;
+}
+#testimonials{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width:100%;
+}
+.testimonial-heading{
+  letter-spacing: 1px;
+  margin: 30px 0px;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.testimonial-heading h1{
+  font-size: 2.2rem;
+  font-weight: 500;
+  background-color: #202020;
+  color: #ffffff;
+  padding: 10px 20px;
+}
+.testimonial-heading span{
+  font-size: 1.3rem;
+  color: #252525;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.testimonial-box-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width:100%;
+}
+.testimonial-box{
+  width:500px;
+  box-shadow: 2px 2px 30px rgba(0,0,0,0.1);
+  background-color: #ffffff;
+  padding: 20px;
+  margin: 15px;
+  cursor: pointer;
+}
+.profile-img{
+  width:50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+.profile-img img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.profile{
+  display: flex;
+  align-items: center;
+}
+.name-user{
+  display: flex;
+  flex-direction: column;
+}
+.name-user strong{
+  color: #3d3d3d;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+}
+.name-user span{
+  color: #979797;
+  font-size: 0.8rem;
+}
+.reviews{
+  color: #f9d71c;
+}
+.box-top{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.client-comment p{
+  font-size: 0.9rem;
+  color: #4b4b4b;
+}
+.testimonial-box:hover{
+  transform: translateY(-10px);
+  transition: all ease 0.3s;
+}
+
+@media(max-width:1060px){
+  .testimonial-box{
+      width:45%;
+      padding: 10px;
+  }
+}
+@media(max-width:790px){
+  .testimonial-box{
+      width:100%;
+  }
+  .testimonial-heading h1{
+      font-size: 1.4rem;
+  }
+}
+@media(max-width:340px){
+  .box-top{
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+  }
+  .reviews{
+      margin-top: 10px;
+  }
+}
+::selection{
+  color: #ffffff;
+  background-color: #252525;
+}
+
+.container-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px; /* Espace entre les div */
+  margin-bottom: 40px; /* Espace sous les cartes d'appréciation */
+}
+.floating-div {
+  flex: 1;
+  min-width: 250px; /* Largeur minimale pour chaque div */
+  max-width: 30%; /* Largeur maximale pour éviter d'être trop large */
+  box-sizing: border-box; /* Inclure les padding et border dans la largeur */
+  padding: 40px; /* Espace intérieur */
+  margin: 3%; /* Espace vertical */
+  background-color: #f8f9fa; /* Couleur de fond pour une meilleure visualisation */
+  border: 1px solid #ddd; /* Bordure pour une meilleure visualisation */
+  border-radius: 5px; /* Bordure arrondie */
+  text-align: center; /* Centrer le texte */
+  overflow: hidden; /* Assurez-vous que les images ne débordent pas */
+}
+.floating-div img {
+  max-width: 100%; /* S'assurer que l'image est responsive */
+  height: auto;
+  transition: transform 0.3s ease; /* Transition douce pour l'effet de survol */
+  margin-bottom: 8%; /* Espace sous l'image */
+}
+.floating-div b {
+  display: block; /* S'assurer que <b> est un bloc pour le margin */
+  margin-bottom: 10px; /* Espace sous le texte en gras */
+}
+.floating-div p {
+  margin: 0; /* Supprimer la marge par défaut */
+}
+.floating-div:hover img {
+  transform: scale(1.1); /* Agrandir l'image au survol */
+}
+.testimonial-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px; /* Espace entre les cartes d'appréciation */
+}
+.testimonial-card {
+  flex: 1;
+  min-width: 250px; /* Largeur minimale pour chaque carte */
+  max-width: 30%; /* Largeur maximale pour éviter d'être trop large */
+  box-sizing: border-box; /* Inclure les padding et border dans la largeur */
+  padding: 20px;
+  margin: 10px 0;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: left; /* Texte aligné à gauche pour les témoignages */
+}
+.testimonial-card p {
+  margin-bottom: 10px;
+}
+.testimonial-card footer {
+  font-size: 0.9em;
+  font-style: italic;
+  color: #555;
+  text-align: right;
+}
+
+
+
 .container .box .image {
   margin: 10px 0;
   height: 150px;
@@ -319,7 +657,12 @@
 .underPage {
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
+  margin: 2%;
+  margin-top: 4%;
+}
+.underPage img{
+  border-radius: 10%;
+  background-color: white;
 }
 .imgAss {
   width: 49%;
@@ -394,7 +737,7 @@
 }
 
 .box:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
   z-index: 2;
   background-color: rgb(187 225 250);
   text-decoration: none;

@@ -6,6 +6,7 @@ use App\Models\Contrat;
 use Illuminate\Http\Request;
 use App\Mail\ContratTraiteMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 
 
 class ContratController extends Controller
@@ -61,7 +62,8 @@ class ContratController extends Controller
         });
 
         return response()->json($data);
-    }    public function getContratsTraites()
+    }   
+     public function getContratsTraites()
     {
         $contrats = Contrat::with(['client:id,nom,prenom,telephone,email','vehicule:matricule'])
             ->whereHas('vehicule', function($query) {

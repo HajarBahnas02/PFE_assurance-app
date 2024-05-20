@@ -23,7 +23,7 @@ return new class extends Migration
         });
         
                             
-        $associations = [
+   /*     $associations = [
             1 => [1, 2, 3, 4], // Offre d'id 1 correspondant aux garanties 1, 2, 3, 4
             2 => [1, 2, 3, 4, 5, 6, 7, 8, 9], // Offre d'id 2 correspondant aux garanties 1 à 9
             3 => [1, 2, 3, 4, 5, 6, 7, 8, 9], // Offre d'id 3 correspondant aux garanties 1 à 9
@@ -46,7 +46,7 @@ return new class extends Migration
         // Insérer les données dans la table garanties_selectionnees
         DB::table('garanties_selectionnees')->insert($data);
 
-   
+   */
    
     }
    public function down(): void

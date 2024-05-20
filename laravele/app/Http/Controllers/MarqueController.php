@@ -22,10 +22,12 @@ class MarqueController extends Controller
     {
         //
     }
+    public function getMarqueName($id)
+    {
+        $marque = Marque::findOrFail($id);
+        return response()->json($marque->nomMarque);
+    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         Marque::create($request->post());

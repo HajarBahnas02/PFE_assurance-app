@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Http\Requests\Vehicule_rse;
-use App\Http\Requests\VehiculeRse;
 use App\Models\Vehicule;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

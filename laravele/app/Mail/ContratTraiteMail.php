@@ -5,57 +5,39 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Client;
 
 class ContratTraiteMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $client;
+
+    public $baseUrl;
+    public $clientId;
 
     /**
      * Create a new message instance.
+     *
+     * @return void
      */
-    public function __construct(Client $client)
+    public function __construct($baseUrl, $clientId)
     {
-        $this->client = $client;
-    }
-
-
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Contrat Traite Mail',
-        );
+        $this->baseUrl = $baseUrl;
+        $this->clientId = $clientId;
     }
 
     /**
-     * Get the message content definition.
+     * Build the message.
+     *
+     * @return $this
      */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    }
     public function build()
     {
-        return $this->view('emails.contrat_traite')
-                    ->subject('Votre contrat a été traité');
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
+        return $this->view('emails.offre')
+                    ->subject('Votre offre personnalisée')
+                    ->to($this->clientId) // Définir l'adresse e-mail du destinataire
+                    ->with([
+                        'baseUrl' => $this->baseUrl,
+                        'clientId' => $this->clientId,
+                    ]);
     }
 }

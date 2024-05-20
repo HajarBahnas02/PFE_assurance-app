@@ -13,10 +13,15 @@ class VilleController extends Controller
     public function index()
     {
        
-        return Ville::all(['id','nomVille']);
+        return Ville::all(["id","nomVille"]);
         
     }
-
+    public function getVilleName($id)
+    {
+        $ville = Ville::findOrFail($id);
+        return response()->json($ville->nomVille);
+    }
+  
     /**
      * Show the form for creating a new resource.
      */

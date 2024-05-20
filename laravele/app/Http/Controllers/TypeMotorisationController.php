@@ -14,6 +14,11 @@ class TypeMotorisationController extends Controller
     {
         return TypeMotorisation::all(['id','typeM']);
     }
+    public function getTypeMotorisarion($id)
+    {
+        $type_motorisation = TypeMotorisation::findOrFail($id);
+        return response()->json($type_motorisation->typeM);
+    }
 
     /**
      * Show the form for creating a new resource.

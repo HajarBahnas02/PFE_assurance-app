@@ -16,21 +16,25 @@ return new class extends Migration
             $table->id();
             $table->string('nom');
             $table->string('prenom');
-            $table->string('cin')->unique();
             $table->string('email')->unique();
-            $table->string('telephone')->unique();
-            $table->string('password');
+            $table->date('date_naissance');
+            $table->string('telephone')->unique(); 
+            $table->foreignId('ville_id')->constrained('villes');
+            $table->string('cin')->unique()->nullable();
+            $table->string('password')->nullable();
             $table->timestamps();
             $table->tinyInteger('role')->default(0);
         });
-        
+
         DB::table('clients')->insert([
             'nom' => 'user',
             'prenom' => 'admin',
+            'date_naissance' => '1999-05-07',
             'cin' => 'CB342881',
             'email' => 'user@example.com',
-            'telephone' => '012345789',
-            'password' => bcrypt('root'), 
+            'telephone' => '+212650359007',
+            'password' => bcrypt('root'),
+            'ville_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -38,9 +42,11 @@ return new class extends Migration
             'nom' => 'tanjiro',
             'prenom' => 'tan',
             'cin' => 'CB342883',
+            'date_naissance' => '1999-05-07',
             'email' => 'tanjiro@example.com',
             'telephone' => '06286328',
             'password' => bcrypt('root'), 
+            'ville_id' =>1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -48,9 +54,11 @@ return new class extends Migration
             'nom' => 'nezuko',
             'prenom' => 'kam',
             'cin' => 'CB342884',
-            'email' => 'user@gamil.com',
+            'date_naissance' => '1999-05-07',
+            'email' => 'bahnashajar@gmail.com',
             'telephone' => '0474723',
-            'password' => bcrypt('root'), 
+            'password' => bcrypt('root'),
+            'ville_id' => 1, 
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -58,9 +66,12 @@ return new class extends Migration
             'nom' => 'inuske',
             'prenom' => 'hajar',
             'cin' => 'CB342887',
-            'email' => 'bahnashajar@gmail.com',
+            'date_naissance' => '1999-05-07',
+
+            'email' => 'boucchrabahnas@gmail.com',
             'telephone' => '04747023',
             'password' => bcrypt('root'), 
+            'ville_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -68,9 +79,11 @@ return new class extends Migration
             'nom' => 'bhs',
             'prenom' => 'hajar',
             'cin' => 'CB342888',
+            'date_naissance' => '1999-05-07',
             'email' => 'hajar.bahnas@usmba.ac.ma',
             'telephone' => '04747909',
             'password' => bcrypt('root'), 
+            'ville_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

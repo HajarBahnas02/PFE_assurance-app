@@ -15,7 +15,12 @@ class ModeleController extends Controller
         $modeles = Modele::all();
         return response()->json($modeles);
     }
-   
+    public function getModelName($id)
+    {
+        $model = Modele::findOrFail($id);
+        return response()->json($model->nomModele);
+    }
+
 
     /**
      * Show the form for creating a new resource.
