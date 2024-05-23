@@ -110,14 +110,22 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'table' => 'password_reset_tokens',
+            'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],
         'clients' => [
             'provider' => 'clients',
-            'table' => 'password_reset_tokens',
+            'table' => 'password_resets',
             'expire' => 60,
+            'throttle' => 60,
+        ],
+    
+        'administrateurs' => [
+            'provider' => 'administrateurs',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
         ],
     ],
 

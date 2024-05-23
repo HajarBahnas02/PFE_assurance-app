@@ -1,526 +1,527 @@
 <template>
-  <Layout />
-  <div class="formsbutt">
-    <h1>Obtention votre devis en quelques minutes</h1>  
-    <div class="content-forms">
-    <div class="form-vehicule">
-      <h3>Informations Véhicule</h3>
-      <form @submit.prevent="submitForm">
-        <label for="typeMotorisation">Type motorisation:</label>
-        <div class="radio-wrapper">
-          <div 
-            v-for="typeMotorisation in typeMotorisations" 
-            :key="typeMotorisation.id" 
-            :class="['radio-option', { 'selected': form.type_motorisation_id === typeMotorisation.id }]"
-          >
-            <input
-              type="radio"
-              :id="'motorisation_' + typeMotorisation.id"
-              :value="typeMotorisation.id"
-              v-model="form.type_motorisation_id"
-              @change="optionTouched = true"
-              required
-            />
-            <label :for="'motorisation_' + typeMotorisation.id">{{ typeMotorisation.typeM }}</label>
+  <div class="admin-comp">
+    <Sidebar @select="handleSelect" />
+    <div class="dash">
+      <nav class="navbar">
+        <div class="navbar-brand">
+
+          <a href="#">Panel administrateur {{ dateActuelle }} </a>
+      
+        </div>
+        <div class="navbar-menu">
+          <a href="#" @click.prevent="goToProfile">Mon Compte</a>
+        </div>
+      </nav>
+      <div :class="{ 'disable-interactions': showForm }" class="content">
+        <div class="cards-container">
+          <div class="card">
+            <div class="card-details">
+              <h3 class="text-title">Devis Non Traités</h3>
+              <p class="text-body">{{ contratsNonTraites.length }}</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-details">
+              <h3 class="text-title">Devis Traités</h3>
+              <p class="text-body">{{ contratsTraites.length }}</p>
+            </div>
           </div>
         </div>
-        <span v-if="errors.type_motorisation_id" class="error">{{ errors.type_motorisation_id }}</span>
-      
-        <div>
-          <label for="matricule">Matricule</label>
-          <input type="text" v-model="form.matricule">
-          <span v-if="errors.matricule" class="error">{{ errors.matricule }}</span>
-        </div>
+        <h2 v-if="selectedSection === 'non-traites'">
+          Contrats avec Véhicules Non Traités
+        </h2>
+        <table
+          v-if="selectedSection === 'non-traites'"
+          id="contrats-non-traites"
+          class="display"
+          style="width: 100%"
+        >
+          <thead>
+            <tr>
+              <th>ID Devis</th>
+              <th>Nom</th>
+              <th>Prénom</th>
+              <th>Téléphone</th>
+              <th>Email</th>
+              <th>Matricule Véhicule</th>
+              <th>Date Début</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="contrat in contratsNonTraites" :key="contrat.id_devis">
+              <td>{{ contrat.id_devis }}</td>
+              <td>{{ contrat.client_nom }}</td>
+              <td>{{ contrat.client_prenom }}</td>
+              <td>{{ contrat.client_telephone }}</td>
+              <td>{{ contrat.client_email }}</td>
+              <td>{{ contrat.matricule }}</td>
+              <td>{{ contrat.date_debut }}</td>
+              <td><button @click="showTraiterForm(contrat)">Afficher</button></td>
+            </tr>
+          </tbody>
+        </table>
 
-        <div>
-          <label for="puissanceFiscale">Puissance Fiscale</label>
-          <select v-model="form.puissanceFiscale" id="puissanceFiscale">
-            <option v-for="puissance in puissancesfisc" :key="puissance.id" :value="puissance.id">
-              {{ puissance.PuissFiscale }}
-            </option>
-          </select>
-          <span v-if="errors.puissanceFiscale" class="error">{{ errors.puissanceFiscale }}</span>
-        </div>
+        <h2 v-if="selectedSection === 'traites'">Contrats avec Véhicules Traités</h2>
+        <table
+          v-if="selectedSection === 'traites'"
+          id="contrats-traites"
+          class="display"
+          style="width: 100%"
+        >
+          <thead>
+            <tr>
+              <th>ID Devis</th>
+              <th>Nom</th>
+              <th>Prénom</th>
+              <th>Téléphone</th>
+              <th>Email</th>
+              <th>Matricule Véhicule</th>
+              <th>Date Début</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="contrat in contratsTraites" :key="contrat.id_devis">
+              <td>{{ contrat.id_devis }}</td>
+              <td>{{ contrat.client_nom }}</td>
+              <td>{{ contrat.client_prenom }}</td>
+              <td>{{ contrat.client_telephone }}</td>
+              <td>{{ contrat.client_email }}</td>
+              <td>{{ contrat.matricule }}</td>
+              <td>{{ contrat.date_debut }}</td>
+            </tr>
+          </tbody>
+        </table>
 
-        <div>
-          <label for="dateMiseEnCirculation">Date de Mise en Circulation</label>
-          <input type="date" v-model="form.dateMiseEnCirculation" :max="today">
-          <span v-if="errors.dateMiseEnCirculation" class="error">{{ errors.dateMiseEnCirculation }}</span>
-        </div>
-
-        <div>
-          <label for="valeurNeuve">Valeur Neuve</label>
-          <input type="number" step="0.01" v-model="form.valeurNeuve">
-          <span v-if="errors.valeurNeuve" class="error">{{ errors.valeurNeuve }}</span>
-        </div>
-
-        <div>
-          <label for="valeurVenale">Valeur Vénale</label>
-          <input type="number" step="0.01" v-model="form.valeurVenale">
-          <span v-if="errors.valeurVenale" class="error">{{ errors.valeurVenale }}</span>
-        </div>
-
-        <div>
-          <label for="marque_id">Marque</label>
-          <select v-model="form.marque_id" id="marque_id">
-            <option v-for="marque in marques" :key="marque.id" :value="marque.id">
-              {{ marque.nomMarque }}
-            </option>
-          </select>
-          <span v-if="errors.marque_id" class="error">{{ errors.marque_id }}</span>
-        </div>
-
-        <div>
-          <label for="modele_id">Modèle</label>
-          <select v-model="form.modele_id" id="modele_id">
-            <option v-for="modele in modeles" :key="modele.id" :value="modele.id">
-              {{ modele.nomModele }}
-            </option>
-          </select>
-          <span v-if="errors.modele_id" class="error">{{ errors.modele_id }}</span>
-        </div>
-
-    <!--    <div>
-          <label for="type_motorisation_id">Type de Motorisation</label>
-          <select v-model="form.type_motorisation_id" id="type_motorisation_id">
-            <option v-for="typeMotorisation in typeMotorisations" :key="typeMotorisation.id" :value="typeMotorisation.id">
-              {{ typeMotorisation.typeM }}
-            </option>
-          </select>
-          <span v-if="errors.type_motorisation_id" class="error">{{ errors.type_motorisation_id }}</span>
-        </div>-->
-     
-      </form>
+        <Modal :isVisible="showForm" @close="closeForm">
+          <form @submit.prevent="traiterContrat" class="styled-form">
+            <!-- Formulaire de traitement -->
+            <!-- Contenu du formulaire -->
+          </form>
+        </Modal>
+      </div>
     </div>
-
-    <div class="form-client">
-      <h3>Informations Client</h3>
-      <form @submit.prevent="submitForm">
-        <div>
-          <label for="nom">Nom</label>
-          <input type="text" v-model="formCl.nom">
-          <span v-if="errorsCl.nom" class="error">{{ errorsCl.nom }}</span>
-        </div>
-
-        <div>
-          <label for="prenom">Prénom</label>
-          <input type="text" v-model="formCl.prenom">
-          <span v-if="errorsCl.prenom" class="error">{{ errorsCl.prenom }}</span>
-        </div>
-
-        <div>
-          <label for="email">Email</label>
-          <input type="email" v-model="formCl.email">
-          <span v-if="errorsCl.email" class="error">{{ errorsCl.email }}</span>
-        </div>
-        <div>
-          <label for="date_naissance">Date de naissance</label>
-          <input type="date" v-model="formCl.date_naissance" :max="maxBirthDate">
-          <span v-if="errorsCl.date_naissance" class="error">{{ errorsCl.date_naissance }}</span>
-        </div>
-        <div>
-          <label for="telephone">Téléphone</label>
-          <input type="tel" v-model="formCl.telephone">
-          <span v-if="errorsCl.telephone" class="error">{{ errorsCl.telephone }}</span>
-        </div>
-
-        <div>
-          <label for="ville_id">Ville</label>
-          <select v-model="formCl.ville_id">
-            <option v-for="ville in villes" :key="ville.id" :value="ville.id">
-              {{ ville.nomVille }}
-            </option>
-          </select>
-          <span v-if="errorsCl.ville_id" class="error">{{ errorsCl.ville_id }}</span>
-        </div>
-        <div>
-          <label for="dateDebut">Date de Début</label>
-          <input type="date" v-model="formDev.dateDebut" min="today">
-          <span v-if="errors.dateDebut" class="error">{{ errors.dateDebut }}</span>
-        </div>
-        <button type="submit" class="ajoutbtn">Ajouter</button>
-
-      </form>
-    </div>  
-
   </div>
-
-  </div>
-  <Footer />
-
 </template>
+<script>
+import axios from "../router/axios-config.js";
+import Sidebar from "./Sidebar.vue";
+import Modal from "./Modal.vue";
+
+export default {
+  name: "ContratsTable",
+  components: {
+    Sidebar,
+    Modal,
+  },
+  data() {
+    return {
+      montant_initial: 0,
+      montant_essentiel: 0,
+      montant_premium: 0,
+      contratsNonTraites: [],
+      contratsTraites: [],
+      showForm: false,
+      selectedContrat: null,
+      selectedSection: "non-traites", // Section sélectionnée par défaut
+      vehiculeInfo: {
+        matricule: "",
+        puissanceFiscale: 0,
+        dateMiseEnCirculation: "",
+        valeurNeuve: 0,
+        valeurVenale: 0,
+        marque_nom: "",
+        modele_nom: "",
+        type_motorisation_nom: "",
+        dateActuelle: new Date().toLocaleDateString(),
+
+      },
+      clientInfo: {}, //ajouter les inormations du client
+    };
+  },
+  mounted() {
+    this.fetchContratsNonTraites();
+    this.fetchContratsTraites();
+    this.fetchVehiculeInfo();
+  },
+  methods: {
+    fetchContratsNonTraites() {
+      axios
+        .get("admin/clients-devis-non-traités")
+        .then((response) => {
+          this.contratsNonTraites = response.data;
+          console.log(this.contratsNonTraites);
+          this.$nextTick(() => {
+            $("#contrats-non-traites").DataTable();
+          });
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the non-traite contracts!", error);
+        });
+    },
+    fetchContratsTraites() {
+      axios
+        .get("admin/clients-devis-traités")
+        .then((response) => {
+          this.contratsTraites = response.data;
+          this.$nextTick(() => {
+            $("#contrats-traites").DataTable();
+          });
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the traite contracts!", error);
+        });
+    },
+    showTraiterForm(contrat) {
+      this.selectedContrat = contrat;
+      this.fetchVehiculeInfo(contrat.matricule);
+      this.showForm = true;
+    },
+    fetchVehiculeInfo(matricule) {
+      axios
+        .get(`/vehicules/${matricule}`)
+        .then((response) => {
+          this.vehiculeInfo = response.data;
+          if (this.vehiculeInfo.marque_id) {
+            this.fetchMarqueName(this.vehiculeInfo.marque_id);
+          }
+          if (this.vehiculeInfo.modele_id) {
+            this.fetchModelName(this.vehiculeInfo.modele_id);
+          }
+          if (this.vehiculeInfo.type_motorisation_id) {
+            this.fetchTypeMotorisation(this.vehiculeInfo.type_motorisation_id);
+          }
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the vehicle info!", error);
+        });
+    },
+    fetchMarqueName(marqueId) {
+      axios
+        .get(`marques/${marqueId}/nom`)
+        .then((response) => {
+          this.vehiculeInfo.marque_nom = response.data.nom;
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the marque name!", error);
+        });
+    },
+    fetchModelName(modeleId) {
+      axios
+        .get(`models/${modeleId}/nom`)
+        .then((response) => {
+          this.vehiculeInfo.modele_nom = response.data;
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the model name!", error);
+        });
+    },
+    fetchTypeMotorisation(typeMotorisationId) {
+      axios
+        .get(`TypeMotorisation/${typeMotorisationId}/nom`)
+        .then((response) => {
+          this.vehiculeInfo.type_motorisation_nom = response.data;
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the type motorisation!", error);
+        });
+    },
+    closeForm() {
+      this.showForm = false;
+      this.selectedContrat = null;
+      this.vehiculeInfo = {};
+    },
+    traiterContrat() {
+      const formData = {
+        montant_initial: this.montant_initial,
+        montant_essentiel: this.montant_essentiel,
+        montant_premium: this.montant_premium,
+      };
+      axios
+        .put(`/devis/${this.selectedContrat.id_devis}`, formData)
+        .then((response) => {
+          alert("Les montants ont été enregistrés avec succès.");
+          this.closeForm();
+          this.fetchContratsNonTraites();
+          this.fetchContratsTraites();
+        })
+        .catch((error) => {
+          console.error(
+            "Une erreur s'est produite lors de l'enregistrement des montants.",
+            error
+          );
+        });
+      axios
+        .put(`/vehicules-statut/${this.selectedContrat.matricule}`)
+        .then((response) => {
+          alert("Le statut du véhicule a été mis à jour avec succès.");
+          this.closeForm();
+          this.fetchContratsNonTraites();
+          this.fetchContratsTraites();
+        })
+        .catch((error) => {
+          console.error("There was an error updating the vehicule status!", error);
+        });
+    },
+    sendEmailToClient(clientI) {
+      console.log(clientI);
+      axios
+        .post(`/send-email/${clientI}`)
+        .then((response) => {
+          alert("Email envoyé avec succès au client.");
+        })
+        .catch((error) => {
+          console.error("Une erreur s'est produite lors de l'envoi de l'email.", error);
+        });
+    },
+    handleSelect(section) {
+      this.selectedSection = section;
+    },
+    goToProfile() {
+      // Logique pour naviguer vers la page du profil de l'administrateur
+      // Cela pourrait être une redirection vers une autre route, par exemple :
+      this.$router.push("/admin-profile");
+    },
+  },
+};
+</script>
+/* Conteneur général pour ajuster le style de la page */
 <style scoped>
-.formsbutt h1{
-  color: #165e85;
-  text-align: center;
-  
-}
-h3 {
-  text-align: center;
-  margin-bottom: 5%;
-}
-.form-vehicule div, .form-client div {
+.cards-container {
   display: flex;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
-  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  font-weight: bold;
+  gap: 2rem; /* Ajoute de l'espace entre les cartes */
+  padding: 20px; /* Optionnel : Ajoute du padding autour des cartes */
+}
 
+.card {
+  width: 190px;
+  height: 254px;
+  border-radius: 20px;
+  background: #f5f5f5;
+  position: relative;
+  padding: 1.8rem;
+  border: 2px solid #c3c6ce;
+  transition: 0.5s ease-out;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* Centre le texte à l'intérieur de la carte */
 }
-label{
-  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  font-weight: bold;
+
+.card-details {
+  color: black;
+  height: 100%;
+  gap: 0.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.content-forms button{
-  float: right; /* Positionne le bouton à gauche */
-  background-color: #165e85;
-  color: white;
+
+.card-button {
+  transform: translate(-50%, 125%);
+  width: 60%;
+  border-radius: 1rem;
   border: none;
-  cursor: pointer;
+  background-color: #008bf8;
+  color: #fff;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  opacity: 0;
+  transition: 0.3s ease-out;
 }
 
-.form-vehicule label, .form-client label {
-  width: 150px;
-  margin-right: 10px;
+.text-body {
+  color: rgb(134, 134, 134);
 }
 
-.form-vehicule input, .form-client input,
-.form-vehicule select, .form-client select {
-  flex: 1; /* Prend tout l'espace restant */
-  padding: 8px;
-  box-sizing: border-box;
-  border: 1px solid #ccc; /* Bordure par défaut */
+/*Text*/
+.text-title {
+  font-size: 1.5em;
+  font-weight: bold;
 }
 
-.form-vehicule input:not(:placeholder-shown), .form-client input:not(:placeholder-shown),
-.form-vehicule select:valid, .form-client select:valid {
-  border-color: green; /* Bordure verte quand rempli */
+/*Hover*/
+.card:hover {
+  border-color: #008bf8;
+  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
 }
 
-.form-vehicule input:hover, .form-client input:hover,
-.form-vehicule select:hover, .form-client select:hover {
-  border-color: green;
+.card:hover .card-button {
+  transform: translate(-50%, 50%);
+  opacity: 1;
 }
-
-.form-vehicule input:focus, .form-client input:focus,
-.form-vehicule select:focus, .form-client select:focus {
-  border-color: green;
-  outline: none;
-}
-
-.radio-wrapper {
+.admin-comp {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  background-color: #f0f2f5;
 }
 
-.radio-option {
-  display: flex;
-  align-items: center;
-  background-color: #f0f0f0;
-  padding: 10px;
-  border-radius: 10px;
-  cursor: pointer;
-  margin: 5px 0;
-}
-
-.formsbutt {
+.dash {
+  flex: 1;
   display: flex;
   flex-direction: column;
 }
-.ajoutbtn{
-  width: 40%;
-margin-top: 30%;
-}
-.content-forms {
+
+.navbar {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
-  margin: 20px 0;
-}
-
-.form-vehicule, .form-client {
-  width: 45%;
-  border: 2px solid rgb(16, 15, 15);
-  border-radius: 10px;
-  padding: 2%;
-  margin-bottom: 1px; 
-  backdrop-filter: blur(5px);
-margin-left: 2%;
-margin-right: 2%;
-}
-.form-vehicule div, .form-client div {
-  margin-bottom: 10px;
-}
-
-.form-vehicule input, .form-client input,
-.form-vehicule select, .form-client select {
-  width: 80%;
-  padding: 8px;
-  box-sizing: border-box;
-  /*border: 1px solid black;  Bordure par défaut */
-}
-
-.form-vehicule input:not(:placeholder-shown), .form-client input:not(:placeholder-shown),
-.form-vehicule select:valid, .form-client select:valid {
-  border-color: green; /* Bordure verte quand rempli */
-}
-
-.form-vehicule input:hover, .form-client input:hover,
-.form-vehicule select:hover, .form-client select:hover {
-  border-color: green;
-}
-
-.form-vehicule input:focus, .form-client input:focus,
-.form-vehicule select:focus, .form-client select:focus {
-  border-color: green;
-  outline: none;
-}
-
-.radio-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.radio-option {
-  display: flex;
   align-items: center;
-  background-color: #f0f0f0;
-  padding: 10px;
-  border-radius: 10px;
-  cursor: pointer;
-  }
-
-.radio-option input {
-  margin-right: 5px;
+  background-color: #004085;
+  padding: 1rem;
+  color: #ffffff;
 }
 
-.radio-option.selected {
-  background-color: green;
+.navbar a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+.content {
+  padding: 20px;
+}
+
+.cards-container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.card {
+  width: 190px;
+  height: 254px;
+  border-radius: 20px;
+  background: #ffffff;
+  position: relative;
+  padding: 1.8rem;
+  border: 2px solid #c3c6ce;
+  transition: 0.5s ease-out;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+}
+
+.card-details {
+  color: black;
+  text-align: center;
+}
+
+.text-body {
+  color: rgb(134, 134, 134);
+}
+
+.text-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+/* Styles pour les tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 1em;
+  text-align: left;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+}
+
+th,
+td {
+  padding: 12px 15px;
+  border: 1px solid #dddddd;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f3f3f3;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+button {
+  background-color: #008bf8;
   color: white;
-}
-
-.radio-option label {
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-.error {
-  color: red;
-  font-size: 0.9em;
+button:hover {
+  background-color: #006bb8;
 }
 
-@media (max-width: 768px) {
-  .form-vehicule, .form-client {
-    width: 100%;
-  }
+h2 {
+  color: #333;
+  margin-top: 30px;
+  font-size: 1.5em;
+  border-bottom: 2px solid #009879;
+  padding-bottom: 0.5em;
+}
+
+/* Styles pour la modal */
+.styled-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.styled-form .form-group {
+  margin-bottom: 1em;
+}
+
+.styled-form label {
+  margin-bottom: 0.5em;
+  color: #333333;
+}
+
+.styled-form input[type="text"],
+.styled-form input[type="date"],
+.styled-form input[type="number"] {
+  width: 100%;
+  padding: 0.5em;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+}
+
+.styled-form button {
+  align-self: flex-end;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: 5px;
+  background-color: #008bf8;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.styled-form button:hover {
+  background-color: #006bb8;
 }
 </style>
-
-<script>
-
-import axios from "../router/axios-config.js";
-import Footer from "../views-home/Footer.vue";
-import Layout from "../views-home/Layout.vue";
-import "@fortawesome/fontawesome-free/css/all.css";
-
-export default {
-  components: {
-    Layout,
-    Footer,},
-  data() {
-    return {
-      form: {
-        matricule: '',
-        puissanceFiscale: '',
-        dateMiseEnCirculation: '',
-        valeurNeuve: '',
-        valeurVenale: '',
-        marque_id: '',
-        modele_id: '',
-        type_motorisation_id: '',
-            },
-      formCl: {
-        nom: '',
-        prenom: '',
-        email: '',
-        telephone: '',
-        ville_id: '',
-        date_naissance:'',
-      },
-      formDev: {
-        dateDebut: '',
-      },
-      marques: [],
-      modeles: [],
-      typeMotorisations: [],
-      puissancesfisc: [],
-      villes: [],
-      errors: {},
-      errorsCl: {}
-    };
-  },
-  created() {
-    this.fetchData();
-    this.fetchVilles();
-  },
-  computed: {
-    today() {
-      const today = new Date();
-      const year = today.getFullYear();
-      const month = String(today.getMonth() + 1).padStart(2, '0');
-      const day = String(today.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
-    },
-    maxBirthDate() {
-      const today = new Date();
-      const year = today.getFullYear() - 18;
-      const month = String(today.getMonth() + 1).padStart(2, '0');
-      const day = String(today.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
-    }
-  },
-  methods: {
-    fetchVilles() {
-      axios.get('/Villes')
-        .then(response => {
-          this.villes = response.data;
-        })
-        .catch(error => {
-          console.error('Erreur lors de la récupération des villes:', error);
-        });
-    },
-    fetchData() {
-      axios.get('Marques')
-        .then(response => {
-          this.marques = response.data;
-        })
-        .catch(error => {
-          console.error('Erreur lors de la récupération des marques:', error);
-        });
-
-      axios.get('PuissanceFiscale')
-        .then(response => {
-          this.puissancesfisc = response.data;
-        })
-        .catch(error => {
-          console.error('Erreur lors de la récupération des puissances fiscales:', error);
-        });
-
-      axios.get('Modele')
-        .then(response => {
-          this.modeles = response.data;
-        })
-        .catch(error => {
-          console.error('Erreur lors de la récupération des modèles:', error);
-        });
-
-      axios.get('Typem')
-        .then(response => {
-          this.typeMotorisations = response.data;
-        })
-        .catch(error => {
-          console.error('Erreur lors de la récupération des types de motorisation:', error);
-        });
-
-      axios.get('Villes')
-        .then(response => {
-          this.villes = response.data;
-        })
-        .catch(error => {
-          console.error('Erreur lors de la récupération des villes:', error);
-        });
-    },
-    validateForm() {
-      this.errors = {};
-      this.errorsCl = {};
-
-      if (!this.form.matricule) this.errors.matricule = 'Ce champ est obligatoire';
-      if (!this.form.puissanceFiscale) this.errors.puissanceFiscale = 'Ce champ est obligatoire';
-      if (!this.form.dateMiseEnCirculation) {
-        this.errors.dateMiseEnCirculation = 'Ce champ est obligatoire';
-      } else if (this.form.dateMiseEnCirculation > this.today) {
-        this.errors.dateMiseEnCirculation = 'La date de mise en circulation doit être aujourd\'hui ou avant';
-      }
-      if (!this.form.valeurNeuve) this.errors.valeurNeuve = 'Ce champ est obligatoire';
-      if (!this.form.valeurVenale) {
-        this.errors.valeurVenale = 'Ce champ est obligatoire';
-      } else if (parseFloat(this.form.valeurVenale) > parseFloat(this.form.valeurNeuve)) {
-        this.errors.valeurVenale = 'La valeur vénale doit être inférieure ou égale à la valeur neuve';
-      }
-      if (!this.form.marque_id) this.errors.marque_id = 'Ce champ est obligatoire';
-      if (!this.form.modele_id) this.errors.modele_id = 'Ce champ est obligatoire';
-      if (!this.form.type_motorisation_id) this.errors.type_motorisation_id = 'Ce champ est obligatoire';
-      if (!this.formCl.nom) this.errorsCl.nom = 'Ce champ est obligatoire';
-      if (!this.formCl.prenom) this.errorsCl.prenom = 'Ce champ est obligatoire';
-      if (!this.formCl.email) this.errorsCl.email = 'Ce champ est obligatoire';
-      if (!this.formCl.telephone) this.errorsCl.telephone = 'Ce champ est obligatoire';
-      if (!this.formCl.ville_id) this.errorsCl.ville_id = 'Ce champ est obligatoire';
-      if (!this.formCl.date_naissance) {
-        this.errorsCl.date_naissance = 'Ce champ est obligatoire';
-      } else if (new Date(this.formCl.date_naissance) > new Date(this.maxBirthDate)) {
-        this.errorsCl.date_naissance = 'Vous devez avoir au moins 18 ans';
-      }
-      return Object.keys(this.errors).length === 0 && Object.keys(this.errorsCl).length === 0;
-    },
-    submitForm() {
-      if (this.validateForm()) {
-        axios.post('vehicules', this.form)
-          .then(response => {
-            alert('Véhicule créé avec succès!');
-            // Une fois le véhicule ajouté avec succès, récupérez l'ID client
-            axios.post('/clients_form', this.formCl)
-              .then(clientResponse => {
-                const clientId = clientResponse.data.client.id;
-                alert('Client ajouté avec succès!');
-                // Ensuite, créez le devis avec l'ID client récupéré
-                const devisData = {
-                  matricule: this.form.matricule,
-                  client_id: clientId,
-                  date_debut: this.formDev.dateDebut,
-                  // Autres champs de devis si nécessaire
-                };
-                axios.post('/enregistrer', devisData)
-                  .then(devisResponse => {
-                    alert('Devis créé avec succès!');
-                    this.resetForm();
-                  })
-                  .catch(error => {
-                    console.error('Erreur lors de la création du devis:', error);
-                  });
-              })
-              .catch(error => {
-                console.error('Erreur lors de l\'ajout du client:', error);
-              });
-          })
-          .catch(error => {
-            console.error('Erreur lors de la création du véhicule:', error);
-          });
-          this.$router.push('/devis');
-      }
-    },
-    resetForm() {
-      this.form = {
-        matricule: '',
-        puissanceFiscale: '',
-        dateMiseEnCirculation: '',
-        valeurNeuve: '',
-        valeurVenale: '',
-        marque_id: '',
-        modele_id: '',
-        type_motorisation_id: ''
-      };
-      this.formCl = {
-        nom: '',
-        prenom: '',
-        email: '',
-        telephone: '',
-        ville_id: '',
-        date_naissance:''
-      };
-      this.errors = {};
-      this.errorsCl = {};
-    }
-  }
-};
-</script>

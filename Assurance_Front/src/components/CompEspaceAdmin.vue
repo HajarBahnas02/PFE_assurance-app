@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'disable-interactions': showForm }" style="margin: auto ; width : 80%">
+  <div :class="{ 'disable-interactions': showForm }" style="margin: auto; width: 80%;">
     <h2>Contrats avec Véhicules Non Traités</h2>
     <table id="contrats-non-traites" class="display" style="width:100%">
       <thead>
@@ -57,9 +57,9 @@
     <Modal :isVisible="showForm" @close="closeForm">
       <form @submit.prevent="traiterContrat" class="styled-form">
         <h2>Traiter Contrat</h2>
-          <div class="form-group">
-            <input type="hidden" v-model="selectedContrat.id_client" readonly />
-          </div>
+        <div class="form-group">
+          <input type="hidden" v-model="selectedContrat.id_client" readonly />
+        </div>
 
         <div class="form-row">
           <div class="form-group">
@@ -150,6 +150,7 @@
     </Modal>
   </div>
 </template>
+
 <script>
 import axios from "../router/axios-config.js";
 import Modal from './Modal.vue';
@@ -335,10 +336,12 @@ sendEmailToClient(clientI) {
   }
 };
 </script>
+
 <style>
 .disable-interactions {
   pointer-events: none;
-}.styled-form {
+}
+.styled-form {
   max-width: 900px;
   margin: 0 auto;
 }

@@ -10,10 +10,10 @@
        
           <form @submit.prevent="login">
             <div class="input-field">
-              <input type="text" id="cin" v-model="credentials.cin" required>
-              <label for="cin">CIN:</label>
+              <input type="text" id="email" v-model="credentials.email" required>
+              <label for="email">Emai:</label>
             </div>
-            <span class="error-message">{{ error.cin }}</span>
+            <span class="error-message">{{ error.email }}</span>
 
             <div class="input-field">
               <input type="password" id="password" v-model="credentials.password" required>
@@ -179,11 +179,11 @@ export default {
   data() {
     return {
       credentials: {
-        cin: '',
+        email: '',
         password: ''
       },
       error: {
-        cin: '',
+        email: '',
         password: '',
         general: ''
       } 
@@ -192,7 +192,7 @@ export default {
   methods: {
     async login() {
       // Vérifier si les champs obligatoires sont vides
-      if (!this.credentials.cin || !this.credentials.password) {
+      if (!this.credentials.email || !this.credentials.password) {
         this.error.general = 'Veuillez remplir tous les champs obligatoires.';
         return;
       }
@@ -202,9 +202,10 @@ export default {
         // Gérer la réponse
         console.log(response.data);
         this.$router.push({ name: "espace-admin" });
+
       } catch (error) {
         // Gérer les erreurs
-        this.error.cin = error.response.data.errors.cin_not_exist || '';
+        this.error.email = error.response.data.errors.cin_not_exist || '';
         this.error.password = error.response.data.errors.wrong_password || '';
         this.error.general = 'Une erreur s\'est produite';
         console.error('Error:', error);

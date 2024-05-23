@@ -12,7 +12,7 @@ class LoginController extends Controller
     public function check(Request $request)
     {
         $credentials = $request->validate([
-            'cin' => ['required'],
+            'email' => ['required'],
             'password' => ['required'],
         ]);
     
@@ -33,9 +33,9 @@ class LoginController extends Controller
         } else {
             // Si l'authentification du client échoue
             $errors = [];
-            $client = Client::where('cin', $credentials['cin'])->first();
+            $client = Client::where('email', $credentials['email'])->first();
             if (!$client) {
-                $errors['cin_not_exist'] = 'CIN n\'existe pas';
+                $errors['email_not_exist'] = 'email n\'existe pas';
             } else {
                 // Si le mot de passe est incorrect
                 $errors['wrong_password'] = 'Mot de passe incorrect';
@@ -47,7 +47,7 @@ class LoginController extends Controller
         public function adminLogin(Request $request)
 {
     $credentials = $request->validate([
-        'cin' => ['required'],
+        'email' => ['required'],
         'password' => ['required'],
     ]);
 
@@ -68,9 +68,9 @@ class LoginController extends Controller
     } else {
         // Si l'authentification de l'administrateur échoue
         $errors = [];
-        $admin = Administrateur::where('cin', $credentials['cin'])->first();
+        $admin = Administrateur::where('email', $credentials['email'])->first();
         if (!$admin) {
-            $errors['cin_not_exist'] = 'CIN n\'existe pas';
+            $errors['email_not_exist'] = 'Email n\'existe pas';
         } else {
             // Si le mot de passe est incorrect
             $errors['wrong_password'] = 'Mot de passe incorrect';

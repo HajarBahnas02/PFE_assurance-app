@@ -20,14 +20,13 @@
     </ul>
     <div class="right-liens">
       <div class="buttons">
-        <router-link to="#">
+        <router-link to="#" class="linkHeader">
           <button>
             <i> <img src="../assets/left.svg" /> </i>Site Particulier
-          </button></router-link
-        >
+          </button></router-link >
       </div>
       <div class="buttons">
-        <router-link to="/login">
+        <router-link to="/login" class="linkHeader">
           <button>
             <i> <img src="../assets/user.svg" /> </i> Espace Client
           </button></router-link >
@@ -55,7 +54,9 @@ button{
 .md\:flex {
   display: flex;
 }
-
+.linkHeader {
+  text-decoration: none;
+}
 .md\:mx-4 {
   margin-right: 20px;
   background-color: antiquewhite;
@@ -86,14 +87,17 @@ ul > li {
   margin-right: 10px;
 }
 button i {
-  margin-right: 10px; /* Ajoute de l'espace entre l'icône et le texte */
+  margin-right: 10px; 
+  text-decoration: none;
+  /* Ajoute de l'espace entre l'icône et le texte */
 }
 button {
   background-color: rgb(41, 140, 197)!important;/* Couleur bleue pour le bouton */
   color: white; /* Texte blanc sur fond bleu */
   padding: 10px 10px;
   border: none; /* Pas de bordure */
-  cursor: pointer; /* Curseur de type pointer pour indiquer que le bouton est cliquable */
+  cursor: pointer; 
+  text-decoration: none;
 }
 button img {
   width: 20px; /* Ajuster la taille de l'image */

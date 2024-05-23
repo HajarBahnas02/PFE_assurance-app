@@ -18,14 +18,13 @@
       <div v-if="showCardList" class="overlay" @click="hideCards"></div>
 
       <div class="box">
-        <div class="box" @click="showCards">
-          <router-link to="/" class="box">
+<!--        <div class="box" @click="showCards">
             <img class="image-devis" src="../assets/automobile-icon.svg" alt="Image 1" />
             <h3 class="title-devis">Assurance Auto</h3>
-          </router-link>
+          
         </div>
         <div v-if="showCardList" class="card-list">
-          <!-- Cartes ici -->
+          <!-- Cartes ici 
           <div class="carde">
             <img src="../assets/auto-insure.svg" alt="Image de la carte 1" />
             <h3>Effectuer une simulation et souscrire un nouveau contrat​</h3>
@@ -41,7 +40,28 @@
             <h3>Demander votre carte verte en ligne</h3>
             <button @click="goToPage('/page2')">Accéder</button>
           </div>
-        </div>
+        </div>-->
+        <div class="box" @click="showCards">
+          <img class="image-devis" src="../assets/automobile-icon.svg" alt="Image 1" />
+          <h3 class="title-devis">Assurance Auto</h3>
+        </div> <div v-if="showCardList" class="card-list">
+          <!-- Cartes ici -->
+          <div class="carde" @click="goToPage('/assuranceAutoSimulation')">
+            <img src="../assets/auto-insure.svg" alt="Image de la carte 1" />
+            <h3>Effectuer une simulation et souscrire un nouveau contrat​</h3>
+            <button>Accéder</button>
+          </div>
+          <div class="carde" @click="goToPage('')">
+            <img src="../assets/auto-insure.svg" alt="Image de la carte 2" />
+            <h3>Renouveler mon contrat Automobile​</h3>
+            <button>Accéder</button>
+          </div>
+          <div class="carde" @click="goToPage('')">
+            <img src="../assets/auto-insure.svg" alt="Image de la carte 3" />
+            <h3>Demander votre carte verte en ligne</h3>
+            <button>Accéder</button>
+          </div>
+          </div>
       </div>
 
       <div class="box" @click="showCards">
@@ -206,11 +226,11 @@
                 </div>
                 <!--reviews------>
                 <div class="reviews">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="far fa-star"></i><!--Empty star-->
+                    <i class="fas fa-star" style="color:yellow"></i>
+                    <i class="fas fa-star" style="color:yellow"></i>
+                    <i class="fas fa-star" style="color:yellow"></i>
+                    <i class="fas fa-star" style="color:yellow"></i>
+                    <i class="far fa-star" style="color:yellow"></i><!--Empty star-->
                 </div>
             </div>
             <!--Comments---------------------------------------->
@@ -236,11 +256,11 @@
                 </div>
                 <!--reviews------>
                 <div class="reviews">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i><!--Empty star-->
+                    <i class="fas fa-star" style="color:yellow"></i>
+                    <i class="fas fa-star" style="color:yellow"></i>
+                    <i class="fas fa-star" style="color:yellow"></i>
+                    <i class="fas fa-star" style="color:yellow"></i>
+                    <i class="fas fa-star" style="color:yellow"></i><!--Empty star-->
                 </div>
             </div>
             <!--Comments---------------------------------------->
@@ -266,11 +286,11 @@
                 </div>
                 <!--reviews------>
                 <div class="reviews">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="far fa-star"></i><!--Empty star-->
+                    <i class="fas fa-star" style="color:yellow"></i>
+                    <i class="fas fa-star" style="color:yellow"></i>
+                    <i class="fas fa-star" style="color:yellow"></i>
+                    <i class="fas fa-star" style="color:yellow"></i>
+                    <i class="far fa-star" style="color:yellow"></i><!--Empty star-->
                 </div>
             </div>
             <!--Comments---------------------------------------->
@@ -296,11 +316,11 @@
                 </div>
                 <!--reviews------>
                 <div class="reviews">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="far fa-star"></i><!--Empty star-->
+                    <i class="fas fa-star" style="color:yellow"></i>
+                    <i class="fas fa-star" style="color:yellow"></i>
+                    <i class="fas fa-star" style="color:yellow"></i>
+                    <i class="fas fa-star" style="color:yellow"></i>
+                    <i class="far fa-star" style="color:yellow"></i><!--Empty star-->
                 </div>
             </div>
             <!--Comments---------------------------------------->
@@ -314,8 +334,9 @@
 </template>
 
 <style>
-*{
-  text-decoration: none;
+
+button{
+  text-decoration: none !important;
 }
 #testimonials{
   display: flex;
@@ -599,7 +620,6 @@
   flex-basis: 25%;
   box-shadow: rgba(0, 0, 0, 0.03) 0px 1px 1px 0px, rgba(0, 0, 0, 0.08) 0px 0px 24px 0px;
   margin-top: 10px;
-  margin-bottom: 10px;
   border-radius: 20px;
   flex-direction: column;
   justify-content: space-between;
@@ -612,7 +632,6 @@
   background-color: rgb(41, 140, 197); /* Couleur de fond du bouton */
   color: #ffffff; /* Couleur du texte du bouton */
   border: none; /* Pas de bordure */
-  padding: 10px 20px; /* Espacement intérieur du bouton */
   border-radius: 5px; /* Coins arrondis du bouton */
   cursor: pointer; /* Curseur pointer au survol */
   transition: background-color 0.3s ease; /* Animation de transition fluide */
@@ -753,7 +772,7 @@
   justify-content: center;
   margin-left: 1%;
   padding: 1%;
-  flex: 1 1 50%; /* La moitié de la largeur de l'écran sur les écrans larges */
+  flex: 1 1 50%;
   justify-content: start;
 }
 .conditions h2 {
@@ -856,7 +875,6 @@ export default {
         this.animatedText += this.text[this.index];
         this.index++;
 
-        // Si nous avons atteint la fin du texte, arrêtez l'animation
         if (this.index === this.text.length) {
           clearInterval(interval);
           // Commencez à écrire en blanc
@@ -898,8 +916,6 @@ h1 {
   color: black;
   font-size: 3vw;
   display: inline-block;
-  margin-left: 1%;
-  margin-right: 1%;
   padding-bottom: 1%;
 }
 </style>

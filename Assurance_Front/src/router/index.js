@@ -11,6 +11,11 @@ import CompAdminLogin from '@/components/CompAdminLogin.vue';
 import CompEspaceAdmin from '@/components/CompEspaceAdmin.vue';
 import Modal from '@/components/Modal.vue';
 import CompDevis from '@/components/CompDevis.vue';
+import Dashboard  from '@/components/Dashboard.vue';
+import CompTarification from '../components/CompTarification.vue';
+import ResetPassword from '@/components/ResetPassword.vue';
+//import Tarification from '../components/Tarification.vue';
+
 const routes = [
   
     { path: '/', component: Home },
@@ -18,7 +23,7 @@ const routes = [
   { path: '/header', component: Home, name: 'header'},
   { path: '/sousheader', component: SousHeader },
   { path: '/footer', component: Home,name:'footer'},
-  {path: '/tarification', component:Tarification, name: 'tarification' },
+  {path:'/sidebar', component:About, name:'sidebar'},
   { path: '/assuranceAutoSimulation', component: assuranceAutoSimulation, name: 'assuranceAutoSimulation' },
   { path: '/login', component: CompLogin, name: 'login' },
   { path: '/espace-client', component: CompEspaceClient, name: 'espace-client' },
@@ -26,7 +31,11 @@ const routes = [
   { path: '/login-admin', component: CompAdminLogin, name: 'login-admin' },
   { path: '/espace-admin', component: CompEspaceAdmin, name: 'espace-admin' },
   {path: '/modal', component: Modal, name: 'modal'},
-  {path: '/devis', component: CompDevis, name: 'devis'}
+  {path: '/devis', component: CompDevis, name: 'devis'},
+  {path: '/dashboard', component: Dashboard, name: 'dashboard'},
+  {path: '/tarifications/:clientId', component: CompTarification, name: 'tarification',  props: true,},
+  {path:'/reset-password/:token', component: ResetPassword, name: 'reset-password'},
+
 
 ];
 

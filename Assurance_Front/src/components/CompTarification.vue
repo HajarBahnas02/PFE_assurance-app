@@ -13,7 +13,7 @@
           <p class="info">Les garanties incluses:</p>
           <ul class="features">
               <li v-for="(garantie, i) in offre.garanties" :key="i">
-                  <span class="icon">
+                  <span class="icon-tarif">
                       <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                           <path d="M0 0h24v24H0z" fill="none"></path>
                           <path fill="currentColor" d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"></path>
@@ -54,8 +54,7 @@
                       </option>
                     </select>
                     <div v-if="selectedOptionAssistanceDescriptions[index]" class="selected-offre">
-                      <h3>Description de l'option d'assistance :</h3>
-                      <p>{{ selectedOptionAssistanceDescriptions[index] }}</p>
+                      <p><Strong>Description de l'option d'assistance:</Strong> {{ selectedOptionAssistanceDescriptions[index] }}</p>
                     </div>
                   </div>
                 </div>
@@ -74,7 +73,7 @@
         <h4>Garanties : </h4>  
         <ul>
           <li v-for="(garantie, key) in selectedOffre.garanties" :key="key">
-            <span class="icon">
+            <span class="icon-tarif">
                 <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0 0h24v24H0z" fill="none"></path>
                     <path fill="currentColor" d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"></path>
@@ -213,8 +212,8 @@ fetchOptionAssistanceDescription(optionAssistanceId, index) {
   axios
     .get(`/optionsAssistances/${optionAssistanceId}/description`)
     .then((response) => {
-      // Utilisation de l'opérateur d'assignation standard pour définir la propriété
-      this.selectedOptionAssistanceDescriptions[index] = response.data;
+      // Extraire directement la description de la réponse
+      this.selectedOptionAssistanceDescriptions[index] = response.data.description;
       console.log(this.selectedOptionAssistanceDescriptions[index]);
     })
     .catch((error) => {
@@ -636,7 +635,7 @@ z-index: -1;Assurez-vous que le ::before est derrière le contenu de .card-selec
   margin-top: 0.75rem;
 }
 
-.icon {
+.icon-tarif {
   background-color: #1FCAC5;
   display: inline-flex;
   align-items: center;
@@ -647,7 +646,7 @@ z-index: -1;Assurez-vous que le ::before est derrière le contenu de .card-selec
   height: 20px;
 }
 
-.plan .features .icon svg {
+.plan .features .icon-tarif svg {
   width: 14px;
   height: 14px;
 }

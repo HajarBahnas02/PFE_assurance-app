@@ -34,7 +34,7 @@ class ContratTraiteMail extends Mailable
     {
         return $this->view('emails.offre')
                     ->subject('Votre offre personnalisée')
-                    ->to($this->clientId) // Définir l'adresse e-mail du destinataire
+                    ->to($this->clientId) 
                     ->with([
                         'baseUrl' => $this->baseUrl,
                         'clientId' => $this->clientId,

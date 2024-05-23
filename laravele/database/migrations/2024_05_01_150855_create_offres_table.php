@@ -11,13 +11,18 @@ return new class extends Migration
     {
        
             Schema::create('offres', function (Blueprint $table) {
-                $table->id('id'); // Clé primaire
-                $table->string('nomOffre'); // Nom de l'offre
-                $table->decimal('montant_offre', 10, 2)->default("0"); // Montant de l'offre
-                $table->timestamps(); // Colonnes created_at et updated_at
+                $table->id('id');
+                $table->string('nomOffre'); 
+                $table->decimal('montant_offre', 10, 2)->default("0"); 
+                $table->timestamps(); 
                 });
-        
-    
+                DB::table('offres')->insert([
+                    [ 'nomOffre' => 'Formule initiale' , 'created_at' => now(),
+                    'updated_at' => now()],
+                    ['nomOffre' => 'Formule essentielle','created_at' => now(),
+                    'updated_at' => now()],
+                    ['nomOffre' => 'Formule premium','created_at' => now(),
+                    'updated_at' => now()],      ]);
     }
 
     /**

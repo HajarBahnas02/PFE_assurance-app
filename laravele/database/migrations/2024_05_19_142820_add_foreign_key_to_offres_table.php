@@ -24,13 +24,6 @@ return new class extends Migration
                 $table->foreign('devis_id')->references('id')->on('devis')->onDelete('cascade');
             }
         });
-       DB::table('offres')->insert([
-            [ 'nomOffre' => 'Formule initiale' , 'created_at' => now(),
-            'updated_at' => now()],
-            ['nomOffre' => 'Formule essentielle','created_at' => now(),
-            'updated_at' => now()],
-            ['nomOffre' => 'Formule premium','created_at' => now(),
-            'updated_at' => now()],      ]);
     }
     /**
      * Reverse the migrations.

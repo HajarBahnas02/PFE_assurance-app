@@ -8,7 +8,7 @@
           <h2 align="center">Bienvenue sur votre nouvel espace client</h2></div>
           <div class="logicons">
             <div class="item">
-              <img src="../assets/automobile-icon.svg" alt="Auto-icon" />
+              <img src="../assets/home-login.svg" alt="Auto-icon"/>
               <h4>Auto</h4>
             </div>
             <div class="item">
@@ -35,7 +35,7 @@
           </div>
           <div class="consigne">
             <img src="../assets/order.svg" alt="Epargne-icon" />
-            <h4>Déposez vos dossiers maladie en ligne</h4>
+            <h4>Déclarez un sinistre</h4>
           </div>
           <div class="consigne">
             <img src="../assets/conversation.svg" alt="Santé-icon" />
@@ -48,25 +48,25 @@
           <form @submit.prevent="loginData">
             <h2 align="center">Se connecter</h2>
             <div class="input-field">
-              <input type="text" v-model="client.cin" placeholder="CIN" required />
-              <label>CIN</label>
+              <input type="text" v-model="client.email" required /> 
+              <label>Login</label>
             </div>
-            <span v-if="submitted && !client.cin" class="error-message">Champ obligatoire à insérer</span>
-            <span v-if="errors.cin_not_exist" class="error-message">{{ errors.cin_not_exist }}</span>
+            <span v-if="submitted && !client.email" class="error-message">Champ obligatoire à insérer</span>
+            <span v-if="errors.email_not_exist" class="error-message">{{ errors.email_not_exist }}</span>
             <div class="input-field">
               <input type="password" v-model="client.password" required />
               <label>Mot de passe</label> 
             </div>
             <span v-if="submitted && !client.password" class="error-message">Champ obligatoire à insérer</span>
             <span v-if="errors.wrong_password" class="error-message">{{ errors.wrong_password }}</span>   
-            <div class="forget">
             
+            <div class="forget">
               <p class="forgot-password text-right">
                 <router-link to="/mot-de-passe-oublié">
                 Forgot password?</router-link></p>
             </div>
             <button :disabled="loading" type="submit">
-              {{ loading ? "Connecting" : "Se connecter" }}
+              {{ loading ? "En cours de connexion" : "Se connecter" }}
             </button>
           </form>
         </div>
@@ -77,43 +77,43 @@
         </span>
         <div class="media-icons">
           <a href="#" style="background: #0e76a8">
-            <i class="fab fa-linkedin"></i>
-            <span class="tooltip" style="color: #0e76a8">Question fréquentes</span>
+            <i class="fas fa-question-circle"></i>
+                        <span class="tooltip" style="color: #0e76a8">Question fréquentes</span>
           </a>
           <a href="#" style="background: #ff0000">
-            <i class="fab fa-youtube"></i>
-            <span class="tooltip" style="color: #ff0000">Localisation</span>
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="tooltip" style="color: #ff0000">Localiser agence</span>
           </a>
           <a href="#" style="background: #ea4689">
-            <i class="fab fa-dribbble"></i>
+            <i class="fa fa-address-book"></i>
             <span class="tooltip" style="color: #ea4689">Contacts utiles</span>
           </a>
           <a href="#" style="background: #8e36ff">
-            <i class="fab fa-github"></i>
-            <span class="tooltip" style="color: #8e36ff">Contacter nous</span>
+            <i class="fa-solid fa-phone"></i>
+                        <span class="tooltip" style="color: #8e36ff">Contacter nous</span>
           </a>
         </div>
       </div>
       </div>
-<Footer />
+
 
   </div>
-
    </div>
   
 </template>
 
 <style>
+.error-message {
+  color:red;
+  padding-bottom: 15px;
+}
   .logbackground {
-background-color: rgb(125, 162, 162);
-background-image: url("../assets/login_background.jpg");
+ background-image: url("../assets/login_background.jpg");
  width: 100%;
  height: 100vh;
  background-size: cover;
  background-position: center;
  background-repeat: no-repeat;
- height: 100%;
- width: 100%;
  justify-content: center;
   }
 .hdimage {
@@ -152,12 +152,11 @@ background-image: url("../assets/login_background.jpg");
 }
 .content-login .logicons {
     display: flex;
-    justify-content: center;
-    flex-wrap:wrap ;
-    align-items: center;
-    margin-top: 4%;
+    flex-wrap:wrap;
     cursor: text;
-}
+    justify-content: space-between;
+    margin:5%  10% 0% !important;
+  }
 
 .item {
   display: flex;
@@ -223,8 +222,8 @@ svg {
   -webkit-backdrop-filter: blur(8px); 
 }
 .form-log {
-  width: 50%;
-  height: 70%;
+  width: 60%;
+  height: 75%;
   margin-top: 8%;
   margin-left: 30%;
   display: flex;
@@ -237,14 +236,22 @@ svg {
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(8px); 
 }
+.frm form {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+
+}
 form h2 {
   font-size: 2rem;
-  margin-bottom: 20px;
-  color: black;
+  margin-bottom: 30px;
+  color: rgb(0, 0, 0);
+  font-family: "Poppins";
 }
 .input-field {
   position: relative;
   border-bottom: 2px solid #ccc;
+  margin-bottom: 20px;
 }
 .input-field label {
   position: absolute;
@@ -263,8 +270,8 @@ form h2 {
   border: none;
   outline: none;
   font-size: 16px;
-  color: #171717;
-  font: 400 13.3333px Arial;
+  color: #461cc6;
+  font:  13.3333px ;
   
 }
 
@@ -273,13 +280,13 @@ form h2 {
   font-size: 0.8rem;
   top: 10px;
   transform: translateY(-120%);
+  font-weight: 600;
 }
 .forget {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 25px 0 35px 0;
-  color: #fff;
 }
 .forget label p {
   margin-left: 8px;
@@ -288,7 +295,7 @@ form h2 {
   color: #fff;
 }
 .form-log a {
-  color: #efefef;
+  color: black;
   text-decoration: none;
 }
 
@@ -320,7 +327,6 @@ button:hover {
   display: flex;
   flex-direction: column-reverse;
 }
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 
 .media-icons {
   display: flex;
@@ -351,7 +357,7 @@ button:hover {
 .media-icons a .tooltip {
   position: absolute;
   left: calc(100% + 10px);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
   pointer-events: none;
   background-color: #fff;
@@ -432,7 +438,7 @@ export default {
     return {
       loading: false,
       client: {
-        cin: "",
+        email: "",
         password: "",
       },
       remember: false, // Nouvelle propriété pour Se souvenir de moi
@@ -449,12 +455,11 @@ export default {
         .then(({ data }) => {
           if (data.status === true) {
             this.$router.push({ name: "espace-client" });
-            // Réinitialiser le formulaire
-            this.client.cin = "";
-            this.client.password = "";
           } else {
             // Réinitialiser les erreurs
             this.errors = data.errors || {};
+            this.resetForm();
+
           }
         })
         .catch(error => {
@@ -469,6 +474,10 @@ export default {
         .finally(() => {
           this.loading = false;
         });
+    },
+    resetForm() {
+      this.client.email = "";
+      this.client.password = "";
     },
     toggleMenu() {
       const closeBtn = document.querySelector(".close-btn");

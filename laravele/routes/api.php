@@ -17,7 +17,7 @@ use App\Http\Controllers\MontantProposeController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\TarificationController;
 use App\Http\Controllers\EmailController;
-
+use App\Http\Controllers\ResetPasswordController;
 use App\Models\Offre;
 use App\Models\OptionAssistance;
 use Illuminate\Http\Request;
@@ -92,5 +92,21 @@ Route::post('/send-message', 'YourController@sendMessage');
 Route::post('/clients/{client}/send-whatsapp', [ClientController::class, 'sendWhatsAppMessage']);
 //Email
 Route::get('/tarification/{client}/{devis}', [TarificationController::class, 'show'])->name('tarification.show');
-//
+////Email 
 Route::post('/send-email/{clientId}', [EmailController::class, 'sendEmailToClient']);
+//Réccupération des montants
+Route::get('/devis/{idDevis}/montants', [DevisController::class, 'getMontants']);
+
+//Réccupérer le client à partir de l'url:
+Route::get('clients/{clientId}/montants', [DevisController::class, 'getMontantsProposes']);
+
+
+/*Mot de passe Oublié
+Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+Route::post('password/reset', [ForgotPasswordController::class, 'reset']);
+Route::post('/forgot-passwordl', [ResetPasswordController::class, 'sendResetLinkEmail']);
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+*/
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
+////

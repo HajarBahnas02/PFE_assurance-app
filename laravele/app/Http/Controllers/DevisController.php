@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\Devis;
+use App\Models\Offre;
 use App\Models\Vehicule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -16,7 +17,26 @@ class DevisController extends Controller
     {
         //
     }
-
+    public function getMontants($idDevis)
+    {
+        $devis = Devis::find($idDevis);
+    
+        if ($devis) {
+            return response()->json([
+                'montant_initial' => $devis->montant_initial,
+                'montant_essentiel' => $devis->montant_essentiel,
+                'montant_premium' => $devis->montant_premium
+            ]);
+        } else {
+            return response()->json(['error' => 'Devis not found'], 404);
+        }
+    }
+    public function fetchMontantsForOffres()
+{
+    $offres = Offre::with('devis')->get(); 
+    
+    return response()->json($offres);
+}
 
     public function getDevisNonTraites()
     {
@@ -80,6 +100,36 @@ class DevisController extends Controller
 
     return response()->json(['message' => 'Devis mis à jour avec succès!']);
 }*/
+public function reccuperId(Request $request, $clientId)
+{
+    // Récupérer le client à partir de l'ID
+    $client = Client::find($clientId);
+
+    if (!$client) {
+        return response()->json(['message' => 'Client non trouvé.'], 404);
+    }
+    return response()->json(['clientId' => $clientId]);
+}
+public function getMontantsProposes($clientId)
+{
+    // Récupérer les montants proposés à partir de la table devis pour un client donné
+    $devis = Devis::where('client_id', $clientId)->first();
+
+    if (!$devis) {
+        return response()->json(['message' => 'Devis non trouvé pour ce client.'], 404);
+    }
+
+    // Extraire les montants proposés
+    $montantInitial = $devis->montant_initial;
+    $montantEssentiel = $devis->montant_essentiel;
+    $montantPremium = $devis->montant_premium;
+
+    return response()->json([
+        'montant_initial' => $montantInitial,
+        'montant_essentiel' => $montantEssentiel,
+        'montant_premium' => $montantPremium
+    ]);
+}
 public function ajouter(Request $request, $numero_devis)
 {
     $request->validate([

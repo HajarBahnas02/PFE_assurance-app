@@ -4,7 +4,7 @@
       <div class="message">
       <p>Votre devis est en cours de traitement.Vous recevez une notification dans quelques minutes par whatssap et par email avec la tarification
          afin de continuer votre souscription en ligne.
-               <br/> <b> Merci pour votre choix  de Shahed assurance</b></p>
+               <br/> <b> Merci pour  choix  de Shahed assurance</b></p>
         <img src="../assets/message.png" id="thank-you" width="13%"/>
 <div>        <router-link to="/" class="home-button">
     <i class="fa fa-home"></i>
