@@ -15,11 +15,8 @@ jobs:
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Dependencies
-        run: composer install
-      - name: Generate key
-        run: |
+        run: composer install 
           cd laravel
-          php artisan key:generate
       - name: Directory Permissions
         run: |
           cd laravel
