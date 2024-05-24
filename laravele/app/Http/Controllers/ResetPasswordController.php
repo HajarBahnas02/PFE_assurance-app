@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Client;
 use App\Models\Administrateur;
 
@@ -20,32 +19,25 @@ class ResetPasswordController extends Controller
 
         $email = $request->input('email');
         $token = $request->input('token');
+        $password = $request->input('password');
 
+        // Vérifier si l'email appartient à un client
         $client = Client::where('email', $email)->first();
+        // Vérifier si l'email appartient à un administrateur
         $admin = Administrateur::where('email', $email)->first();
 
         if ($client) {
-            $status = Password::broker('clients')->reset(
-                $request->only('email', 'password', 'password_confirmation', 'token'),
-                function ($user, $password) {
-                    $user->password = bcrypt($password);
-                    $user->save();
-                }
-            );
+            // Réinitialisation du mot de passe pour le client
+            $client->password = Hash::make($password);
+            $client->save();
         } elseif ($admin) {
-            $status = Password::broker('administrateurs')->reset(
-                $request->only('email', 'password', 'password_confirmation', 'token'),
-                function ($user, $password) {
-                    $user->password = bcrypt($password);
-                    $user->save();
-                }
-            );
+            // Réinitialisation du mot de passe pour l'administrateur
+            $admin->password = Hash::make($password);
+            $admin->save();
         } else {
             return response()->json(['message' => 'Aucun utilisateur trouvé avec cet email.'], 404);
         }
 
-        return $status === Password::PASSWORD_RESET
-            ? response()->json(['message' => 'Mot de passe réinitialisé avec succès.'], 200)
-            : response()->json(['message' => 'Erreur lors de la réinitialisation du mot de passe.'], 400);
+        return response()->json(['message' => 'Mot de passe réinitialisé avec succès.'], 200);
     }
 }

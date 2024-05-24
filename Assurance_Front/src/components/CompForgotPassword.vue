@@ -1,54 +1,59 @@
-<template>  <Layout />
-
+<!-- resources/js/components/ForgotPassword.vue -->
+<template>
+  <Layout />
+  <div class="cont-pass">
   <div class="forgot-password-container">
-    <h2>Mot de passe oublié</h2>
-    <form @submit.prevent="forgotPassword" class="forgot-password-form">
-      <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" v-model="email" required>
-      </div>
-      <button type="submit">Envoyer</button>
-    </form>
-    <div v-if="message" class="message">{{ message }}</div>
-  </div>
-  <Footer />
+      <form @submit.prevent="sendResetLink">
+        <h3>Mot de passe oublié</h3>
+        <div class="form-group">
+              <label for="email">Adresse email:</label>
+              <input type="email" v-model="email" id="email" required>
+          </div>
+          <button type="submit">Envoyer le lien de réinitialisation</button>
+     
+      <div v-if="message" class="message">{{ message }}</div>
+      <div v-if="error" class="error">{{ error }}</div> </form>
+  </div></div>
 </template>
-
 <style>
 .forgot-password-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+  width: 40%;
+  height:auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;/* Couleur de fond différente */
 }
 
-.forgot-password-form {
-  width: 300px;
+
+
+.forgot-password-container form {
+  width: 100%;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #f9f9f9;
 }
 
-.forgot-password-form div {
+.form-group {
   margin-bottom: 10px;
 }
 
-.forgot-password-form label {
+.form-group label {
   display: block;
   margin-bottom: 5px;
 }
 
-.forgot-password-form input[type="email"] {
+.form-group input[type="email"] {
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 3px;
 }
 
-.forgot-password-form button {
+.form-group button {
   width: 100%;
+  margin-top: 12px;
   padding: 10px;
   border: none;
   border-radius: 3px;
@@ -57,14 +62,18 @@
   cursor: pointer;
 }
 
-.forgot-password-form button:hover {
+.form-group button:hover {
   background-color: #0056b3;
 }
 
 .message {
-  margin-top: 10px;
   font-size: 14px;
   color: #007bff;
+}
+
+.error {
+  font-size: 14px;
+  color: red;
 }
 </style>
 
@@ -76,32 +85,72 @@ export default {
   name: "Login",
   components: {
     Footer,
-    Layout,
-  },
+    Layout,}
+    ,
   data() {
-    return {
-      email: '',
-      message: '',
-    };
+      return {
+          email: '',
+          message: '',
+          error: ''
+      };
   },
   methods: {
-    forgotPassword() {
-      axios.post('/forgot-password', {
-        email: this.email,
-        reset_url: 'http://localhost:5173/reset-password/' // Lien de la page reset-password
+      async sendResetLink() {
+          this.message = '';
+          this.error = '';
 
-      })
-      .then(response => {
-        this.message = response.data.message;
-      })
-      .catch(error => {
-        this.message = error.response.data.message;
-      });
-    }
+          try {
+              const response = await axios.post('/forgot-password', {
+                  email: this.email
+              });
+              this.message = response.data.message;
+          } catch (error) {
+              if (error.response && error.response.data) {
+                  this.error = error.response.data.message;
+              } else {
+                  this.error = 'Une erreur s\'est produite. Veuillez réessayer.';
+              }
+          }
+      }
   }
 }
 </script>
 
-<style>
-/* Styles CSS */
+<style scoped>
+.forgot-password-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+.form-group {
+  margin-bottom: 1rem;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.form-group input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+.message {
+  margin-top: 1rem;
+  color: green;
+}
+.error {
+  margin-top: 1rem;
+  color: red;
+}
 </style>

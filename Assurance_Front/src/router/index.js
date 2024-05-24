@@ -34,8 +34,9 @@ const routes = [
   {path: '/devis', component: CompDevis, name: 'devis'},
   {path: '/dashboard', component: Dashboard, name: 'dashboard'},
   {path: '/tarifications/:clientId', component: CompTarification, name: 'tarification',  props: true,},
-  {path:'/reset-password/:token', component: ResetPassword, name: 'reset-password'},
-
+  {path: '/reset-password/:token',name: 'ResetPassword',component: ResetPassword, props: true
+    
+  }
 
 ];
 

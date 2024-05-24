@@ -1,9 +1,9 @@
 <template>
-    <nav class="navbar" style="background-color: #b8bbbe54; height:5%">
-      <ul class="md:flex md:items-center">
+<nav>
+        <ul class="md:flex md:items-center">
         <li class="logo-container">
           <router-link id="link" class="link" to="/">
-            <img src="../assets/logo.png" width="50px" height="50px" alt="logo">
+            <img src="../assets/logo.png" width="40px" height="40px" alt="logo">
             <span class="logo-text">Shahed</span>
           </router-link>
         </li>
@@ -12,12 +12,11 @@
   </template>
   <style>
   #link:hover {
-    color: #fff; /* Adjust this value to set the hover text color */
+    color: #fff; 
   }
 
   .logo-container {
     display: flex;
-    align-items: center;
   }
 
   .logo-text {
