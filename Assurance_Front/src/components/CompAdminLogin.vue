@@ -4,7 +4,7 @@
     <div class="log-admin">
       <div class="admin-panel">
         <img src="../assets/logo.png"
-          style="width: 150px; padding:12%" alt="logo">
+          style="width: 80px; padding-top:5%" alt="logo">
         <h4 class="">Shahed Assurance</h4>
         <div class="admin-frm">
        
@@ -21,7 +21,11 @@
             </div>
             <span class="error-message">{{ error.password }}</span> <!-- Afficher les erreurs sous le champ -->
             <span class="error-message">{{ error.general }}</span>
-
+            <div class="forget">
+              <p class="forgot-password text-right">
+                <router-link to="/mot-de-passe-oublié">
+                Forgot password?</router-link></p>
+            </div>
             <button type="submit">Se connecter</button>
           </form>
         </div>

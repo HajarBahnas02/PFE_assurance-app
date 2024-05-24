@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Layout />
-    <div class="tarification">
+   
+    <Layout /> <div class="tarification">
   <div class="plan" v-for="(offre, index) in offres" :key="index">
       <div class="inner">
           <span class="pricing">
@@ -85,8 +85,14 @@
         <button class="btn">Valider</button>
     </div>
 </div>    
+<div v-if="chargementEnCours" class="loading-container">
+  <div class="">
+    <img src="../assets/logo.png" alt="Logo" class="logo">
 
+  </div>
 </div>
+</div>
+
 
   <Footer />
 
@@ -104,6 +110,7 @@ export default {
   },
   data() {
     return {
+      chargementEnCours: false, // Initialiser à faux pour cacher le logo
       offres: [],
       montants: {},
       assistances: [], // Liste des assistances
@@ -122,11 +129,19 @@ export default {
     },
   },
   mounted() {
+    this.afficherChargement();
+    setTimeout(this.cacherChargement, 3000); // Cacher après 3 secondes
     console.log("Client ID from URL:", this.clientId); // Afficher l'ID du client dans la console
     this.fetchMontants();
     this.fetchAssistances();
   },
   methods: {
+    afficherChargement() {
+      this.chargementEnCours = true; // Afficher le logo de chargement
+    },
+    cacherChargement() {
+      this.chargementEnCours = false; // Cacher le logo de chargement
+    },
       selectOffre(offre) {
   this.selectedOffre = offre;
 },
@@ -238,6 +253,39 @@ handleRadioChange(index, selectedAssistanceId) {
 </script>
 
 <style>
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+}
+.logo {
+  width: 100px;
+  height: 100px; 
+  border-radius: 50%;
+  border: 4px solid rgba(49, 200, 7, 0.1);
+  animation: spin 1s linear infinite;
+  background-color: #bed6fb;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #007bff; /* Couleur du spinner */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite; /* Application de l'animation */
+}
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 .parent-container {
   display: flex;
   justify-content: center;

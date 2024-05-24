@@ -24,7 +24,7 @@
           
         </div>
         <div v-if="showCardList" class="card-list">
-          <!-- Cartes ici 
+          < Cartes ici 
           <div class="carde">
             <img src="../assets/auto-insure.svg" alt="Image de la carte 1" />
             <h3>Effectuer une simulation et souscrire un nouveau contrat​</h3>
