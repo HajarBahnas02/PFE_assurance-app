@@ -17,11 +17,12 @@ jobs:
       - name: Install Dependencies
         run: composer install
       - name: Generate key
-        run: php artisan key:generate
+        run: |
+          cd laravel
+          php artisan key:generate
       - name: Directory Permissions
         run: |
-          mkdir -p storage
-          mkdir -p bootstrap/cache
+          cd laravel
           chmod -R 777 storage bootstrap/cache
       - name: Create Database
         run: |
@@ -34,7 +35,9 @@ jobs:
           DB_PORT: 3306
           DB_USERNAME: root
           DB_PASSWORD: 
-        run: php artisan test
+        run: |
+          cd laravel
+          php artisan test
 
   front:
     runs-on: ubuntu-latest 
@@ -42,5 +45,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install dependencies and build Vue.js app
         run: |
+          cd Assurance_Front
           npm install
           npm run build
