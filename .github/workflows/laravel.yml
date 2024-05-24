@@ -14,8 +14,8 @@ jobs:
           php-version: '8.0'
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-      - name: Navigate to Laravel directory
-        run: cd laravel
+      - name: Navigate to laravele directory
+        run: cd laravele
       - name: Install Dependencies
         run: composer install
       - name: Directory Permissions
