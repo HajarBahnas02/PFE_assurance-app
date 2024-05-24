@@ -14,10 +14,12 @@ jobs:
           php-version: '8.0'
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-      - name: Navigate to laravele directory
+      - name: laravele
         run: cd laravele
       - name: Install Dependencies
         run: composer install
+      - name: Create storage and cache directories
+        run: mkdir -p storage bootstrap/cache
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
       - name: Create Database
