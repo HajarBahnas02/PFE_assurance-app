@@ -8,22 +8,32 @@ jobs:
   laravel-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up PHP
+        uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
         with:
           php-version: '8.0'
+          
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-      - name: laravele
+      
+      - name: Navigate to Laravel directory
         run: cd laravele
+      
       - name: Install Dependencies
         run: composer install
+      
       - name: Create storage and cache directories
         run: mkdir -p storage bootstrap/cache
+      
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
+      
       - name: Create Database
         run: mysql -e 'CREATE DATABASE IF NOT EXISTS laravel_test;'
+      
       - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
         run: php artisan test
         env:
@@ -37,9 +47,17 @@ jobs:
   front:
     runs-on: ubuntu-latest 
     steps: 
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+          
       - name: Install dependencies and build Vue.js app
         run: |
           cd Assurance_Front
           npm install
           npm run build
+          ls -l dist  # Afficher le contenu du répertoire de build
