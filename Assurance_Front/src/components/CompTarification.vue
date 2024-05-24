@@ -87,7 +87,7 @@
 </div>    
 <div v-if="chargementEnCours" class="loading-container">
   <div class="">
-    <img src="../assets/logo.png" alt="Logo" class="logo">
+    <img src="../assets/logo.png" alt="Logo" class="logoSni">
 
   </div>
 </div>
@@ -260,7 +260,7 @@ handleRadioChange(index, selectedAssistanceId) {
   height: 100vh;
 
 }
-.logo {
+.logoSni {
   width: 100px;
   height: 100px; 
   border-radius: 50%;

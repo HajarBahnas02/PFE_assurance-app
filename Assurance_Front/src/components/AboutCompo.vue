@@ -1,527 +1,625 @@
 <template>
-  <div class="admin-comp">
-    <Sidebar @select="handleSelect" />
-    <div class="dash">
-      <nav class="navbar">
-        <div class="navbar-brand">
+	<div class="limiter">
+    <Layout />
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-pic js-tilt" data-tilt>
+					<img src="../assets/admin.png"  alt="IMG">
+				</div>
+				<form class="login100-form validate-form" @submit.prevent="login">
+					<span class="login100-form-title">
+					Espace Administrateur
+					</span>							
+          <div class="wrap-input100 validate-input" >
+						<input class="input100" type="email" name="email" placeholder=" Email" id="email" v-model="credentials.email" required>
+						<span class="focus-input100" ></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+					</div>
+          <span v-if="error.email">{{ error.email }}</span>
+          <div class="wrap-input100 validate-input">
+						<input class="input100" type="password" name="pass" placeholder="Mot de passe" id="password" v-model="credentials.password" required>
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					          <span class="error-message">{{ error.password }}</span> 
 
-          <a href="#">Panel administrateur {{ dateActuelle }} </a>
+          </div>
+          <div>
+            <span v-if="error.general" class="error-message">{{ error.general }}</span>
+          </div>
       
-        </div>
-        <div class="navbar-menu">
-          <a href="#" @click.prevent="goToProfile">Mon Compte</a>
-        </div>
-      </nav>
-      <div :class="{ 'disable-interactions': showForm }" class="content">
-        <div class="cards-container">
-          <div class="card">
-            <div class="card-details">
-              <h3 class="text-title">Devis Non Traités</h3>
-              <p class="text-body">{{ contratsNonTraites.length }}</p>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-details">
-              <h3 class="text-title">Devis Traités</h3>
-              <p class="text-body">{{ contratsTraites.length }}</p>
-            </div>
-          </div>
-        </div>
-        <h2 v-if="selectedSection === 'non-traites'">
-          Contrats avec Véhicules Non Traités
-        </h2>
-        <table
-          v-if="selectedSection === 'non-traites'"
-          id="contrats-non-traites"
-          class="display"
-          style="width: 100%"
-        >
-          <thead>
-            <tr>
-              <th>ID Devis</th>
-              <th>Nom</th>
-              <th>Prénom</th>
-              <th>Téléphone</th>
-              <th>Email</th>
-              <th>Matricule Véhicule</th>
-              <th>Date Début</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="contrat in contratsNonTraites" :key="contrat.id_devis">
-              <td>{{ contrat.id_devis }}</td>
-              <td>{{ contrat.client_nom }}</td>
-              <td>{{ contrat.client_prenom }}</td>
-              <td>{{ contrat.client_telephone }}</td>
-              <td>{{ contrat.client_email }}</td>
-              <td>{{ contrat.matricule }}</td>
-              <td>{{ contrat.date_debut }}</td>
-              <td><button @click="showTraiterForm(contrat)">Afficher</button></td>
-            </tr>
-          </tbody>
-        </table>
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn"  type="submit">
+							Se connecter
+						</button>
+					</div>
+					<div class="text-center p-t-12">
+            <router-link to="/mot-de-passe-oublié">
 
-        <h2 v-if="selectedSection === 'traites'">Contrats avec Véhicules Traités</h2>
-        <table
-          v-if="selectedSection === 'traites'"
-          id="contrats-traites"
-          class="display"
-          style="width: 100%"
-        >
-          <thead>
-            <tr>
-              <th>ID Devis</th>
-              <th>Nom</th>
-              <th>Prénom</th>
-              <th>Téléphone</th>
-              <th>Email</th>
-              <th>Matricule Véhicule</th>
-              <th>Date Début</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="contrat in contratsTraites" :key="contrat.id_devis">
-              <td>{{ contrat.id_devis }}</td>
-              <td>{{ contrat.client_nom }}</td>
-              <td>{{ contrat.client_prenom }}</td>
-              <td>{{ contrat.client_telephone }}</td>
-              <td>{{ contrat.client_email }}</td>
-              <td>{{ contrat.matricule }}</td>
-              <td>{{ contrat.date_debut }}</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <Modal :isVisible="showForm" @close="closeForm">
-          <form @submit.prevent="traiterContrat" class="styled-form">
-            <!-- Formulaire de traitement -->
-            <!-- Contenu du formulaire -->
-          </form>
-        </Modal>
-      </div>
-    </div>
-  </div>
+						<span class="txt1">
+							Forgot
+						</span>
+						<a class="txt2" href="#">
+							  Password?
+						</a></router-link>
+					</div>
+					<div class="text-center p-t-136">
+					</div>
+				</form>
+			</div>
+		</div>
+    <Footer />
+	</div>
+	
+	
 </template>
 <script>
+import $ from 'jquery';
 import axios from "../router/axios-config.js";
-import Sidebar from "./Sidebar.vue";
-import Modal from "./Modal.vue";
+import Footer from "../views-home/Footer.vue";
+import Layout from "../views-home/Layout.vue";
 
 export default {
-  name: "ContratsTable",
+  name: 'TiltComponent',
+  mounted() {
+    // Script JavaScript modifié pour fonctionner dans Vue.js
+    "use strict";
+    var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (t) { return typeof t; } : function (t) { return t && "function" == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t; };
+
+    (function (t) {
+      "function" == typeof define && define.amd ? define(["jquery"], t) : "object" === ("undefined" == typeof module ? "undefined" : _typeof(module)) && module.exports ? module.exports = function (i, s) {
+        return void 0 === s && (s = "undefined" != typeof window ? require("jquery") : require("jquery")(i)), t(s), s;
+      } : t(jQuery);
+    })(function (t) {
+      return t.fn.tilt = function (i) {
+        var s = function s() {
+          this.ticking || (requestAnimationFrame(g.bind(this)), this.ticking = !0);
+        },
+        e = function e() {
+          var i = this;
+          t(this).on("mousemove", o), t(this).on("mouseenter", a), this.settings.reset && t(this).on("mouseleave", l), this.settings.glare && t(window).on("resize", d.bind(i));
+        },
+        n = function n() {
+          var i = this;
+          void 0 !== this.timeout && clearTimeout(this.timeout), t(this).css({ transition: this.settings.speed + "ms " + this.settings.easing }), this.settings.glare && this.glareElement.css({ transition: "opacity " + this.settings.speed + "ms " + this.settings.easing }), this.timeout = setTimeout(function () {
+            t(i).css({ transition: "" }), i.settings.glare && i.glareElement.css({ transition: "" });
+          }, this.settings.speed);
+        },
+        a = function a(i) {
+          this.ticking = !1, t(this).css({ "will-change": "transform" }), n.call(this), t(this).trigger("tilt.mouseEnter");
+        },
+        r = function r(i) {
+          return "undefined" == typeof i && (i = { pageX: t(this).offset().left + t(this).outerWidth() / 2, pageY: t(this).offset().top + t(this).outerHeight() / 2 }), { x: i.pageX, y: i.pageY };
+        },
+        o = function o(t) {
+          this.mousePositions = r(t), s.call(this);
+        },
+        l = function l() {
+          n.call(this), this.reset = !0, s.call(this), t(this).trigger("tilt.mouseLeave");
+        },
+        h = function h() {
+          var i = t(this).outerWidth(), s = t(this).outerHeight(), e = t(this).offset().left, n = t(this).offset().top, a = (this.mousePositions.x - e) / i, r = (this.mousePositions.y - n) / s, o = (this.settings.maxTilt / 2 - a * this.settings.maxTilt).toFixed(2), l = (r * this.settings.maxTilt - this.settings.maxTilt / 2).toFixed(2), h = Math.atan2(this.mousePositions.x - (e + i / 2), -(this.mousePositions.y - (n + s / 2))) * (180 / Math.PI);
+          return { tiltX: o, tiltY: l, percentageX: 100 * a, percentageY: 100 * r, angle: h };
+        },
+        g = function g() {
+          return this.transforms = h.call(this), this.reset ? (this.reset = !1, t(this).css("transform", "perspective(" + this.settings.perspective + "px) rotateX(0deg) rotateY(0deg)"), void (this.settings.glare && (this.glareElement.css("transform", "rotate(180deg) translate(-50%, -50%)"), this.glareElement.css("opacity", "0")))) : (t(this).css("transform", "perspective(" + this.settings.perspective + "px) rotateX(" + ("x" === this.settings.disableAxis ? 0 : this.transforms.tiltY) + "deg) rotateY(" + ("y" === this.settings.disableAxis ? 0 : this.transforms.tiltX) + "deg) scale3d(" + this.settings.scale + "," + this.settings.scale + "," + this.settings.scale + ")"), this.settings.glare && (this.glareElement.css("transform", "rotate(" + this.transforms.angle + "deg) translate(-50%, -50%)"), this.glareElement.css("opacity", "" + this.transforms.percentageY * this.settings.maxGlare / 100)), t(this).trigger("change", [this.transforms]), void (this.ticking = !1));
+        },
+        c = function c() {
+          var i = this.settings.glarePrerender;
+          if (i || t(this).append('<div class="js-tilt-glare"><div class="js-tilt-glare-inner"></div></div>'), this.glareElementWrapper = t(this).find(".js-tilt-glare"), this.glareElement = t(this).find(".js-tilt-glare-inner"), !i) {
+            var s = { position: "absolute", top: "0", left: "0", width: "100%", height: "100%" };
+            this.glareElementWrapper.css(s).css({ overflow: "hidden", "pointer-events": "none" }), this.glareElement.css({ position: "absolute", top: "50%", left: "50%", "background-image": "linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)", width: "" + 2 * t(this).outerWidth(), height: "" + 2 * t(this).outerWidth(), transform: "rotate(180deg) translate(-50%, -50%)", "transform-origin": "0% 0%", opacity: "0" });
+          }
+        },
+        d = function d() {
+          this.glareElement.css({ width: "" + 2 * t(this).outerWidth(), height: "" + 2 * t(this).outerWidth() });
+        };
+
+        return t.fn.tilt.destroy = function () {
+          t(this).each(function () {
+            t(this).find(".js-tilt-glare").remove(), t(this).css({ "will-change": "", transform: "" }), t(this).off("mousemove mouseenter mouseleave");
+          });
+        }, t.fn.tilt.getValues = function () {
+          var i = [];
+          return t(this).each(function () {
+            this.mousePositions = r.call(this), i.push(h.call(this));
+          }), i;
+        }, t.fn.tilt.reset = function () {
+          t(this).each(function () {
+            var i = this;
+            this.mousePositions = r.call(this), this.settings = t(this).data("settings"), l.call(this), setTimeout(function () {
+              i.reset = !1;
+            }, this.settings.transition);
+          });
+        }, this.each(function () {
+          var s = this;
+          this.settings = t.extend({ maxTilt: t(this).is("[data-tilt-max]") ? t(this).data("tilt-max") : 20, perspective: t(this).is("[data-tilt-perspective]") ? t(this).data("tilt-perspective") : 300, easing: t(this).is("[data-tilt-easing]") ? t(this).data("tilt-easing") : "cubic-bezier(.03,.98,.52,.99)", scale: t(this).is("[data-tilt-scale]") ? t(this).data("tilt-scale") : "1", speed: t(this).is("[data-tilt-speed]") ? t(this).data("tilt-speed") : "400", transition: !t(this).is("[data-tilt-transition]") || t(this).data("tilt-transition"), disableAxis: t(this).is("[data-tilt-disable-axis]") ? t(this).data("tilt-disable-axis") : null, axis: t(this).is("[data-tilt-axis]") ? t(this).data("tilt-axis") : null, reset: !t(this).is("[data-tilt-reset]") || t(this).data("tilt-reset"), glare: !!t(this).is("[data-tilt-glare]") && t(this).data("tilt-glare"), maxGlare: t(this).is("[data-tilt-maxglare]") ? t(this).data("tilt-maxglare") : 1 }, i), null !== this.settings.axis && (console.warn("Tilt.js: the axis setting has been renamed to disableAxis. See https://github.com/gijsroge/tilt.js/pull/26 for more information"), this.settings.disableAxis = this.settings.axis), this.init = function () {
+            t(s).data("settings", s.settings), s.settings.glare && c.call(s), e.call(s);
+          }, this.init();
+        });
+      }, t("[data-tilt]").tilt(), !0;
+    });
+  },
   components: {
-    Sidebar,
-    Modal,
+    Footer,
+    Layout,
   },
   data() {
     return {
-      montant_initial: 0,
-      montant_essentiel: 0,
-      montant_premium: 0,
-      contratsNonTraites: [],
-      contratsTraites: [],
-      showForm: false,
-      selectedContrat: null,
-      selectedSection: "non-traites", // Section sélectionnée par défaut
-      vehiculeInfo: {
-        matricule: "",
-        puissanceFiscale: 0,
-        dateMiseEnCirculation: "",
-        valeurNeuve: 0,
-        valeurVenale: 0,
-        marque_nom: "",
-        modele_nom: "",
-        type_motorisation_nom: "",
-        dateActuelle: new Date().toLocaleDateString(),
-
+      credentials: {
+        email: '',
+        password: ''
       },
-      clientInfo: {}, //ajouter les inormations du client
+      error: {
+        email: '',
+        password: '',
+        general: ''
+      } 
     };
   },
-  mounted() {
-    this.fetchContratsNonTraites();
-    this.fetchContratsTraites();
-    this.fetchVehiculeInfo();
-  },
   methods: {
-    fetchContratsNonTraites() {
-      axios
-        .get("admin/clients-devis-non-traités")
-        .then((response) => {
-          this.contratsNonTraites = response.data;
-          console.log(this.contratsNonTraites);
-          this.$nextTick(() => {
-            $("#contrats-non-traites").DataTable();
-          });
-        })
-        .catch((error) => {
-          console.error("There was an error fetching the non-traite contracts!", error);
-        });
-    },
-    fetchContratsTraites() {
-      axios
-        .get("admin/clients-devis-traités")
-        .then((response) => {
-          this.contratsTraites = response.data;
-          this.$nextTick(() => {
-            $("#contrats-traites").DataTable();
-          });
-        })
-        .catch((error) => {
-          console.error("There was an error fetching the traite contracts!", error);
-        });
-    },
-    showTraiterForm(contrat) {
-      this.selectedContrat = contrat;
-      this.fetchVehiculeInfo(contrat.matricule);
-      this.showForm = true;
-    },
-    fetchVehiculeInfo(matricule) {
-      axios
-        .get(`/vehicules/${matricule}`)
-        .then((response) => {
-          this.vehiculeInfo = response.data;
-          if (this.vehiculeInfo.marque_id) {
-            this.fetchMarqueName(this.vehiculeInfo.marque_id);
-          }
-          if (this.vehiculeInfo.modele_id) {
-            this.fetchModelName(this.vehiculeInfo.modele_id);
-          }
-          if (this.vehiculeInfo.type_motorisation_id) {
-            this.fetchTypeMotorisation(this.vehiculeInfo.type_motorisation_id);
-          }
-        })
-        .catch((error) => {
-          console.error("There was an error fetching the vehicle info!", error);
-        });
-    },
-    fetchMarqueName(marqueId) {
-      axios
-        .get(`marques/${marqueId}/nom`)
-        .then((response) => {
-          this.vehiculeInfo.marque_nom = response.data.nom;
-        })
-        .catch((error) => {
-          console.error("There was an error fetching the marque name!", error);
-        });
-    },
-    fetchModelName(modeleId) {
-      axios
-        .get(`models/${modeleId}/nom`)
-        .then((response) => {
-          this.vehiculeInfo.modele_nom = response.data;
-        })
-        .catch((error) => {
-          console.error("There was an error fetching the model name!", error);
-        });
-    },
-    fetchTypeMotorisation(typeMotorisationId) {
-      axios
-        .get(`TypeMotorisation/${typeMotorisationId}/nom`)
-        .then((response) => {
-          this.vehiculeInfo.type_motorisation_nom = response.data;
-        })
-        .catch((error) => {
-          console.error("There was an error fetching the type motorisation!", error);
-        });
-    },
-    closeForm() {
-      this.showForm = false;
-      this.selectedContrat = null;
-      this.vehiculeInfo = {};
-    },
-    traiterContrat() {
-      const formData = {
-        montant_initial: this.montant_initial,
-        montant_essentiel: this.montant_essentiel,
-        montant_premium: this.montant_premium,
-      };
-      axios
-        .put(`/devis/${this.selectedContrat.id_devis}`, formData)
-        .then((response) => {
-          alert("Les montants ont été enregistrés avec succès.");
-          this.closeForm();
-          this.fetchContratsNonTraites();
-          this.fetchContratsTraites();
-        })
-        .catch((error) => {
-          console.error(
-            "Une erreur s'est produite lors de l'enregistrement des montants.",
-            error
-          );
-        });
-      axios
-        .put(`/vehicules-statut/${this.selectedContrat.matricule}`)
-        .then((response) => {
-          alert("Le statut du véhicule a été mis à jour avec succès.");
-          this.closeForm();
-          this.fetchContratsNonTraites();
-          this.fetchContratsTraites();
-        })
-        .catch((error) => {
-          console.error("There was an error updating the vehicule status!", error);
-        });
-    },
-    sendEmailToClient(clientI) {
-      console.log(clientI);
-      axios
-        .post(`/send-email/${clientI}`)
-        .then((response) => {
-          alert("Email envoyé avec succès au client.");
-        })
-        .catch((error) => {
-          console.error("Une erreur s'est produite lors de l'envoi de l'email.", error);
-        });
-    },
-    handleSelect(section) {
-      this.selectedSection = section;
-    },
-    goToProfile() {
-      // Logique pour naviguer vers la page du profil de l'administrateur
-      // Cela pourrait être une redirection vers une autre route, par exemple :
-      this.$router.push("/admin-profile");
-    },
-  },
-};
+    async login() {
+     
+      if (!this.credentials.email || !this.credentials.password) {
+        this.error.general = 'Veuillez remplir tous les champs obligatoires.';
+        return;
+      }
+
+      try {
+        const response = await axios.post('/admin/login', this.credentials);
+        // Gérer la réponse
+        console.log(response.data);
+        this.$router.push({ name: "espace-admin" });
+
+      } catch (error) {
+        // Gérer les erreurs
+        this.error.email = error.response.data.errors.cin_not_exist || '';
+        this.error.password = error.response.data.errors.wrong_password || '';
+        this.error.general = 'Aucun enregistrement trouvé avec ces informations. Veuillez réessayer.';
+        console.error('Error:', error);
+      }
+    }
+  }
+}
+
+
 </script>
-/* Conteneur général pour ajuster le style de la page */
+
+
 <style scoped>
-.cards-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem; /* Ajoute de l'espace entre les cartes */
-  padding: 20px; /* Optionnel : Ajoute du padding autour des cartes */
+
+
+.text-center {
+  padding-top: 3%;
+}
+* {
+	margin: 0px; 
+	padding: 0px; 
+	box-sizing: border-box;
 }
 
-.card {
-  width: 190px;
-  height: 254px;
-  border-radius: 20px;
-  background: #f5f5f5;
-  position: relative;
-  padding: 1.8rem;
-  border: 2px solid #c3c6ce;
-  transition: 0.5s ease-out;
-  overflow: visible;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center; /* Centre le texte à l'intérieur de la carte */
+body, html {
+	height: 100%;
+	font-family: Poppins-Regular, sans-serif;
 }
 
-.card-details {
-  color: black;
-  height: 100%;
-  gap: 0.5em;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+/*---------------------------------------------*/
+a {
+	font-family: Poppins-Regular;
+	font-size: 14px;
+	line-height: 1.7;
+	color: #666666;
+	margin: 0px;
+	transition: all 0.4s;
+	-webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
 }
 
-.card-button {
-  transform: translate(-50%, 125%);
-  width: 60%;
-  border-radius: 1rem;
+a:focus {
+	outline: none !important;
+}
+
+
+
+/*---------------------------------------------*/
+h1,h2,h3,h4,h5,h6 {
+	margin: 0px;
+}
+
+p {
+	font-family: Poppins-Regular;
+	font-size: 14px;
+	line-height: 1.7;
+	color: #666666;
+	margin: 0px;
+}
+
+ul, li {
+	margin: 0px;
+	list-style-type: none;
+}
+
+
+/*---------------------------------------------*/
+input {
+	outline: none;
+	border: none;
+}
+
+textarea {
+  outline: none;
   border: none;
-  background-color: #008bf8;
-  color: #fff;
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
+}
+
+textarea:focus, input:focus {
+  border-color: transparent !important;
+}
+
+input:focus::-webkit-input-placeholder { color:transparent; }
+input:focus:-moz-placeholder { color:transparent; }
+input:focus::-moz-placeholder { color:transparent; }
+input:focus:-ms-input-placeholder { color:transparent; }
+
+textarea:focus::-webkit-input-placeholder { color:transparent; }
+textarea:focus:-moz-placeholder { color:transparent; }
+textarea:focus::-moz-placeholder { color:transparent; }
+textarea:focus:-ms-input-placeholder { color:transparent; }
+
+input::-webkit-input-placeholder { color: #999999; }
+input:-moz-placeholder { color: #999999; }
+input::-moz-placeholder { color: #999999; }
+input:-ms-input-placeholder { color: #999999; }
+
+textarea::-webkit-input-placeholder { color: #999999; }
+textarea:-moz-placeholder { color: #999999; }
+textarea::-moz-placeholder { color: #999999; }
+textarea:-ms-input-placeholder { color: #999999; }
+
+/*---------------------------------------------*/
+.login100-form-btn {
+	outline: none !important;
+	border: none;
+	background: transparent;
+}
+
+.login100-form-btn button:hover {
+	cursor: pointer;
+}
+
+iframe {
+	border: none !important;
+}
+
+
+/*//////////////////////////////////////////////////////////////////
+[ Utility ]*/
+.txt1 {
+  font-family: Poppins-Regular;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #999999;
+}
+
+.txt2 {
+  font-family: Poppins-Regular;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #666666;
+}
+
+
+/*//////////////////////////////////////////////////////////////////
+[ login ]*/
+
+.limiter {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.container-login100 {
+  width: 100%;  
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background: linear-gradient(45deg, #298cc5, #f5f5f5);
+ 
+}
+
+.wrap-login100 {
+  width: 960px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 77px 130px 33px 95px;
+}
+
+/*------------------------------------------------------------------
+[  ]*/
+.login100-pic {
+  width: 316px;
+}
+
+.login100-pic img {
+  max-width: 100%;
+}
+
+
+/*------------------------------------------------------------------
+[  ]*/
+.login100-form {
+  width: 290px;
+}
+
+.login100-form-title {
+  font-family: Bold;
+  font-size: 24px;
+  color: #333333;
+  line-height: 1.2;
+  text-align: center;
+font-weight: 600;
+
+  width: 100%;
+  display: block;
+  padding-bottom: 54px;
+}
+
+
+/*---------------------------------------------*/
+.wrap-input100 {
+  position: relative;
+  width: 100%;
+  z-index: 1;
+  margin-bottom: 10px;
+}
+
+.input100 {
+  font-family: Poppins-Medium;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #666666;
+
+  display: block;
+  width: 100%;
+  background: #e6e6e6;
+  height: 50px;
+  border-radius: 25px;
+  padding: 0 30px 0 68px;
+}
+
+
+/*------------------------------------------------------------------
+[ Focus ]*/
+.focus-input100 {
+  display: block;
   position: absolute;
-  left: 50%;
+  border-radius: 25px;
   bottom: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0px 0px 0px 0px;
+  color: #298cc5;
+}
+
+.input100:focus + .focus-input100 {
+  -webkit-animation: anim-shadow 0.5s ease-in-out forwards;
+  animation: anim-shadow 0.5s ease-in-out forwards;
+}
+
+@-webkit-keyframes anim-shadow {
+  to {
+    box-shadow: 0px 0px 70px 25px;
+    opacity: 0;
+  }
+}
+
+@keyframes anim-shadow {
+  to {
+    box-shadow: 0px 0px 70px 25px;
+    opacity: 0;
+  }
+}
+
+.symbol-input100 {
+  font-size: 15px;
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  border-radius: 25px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding-left: 35px;
+  pointer-events: none;
+  color: #666666;
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.input100:focus + .focus-input100 + .symbol-input100 {
+  color: #57b846;
+  padding-left: 28px;
+}
+
+/*------------------------------------------------------------------
+[ Button ]*/
+.container-login100-form-btn {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.login100-form-btn {
+  font-family: Montserrat-Bold;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #fff;
+  text-transform: uppercase;
+
+  width: 100%;
+  height: 50px;
+  border-radius: 25px;
+  background: #57b846;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 25px;
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.login100-form-btn:hover {
+  background: #333333;
+}
+
+
+
+/*------------------------------------------------------------------
+[ Responsive ]*/
+
+
+
+@media (max-width: 992px) {
+  .wrap-login100 {
+    padding: 177px 90px 33px 85px;
+  }
+
+  .login100-pic {
+    width: 35%;
+  }
+
+  .login100-form {
+    width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .wrap-login100 {
+    padding: 100px 80px 33px 80px;
+  }
+
+  .login100-pic {
+    display: none;
+  }
+
+  .login100-form {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .wrap-login100 {
+    padding: 100px 15px 33px 15px;
+  }
+}
+
+
+/*------------------------------------------------------------------
+[ Alert validate ]*/
+
+.validate-input {
+  position: relative;
+}
+
+.alert-validate::before {
+  content: attr(data-validate);
+  position: absolute;
+  max-width: 70%;
+  background-color: white;
+  border: 1px solid #c80000;
+  border-radius: 13px;
+  padding: 4px 25px 4px 10px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 8px;
+  pointer-events: none;
+
+  font-family: Poppins-Medium;
+  color: #c80000;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: left;
+
+  visibility: hidden;
   opacity: 0;
-  transition: 0.3s ease-out;
+
+  -webkit-transition: opacity 0.4s;
+  -o-transition: opacity 0.4s;
+  -moz-transition: opacity 0.4s;
+  transition: opacity 0.4s;
 }
 
-.text-body {
-  color: rgb(134, 134, 134);
+.alert-validate::after {
+  content: "\f06a";
+  font-family: FontAwesome;
+  display: block;
+  position: absolute;
+  color: #c80000;
+  font-size: 15px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 13px;
 }
 
-/*Text*/
-.text-title {
-  font-size: 1.5em;
-  font-weight: bold;
-}
-
-/*Hover*/
-.card:hover {
-  border-color: #008bf8;
-  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
-}
-
-.card:hover .card-button {
-  transform: translate(-50%, 50%);
+.alert-validate:hover:before {
+  visibility: visible;
   opacity: 1;
 }
-.admin-comp {
-  display: flex;
-  background-color: #f0f2f5;
-}
 
-.dash {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #004085;
-  padding: 1rem;
-  color: #ffffff;
-}
-
-.navbar a {
-  color: #ffffff;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.navbar a:hover {
-  text-decoration: underline;
-}
-
-.content {
-  padding: 20px;
-}
-
-.cards-container {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 20px;
-}
-
-.card {
-  width: 190px;
-  height: 254px;
-  border-radius: 20px;
-  background: #ffffff;
-  position: relative;
-  padding: 1.8rem;
-  border: 2px solid #c3c6ce;
-  transition: 0.5s ease-out;
-  overflow: visible;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
-}
-
-.card-details {
-  color: black;
-  text-align: center;
-}
-
-.text-body {
-  color: rgb(134, 134, 134);
-}
-
-.text-title {
-  font-size: 1.5em;
-  font-weight: bold;
-  margin-bottom: 0.5em;
-}
-
-/* Styles pour les tables */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-  font-size: 1em;
-  text-align: left;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
-}
-
-thead tr {
-  background-color: #009879;
-  color: #ffffff;
-  text-align: left;
-}
-
-th,
-td {
-  padding: 12px 15px;
-  border: 1px solid #dddddd;
-}
-
-tbody tr:nth-child(even) {
-  background-color: #f3f3f3;
-}
-
-tbody tr:nth-child(odd) {
-  background-color: #ffffff;
-}
-
-tbody tr:hover {
-  background-color: #f1f1f1;
-  cursor: pointer;
-}
-
-button {
-  background-color: #008bf8;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #006bb8;
-}
-
-h2 {
-  color: #333;
-  margin-top: 30px;
-  font-size: 1.5em;
-  border-bottom: 2px solid #009879;
-  padding-bottom: 0.5em;
-}
-
-/* Styles pour la modal */
-.styled-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.styled-form .form-group {
-  margin-bottom: 1em;
-}
-
-.styled-form label {
-  margin-bottom: 0.5em;
-  color: #333333;
-}
-
-.styled-form input[type="text"],
-.styled-form input[type="date"],
-.styled-form input[type="number"] {
-  width: 100%;
-  padding: 0.5em;
-  border: 1px solid #dddddd;
-  border-radius: 5px;
-}
-
-.styled-form button {
-  align-self: flex-end;
-  padding: 0.5em 1em;
-  border: none;
-  border-radius: 5px;
-  background-color: #008bf8;
-  color: #ffffff;
-  cursor: pointer;
-}
-
-.styled-form button:hover {
-  background-color: #006bb8;
+@media (max-width: 992px) {
+  .alert-validate::before {
+    visibility: visible;
+    opacity: 1;
+  }
 }
 </style>

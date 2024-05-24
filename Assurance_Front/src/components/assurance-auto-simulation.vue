@@ -153,6 +153,7 @@
 .formsbutt h1{
   color: #165e85;
   text-align: center;
+  background-color: rgb(232 233 234);
   
 }
 
