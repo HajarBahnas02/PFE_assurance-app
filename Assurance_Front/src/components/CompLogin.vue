@@ -455,6 +455,7 @@ export default {
         .then(({ data }) => {
           if (data.status === true) {
             this.$router.push({ name: "espace-client" });
+            localStorage.setItem('auth_token', data.token);
           } else {
             // Réinitialiser les erreurs
             this.errors = data.errors || {};

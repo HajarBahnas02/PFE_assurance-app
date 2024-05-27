@@ -57,7 +57,7 @@
   padding: 10px;
   border: none;
   border-radius: 3px;
-  background-color: #007bff;
+  background: linear-gradient(45deg, #298cc5, #f5f5f5);
   color: #fff;
   cursor: pointer;
 }

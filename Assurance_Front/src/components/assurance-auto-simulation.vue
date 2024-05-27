@@ -372,8 +372,9 @@ export default {
       puissancesfisc: [],
       villes: [],
       errors: {},
-      errorsCl: {}
-    };
+      errorsCl: {},
+       loading: false,
+ };
   },
   created() {
     this.fetchData();
@@ -479,25 +480,25 @@ export default {
       return Object.keys(this.errors).length === 0 && Object.keys(this.errorsCl).length === 0;
     },
     submitForm() {
+      this.loading = true;
       if (this.validateForm()) {
-        axios.post('vehicules', this.form)
+        axios.post('vehicules', this.form,{}, { timeout: 10000 })
           .then(response => {
-            alert('Véhicule créé avec succès!');
+            //alert('Véhicule créé avec succès!');
             // Une fois le véhicule ajouté avec succès, récupérez l'ID client
             axios.post('/clients_form', this.formCl)
               .then(clientResponse => {
                 const clientId = clientResponse.data.client.id;
-                alert('Client ajouté avec succès!');
+               // alert('Client ajouté avec succès!');
                 // Ensuite, créez le devis avec l'ID client récupéré
                 const devisData = {
                   matricule: this.form.matricule,
                   client_id: clientId,
                   date_debut: this.formDev.dateDebut,
-                  // Autres champs de devis si nécessaire
                 };
                 axios.post('/enregistrer', devisData)
                   .then(devisResponse => {
-                    alert('Devis créé avec succès!');
+                    //alert('Devis créé avec succès!');
                     this.resetForm();
                   })
                   .catch(error => {
@@ -510,7 +511,10 @@ export default {
           })
           .catch(error => {
             console.error('Erreur lors de la création du véhicule:', error);
-          });
+          })
+          .finally(() => {
+        this.loading = false;
+      });
           this.$router.push('/devis');
       }
     },

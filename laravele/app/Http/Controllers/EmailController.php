@@ -18,7 +18,7 @@ class EmailController extends Controller
         }
     
         // Générer l'URL avec l'ID du client inclus
-        $baseUrl = 'http://localhost:5173/tarification/' . $clientId;
+        $baseUrl = 'http://localhost:5173/tarifications/' . $clientId;
     
         // Envoyer l'e-mail avec l'URL générée
         Mail::send(new ContratTraiteMail($baseUrl, $client->email));

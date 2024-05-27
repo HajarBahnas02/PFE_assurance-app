@@ -28,7 +28,7 @@
   align-items: center;
   height: 100vh;
   cursor: default; 
-  background-color: #298cc5;
+  background: linear-gradient(45deg, #298cc5, #f5f5f5);
 }
 
 .reset-password-container {

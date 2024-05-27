@@ -5,6 +5,8 @@ use App\Models\Ville;
 use App\Models\Client;
 use App\Services\TwilioService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use Symfony\Contracts\Service\Attribute\Required;
 
 class ClientController extends Controller
@@ -23,7 +25,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        
     }
     protected $twilioService;
 
@@ -81,12 +83,25 @@ class ClientController extends Controller
     {
         return Ville::all();
     }
-    /**
+    /*
      * Display the specified resource.
-     */
+    
     public function show($id)
     {
         $client = Client::with('ville')->findOrFail($id);
+        return response()->json($client);
+    } */
+    public function show($id)
+    {
+        $client = Client::join('villes', 'clients.ville_id', '=', 'villes.id')
+            ->select('clients.*', 'villes.nomVille as ville_nom')
+            ->where('clients.id', $id)
+            ->first();
+
+        if (!$client) {
+            return response()->json(['message' => 'Client not found'], 404);
+        }
+
         return response()->json($client);
     }
 
@@ -97,15 +112,36 @@ class ClientController extends Controller
     {
         //
     }
+ 
+  /*  public function update(Request $request)
+    {
+        // Récupère l'utilisateur actuellement authentifié
+        $client = Auth::user();
 
-    /**
-     * Update the specified resource in storage.
-     */
+        // Met à jour les informations du client avec les données fournies dans la requête,
+        // sauf le mot de passe
+        $client->update($request->except('password'));
+
+        // Vérifie si la requête contient un champ 'password'
+        if ($request->has('password')) {
+            // Si un mot de passe est fourni, il est haché avant d'être enregistré
+            $client->password = bcrypt($request->password);
+            // Sauvegarde l'instance du client avec le mot de passe mis à jour
+            $client->save();
+        }
+
+        // Retourne la réponse en JSON avec les informations mises à jour du client
+        return response()->json($client);
+    }*/
+
+    /*
+      Update the specified resource in storage.
+    
     public function update(Request $request, Client $client)
     {
-        //
+        
     }
-
+ */
     /**
      * Remove the specified resource from storage.
      */

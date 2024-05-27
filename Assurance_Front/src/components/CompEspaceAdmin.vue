@@ -39,7 +39,6 @@
               <tr>
                 <th>ID Devis</th>
                 <th>Nom</th>
-                <th>id</th>
                 <th>Prénom</th>
                 <th>Téléphone</th>
                 <th>Email</th>
@@ -52,7 +51,6 @@
               <tr v-for="(contrat, index) in displayedNonTraites" :key="contrat.id_devis">
                 <td>{{ contrat.id_devis }}</td>
                 <td>{{ contrat.client_nom }}</td>
-                <td>{{contrat.id_client}}</td>
                 <td>{{ contrat.client_prenom }}</td>
                 <td>{{ contrat.client_telephone }}</td>
                 <td>{{ contrat.client_email }}</td>
@@ -68,7 +66,6 @@
             <thead>
               <tr>
                 <th>ID Devis</th>
-                <th>Id client</th>
                 <th>Nom</th>
                 <th>Prénom</th>
                 <th>Téléphone</th>
@@ -80,7 +77,6 @@
             <tbody>
               <tr v-for="(contrat, index) in displayedTraites" :key="contrat.id_devis">
                 <td>{{ contrat.id_devis }}</td>
-                 <td>{{contrat.id_client}}</td>
                 <td>{{ contrat.client_nom }}</td>
                 <td>{{ contrat.client_prenom }}</td>
                 <td>{{ contrat.client_telephone }}</td>
@@ -190,11 +186,40 @@
           </Modal>
         </div>
       </div>
+      <div v-if="loading" class="spinner-overlay">
+        <div class="spinner"></div>
+      </div>
     </div>
+    
   </template>
   
   <style scoped>
+  .spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
   
+  .spinner {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
   .card {
     background-color: #fff;
     padding: 20px;
@@ -445,10 +470,11 @@
           type_motorisation_nom: "",
         },
         clientInfo: {
-          ville:"",
+          ville_nom:"",
           date_naissance:"",
         },
         dateActuelle: new Date().toLocaleDateString(),
+        loading: false,
       };
     },
     mounted() {
@@ -469,6 +495,7 @@
     },
     methods: {
       fetchContratsNonTraites() {
+        this.loading = true;
         axios
           .get("admin/clients-devis-non-traités")
           .then((response) => {
@@ -476,9 +503,14 @@
           })
           .catch((error) => {
             console.error("There was an error fetching the non-traite contracts!", error);
-          });
+          })
+          .finally(() => {
+        this.loading = false;
+      });
       },
       fetchContratsTraites() {
+        this.loading = true;
+
         axios
           .get("admin/clients-devis-traités")
           .then((response) => {
@@ -486,20 +518,25 @@
           })
           .catch((error) => {
             console.error("There was an error fetching the traite contracts!", error);
-          });
+          })
+          .finally(() => {
+        this.loading = false;
+      });
       },
       showTraiterForm(contrat) {
         this.selectedContrat = contrat;
         this.fetchVehiculeInfo(contrat.matricule);
+        this.fetchClientInfo(contrat.id_client);
         this.showForm = true;
       },
       fetchClientInfo(id_client) {
         axios
           .get(`clients/${id_client}`)
           .then((response) => {
-            this.clientInfo = response.data;
+            this.clientInfo = { ...this.clientInfo, ...response.data };
+          console.log("Client Info:", this.clientInfo);
             console.log(id_client);
-            console.log("Client Info:", this.clientInfo);
+        
           })
           .catch((error) => {
             console.error("There was an error fetching the client info!", error);
@@ -568,11 +605,22 @@
         this.vehiculeInfo = {};
       },
       traiterContrat() {
+        this.loading = true;
         const formData = {
           montant_initial: this.montant_initial,
           montant_essentiel: this.montant_essentiel,
           montant_premium: this.montant_premium,
         };
+        axios.put(`/vehicules-statut/${this.selectedContrat.matricule}`, {}, { timeout: 10000 }) // 10 secondes
+  .then((response) => {
+    console.log("Vehicule status updated successfully!", response.data);
+  })
+  .catch((error) => {
+    console.error("There was an error updating the vehicule status!", error);
+  }) 
+  .finally(() => {
+        this.loading = false;
+      });
         axios
           .put(`/devis/${this.selectedContrat.id_devis}`, formData)
           .then((response) => {
@@ -584,6 +632,7 @@
           .catch((error) => {
             console.error("There was an error updating the vehicule status!", error);
           });
+  
       },
       sendEmailToClient(clientI) {
         console.log(clientI);
@@ -594,7 +643,10 @@
           })
           .catch((error) => {
             console.error("Une erreur s'est produite lors de l'envoi de l'email.", error);
-          });
+          })
+          .finally(() => {
+        this.loading = false;
+      });
       },
       handleSelect(section) {
         this.selectedSection = section;

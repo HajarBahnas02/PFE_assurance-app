@@ -19,8 +19,10 @@ use App\Http\Controllers\TarificationController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Models\Offre;
+use App\Http\Controllers\LogoutController;
 use App\Models\OptionAssistance;
 use Illuminate\Http\Request;
+use App\Http\Controllers\EspaceClientController;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Mailer\Transport\Smtp\Auth\LoginAuthenticator;
 
@@ -109,4 +111,14 @@ Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink
 */
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
 Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
-////
+
+
+
+////Routes Espace Client 
+//Route::middleware('auth:sanctum')->get('client', [ClientController::class, 'shows']);
+//Route::middleware('auth:sanctum')->put('client', [ClientController::class, 'update']);
+//Route::middleware('auth:client')->get('/client-infos', [ClientController::class, 'show']);
+//Route::middleware('auth:sanctum')->get('/client', [ClientController::class, 'show']);
+Route::middleware('auth:sanctum')->get('/espace-client/info', [EspaceClientController::class,'getInfoClient']);
+Route::post('/logout', [LogoutController::class, 'logout']);
+

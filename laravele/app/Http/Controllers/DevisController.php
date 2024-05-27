@@ -7,7 +7,6 @@ use App\Models\Offre;
 use App\Models\Vehicule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-
 class DevisController extends Controller
 {
     /**
@@ -155,7 +154,17 @@ public function ajouter(Request $request, $numero_devis)
 
     return response()->json(['message' => 'Montants du devis mis à jour avec succès!']);
 }
-
+public function update_status($matricule)
+{
+    $vehicule = Vehicule::where('matricule', $matricule)->first();
+    if ($vehicule) {
+        $vehicule->statut = 'traitee';
+        $vehicule->save();
+        Mail::to($vehicule->client->email)->send(new DevisTraiteMail($vehicule->client));
+        return response()->json(['message' => 'Statut mis à jour avec succès et email envoyé au client.']);
+    }
+    return response()->json(['message' => 'Véhicule non trouvé.'], 404);
+}
     
     public function create()
     {

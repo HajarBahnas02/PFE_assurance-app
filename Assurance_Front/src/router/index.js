@@ -34,15 +34,25 @@ const routes = [
   {path: '/devis', component: CompDevis, name: 'devis'},
   {path: '/dashboard', component: Dashboard, name: 'dashboard'},
   {path: '/tarifications/:clientId', component: CompTarification, name: 'tarification',  props: true,},
-  {path: '/reset-password/:token',name: 'ResetPassword',component: ResetPassword, props: true
-    
-  }
+ {path: '/reset-password/:token',name: 'ResetPassword',component: ResetPassword, props: true},
+
+
+//  { path: '/espace-client', component: CompEspaceClient, meta: { requiresAuth: true } },
+
 
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes
+});
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = localStorage.getItem('token') !== null;
+  if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
+    next('/login');
+  } else {
+    next();
+  }
 });
 
 export default router;
