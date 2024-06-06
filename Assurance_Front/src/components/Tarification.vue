@@ -1,4 +1,4 @@
-<template>
+n<template>
   <div>
     <Layout />
     <div class="tarification">

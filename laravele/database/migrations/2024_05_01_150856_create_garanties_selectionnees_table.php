@@ -24,9 +24,9 @@ return new class extends Migration
         
                             
         $associations = [
-            1 => [1, 2, 3, 4], // Offre d'id 1 correspondant aux garanties 1, 2, 3, 4
-            2 => [1, 2, 3, 4, 5, 6, 7, 8, 9], // Offre d'id 2 correspondant aux garanties 1 à 9
-            3 => [1, 2, 3, 4, 5, 6, 7, 8, 9], // Offre d'id 3 correspondant aux garanties 1 à 9
+            1 => [1, 2, 3, 4], // Offre INITIAL d'id 1 correspondant aux garanties 1, 2, 3, 4
+            2 => [1, 2, 3, 4, 5, 6, 7, 8, 9], // Offre ESSENTIEL d'id 2 correspondant aux garanties 1 à 9
+            3 => [1, 2, 3, 4, 5, 6, 7, 8, 10], // Offre  PREMIUM d'id 3 correspondant aux garanties 1 à 9
         ];
         
         // Construire un tableau de données pour l'insertion

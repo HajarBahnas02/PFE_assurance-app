@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Vehicule;
 use App\Models\Contrat;
+use App\Models\Devis;
 use Illuminate\Http\Request;
 use App\Mail\ContratTraiteMail;
 use Illuminate\Support\Facades\Mail;
@@ -20,13 +21,15 @@ class ContratController extends Controller
 
         $contratData = $contrats->map(function($contrat) {
             return [
-                'numero_devis' => $contrat->numero_devis,
+                'id_contrat' => $contrat->id_contrat,                
                 'nom' => $contrat->client->nom,
                 'prenom' => $contrat->client->prenom,
                 'telephone' => $contrat->client->telephone,
                 'email'=>$contrat->client->email,
-                'vehicule_matricule' => $contrat->vehicule_matricule,
+                'matricule' => $contrat->matricule,
                 'date_debut' => $contrat->date_debut,
+                'date_fin' => $contrat->date_fin,
+
             ];
         });
 
@@ -58,6 +61,8 @@ class ContratController extends Controller
                 'client_email'=>$contrat->client->email,
                 'vehicule_matricule' => $contrat->vehicule_matricule,
                 'date_debut' => $contrat->date_debut,
+
+
             ];
         });
 
@@ -80,6 +85,7 @@ class ContratController extends Controller
                 'client_email'=>$contrat->client->email,
                 'vehicule_matricule' => $contrat->vehicule_matricule,
                 'date_debut' => $contrat->date_debut,
+
             ];
         });
 
@@ -96,7 +102,26 @@ class ContratController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'client_id' => 'required|exists:clients,id',
+            'devis_id' => 'required|exists:devis,id',
+            'offre_id' => 'required|exists:offres,id',
+            'montant_assurance' => 'required|numeric',
+        ]);
+    
+        // Récupérer le devis associé au contrat
+        $devis = Devis::findOrFail($request->devis_id);
+    
+        // Créer un nouveau contrat
+        $contrat = new Contrat();
+        $contrat->id_contrat = $devis->numero_devis; // Utilisez le numéro de devis récupéré depuis le devis
+        $contrat->client_id = $request->client_id;
+        $contrat->id_devis = $request->devis_id;
+        $contrat->id_offre = $request->offre_id;
+        $contrat->montant_assurance = $request->montant_assurance;
+        $contrat->save();
+    
+        return response()->json(['message' => 'Contrat créé avec succès.']);
     }
 
     /**
@@ -115,9 +140,9 @@ class ContratController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    /*
+     Update the specified resource in storage.
+   
     public function update($matricule)
     {
         $vehicule = Vehicule::where('matricule', $matricule)->first();
@@ -128,7 +153,7 @@ class ContratController extends Controller
             return response()->json(['message' => 'Statut mis à jour avec succès et email envoyé au client.']);
         }
         return response()->json(['message' => 'Véhicule non trouvé.'], 404);
-    }
+    }  */
 
     /**
      * Remove the specified resource from storage.

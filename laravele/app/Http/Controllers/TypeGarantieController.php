@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TypeGarantie;
 use Illuminate\Http\Request;
+use App\Models\OptionGarantie;
 
 class TypeGarantieController extends Controller
 {
@@ -12,7 +13,14 @@ class TypeGarantieController extends Controller
      */
     public function index()
     {
-        //
+        $garanties = TypeGarantie::with('optionsGaranties')->get();
+        return response()->json($garanties);
+    }
+
+    public function getOptions($id)
+    {
+        $options = OptionGarantie::where('garantie_id', $id)->get();
+        return response()->json($options);
     }
 
     /**

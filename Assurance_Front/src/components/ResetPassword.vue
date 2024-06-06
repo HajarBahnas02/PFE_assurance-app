@@ -1,24 +1,29 @@
-<template> <Layout />
-  <div class="cont-pass"> 
+<template>
+  <div>
+  <Layout />
+  <div class="cont-pass">
     <div class="reset-password-container">
       <h3>Réinitialisation de mot de passe</h3>
       <form @submit.prevent="resetPassword" class="reset-password-form">
         <div>
           <label for="password">Nouveau mot de passe:</label>
-          <input type="password" id="password" v-model="password" required>
+          <input type="password" id="password" v-model="password" required />
         </div>
         <div>
           <label for="password_confirmation">Confirmer le nouveau mot de passe:</label>
-          <input type="password" id="password_confirmation" v-model="passwordConfirmation" required>
-        </div> 
+          <input
+            type="password"
+            id="password_confirmation"
+            v-model="passwordConfirmation"
+            required
+          />
+        </div>
         <div v-if="message" class="message">{{ message }}</div>
-
-        <!-- Utilisation de router-link pour naviguer vers la page /login -->
         <button type="submit">Réinitialiser le mot de passe</button>
-
       </form>
     </div>
   </div>
+</div>
 </template>
 
 <style>
@@ -27,19 +32,18 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  cursor: default; 
+  cursor: default;
   background: linear-gradient(45deg, #298cc5, #f5f5f5);
 }
 
 .reset-password-container {
   width: 40%;
-  height:auto;
+  height: auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #f9f9f9;
 }
-
 
 .reset-password-form div {
   margin-bottom: 10px;
@@ -78,7 +82,6 @@
 }
 </style>
 
-
 <script>
 import axios from "../router/axios-config.js";
 
@@ -92,42 +95,41 @@ export default {
   },
   data() {
     return {
-      email: '', // Vous devez récupérer l'email depuis l'URL ou un autre moyen
-      token: '', // Vous devez récupérer le token depuis l'URL ou un autre moyen
-      password: '',
-      passwordConfirmation: '',
-      message: '',
+      email: "", // Vous devez récupérer l'email depuis l'URL ou un autre moyen
+      token: "", // Vous devez récupérer le token depuis l'URL ou un autre moyen
+      password: "",
+      passwordConfirmation: "",
+      message: "",
     };
   },
   mounted() {
     // Extraire l'email et le token de l'URL
     const urlParams = new URLSearchParams(window.location.search);
-    this.email = urlParams.get('email');
+    this.email = urlParams.get("email");
     this.token = this.$route.params.token; // Assurez-vous que votre route Vue inclut le token
   },
   methods: {
     resetPassword() {
       if (this.password !== this.passwordConfirmation) {
         this.message = "Les mots de passe ne correspondent pas.";
-        return; // Arrêter l'exécution de la méthode
+        return;
       }
-      axios.post('/reset-password', {
-        email: this.email,
-        token: this.token,
-        password: this.password,
-        password_confirmation: this.passwordConfirmation,
-      })
-      .then(response => {
-        this.message = response.data.message;
-        alert("Mot de passe réinitialisé avec succès.");
-        this.$router.push('/login');
-      })
-      .catch(error => {
-        this.message = error.response.data.message;
-      });
+      axios
+        .post("/reset-password", {
+          email: this.email,
+          token: this.token,
+          password: this.password,
+          password_confirmation: this.passwordConfirmation,
+        })
+        .then((response) => {
+          this.message = response.data.message;
+          alert("Mot de passe réinitialisé avec succès.");
+          this.$router.push("/login");
+        })
+        .catch((error) => {
+          this.message = error.response.data.message;
+        });
     },
   },
 };
 </script>
-
-

@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('vehicules', function (Blueprint $table) {
-            $table->string('matricule',50)->primary();
+            $table->string('matricule', 50)->primary()->collation('utf8mb4_unicode_ci'); // Définir la collation
             $table-> integer('puissanceFiscale')->unsigned()->check('puissanceFiscale BETWEEN 1 AND 100');
             $table->date('dateMiseEnCirculation'); 
             $table->float('valeurNeuve');

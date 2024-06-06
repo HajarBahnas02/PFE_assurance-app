@@ -95,13 +95,74 @@
         </div>
       </div>
       </div>
-
-
   </div>
    </div>
-  
 </template>
 
+
+<script>
+import axios from "../router/axios-config.js";
+import Footer from "../views-home/Footer.vue";
+import Layout from "../views-home/Layout.vue";
+export default {
+  name: "Login",
+  components: {
+    Footer,
+    Layout,
+  },
+  data() {
+    return {
+      loading: false,
+      client: {
+        email: "",
+        password: "",
+      },
+      remember: false, // Nouvelle propriété pour Se souvenir de moi
+      submitted: false,
+      errors: {},
+    };
+  },
+  methods: {
+    loginData() {
+      this.submitted = true;
+      this.loading = true;
+
+      axios.post('/client/login', this.client)
+        .then(({ data }) => {
+          if (data.status === true) {
+            this.$router.push('/espace-client');
+            localStorage.setItem('auth_token', data.token);
+          } else {
+            // Réinitialiser les erreurs
+            this.errors = data.errors || {};
+            this.resetForm();
+
+          }
+        })
+        .catch(error => {
+          // Vérifier si l'erreur est due à une authentification échouée
+          if (error.response && error.response.status === 400) {
+            this.errors = error.response.data.errors || {};
+          } else {
+            console.error("Erreur de connexion:", error);
+            alert("Une erreur s'est produite, veuillez réessayer.");
+          }
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    resetForm() {
+      this.client.email = "";
+      this.client.password = "";
+    },
+    toggleMenu() {
+      const closeBtn = document.querySelector(".close-btn");
+      closeBtn.classList.toggle("open");
+    },
+  },
+};
+</script>
 <style>
 .error-message {
   color:red;
@@ -424,66 +485,3 @@ button:hover {
 
 
 </style>
-<script>
-import axios from "../router/axios-config.js";
-import Footer from "../views-home/Footer.vue";
-import Layout from "../views-home/Layout.vue";
-export default {
-  name: "Login",
-  components: {
-    Footer,
-    Layout,
-  },
-  data() {
-    return {
-      loading: false,
-      client: {
-        email: "",
-        password: "",
-      },
-      remember: false, // Nouvelle propriété pour Se souvenir de moi
-      submitted: false,
-      errors: {},
-    };
-  },
-  methods: {
-    loginData() {
-      this.submitted = true;
-      this.loading = true;
-
-      axios.post("/login", this.client)
-        .then(({ data }) => {
-          if (data.status === true) {
-            this.$router.push({ name: "espace-client" });
-            localStorage.setItem('auth_token', data.token);
-          } else {
-            // Réinitialiser les erreurs
-            this.errors = data.errors || {};
-            this.resetForm();
-
-          }
-        })
-        .catch(error => {
-          // Vérifier si l'erreur est due à une authentification échouée
-          if (error.response && error.response.status === 400) {
-            this.errors = error.response.data.errors || {};
-          } else {
-            console.error("Erreur de connexion:", error);
-            alert("Une erreur s'est produite, veuillez réessayer.");
-          }
-        })
-        .finally(() => {
-          this.loading = false;
-        });
-    },
-    resetForm() {
-      this.client.email = "";
-      this.client.password = "";
-    },
-    toggleMenu() {
-      const closeBtn = document.querySelector(".close-btn");
-      closeBtn.classList.toggle("open");
-    },
-  },
-};
-</script>

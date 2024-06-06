@@ -1,11 +1,9 @@
 <?php
-
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-
+use Carbon\Carbon;
 
 return new class extends Migration
 {
@@ -14,53 +12,57 @@ return new class extends Migration
      */
     public function up(): void
     {
-        {
-            Schema::create('contrats', function (Blueprint $table) {
-                $table->id();
-                $table->foreignId('client_id')->constrained('clients')->onDelete('cascade');
-                $table->string('vehicule_matricule', 50);
-                $table->foreign('vehicule_matricule')->references('matricule')->on('vehicules')->onDelete('cascade');
-                $table->string('numero_devis')->unique();
-                $table->date('date_debut');
-                $table->date('date_fin');
-                $table->float('montant_assurance');
-                $table->string('statut')->default('non-traitee');
-                $table->timestamps();
-            });
-            DB::table('contrats')->insert([
-                'client_id' => 1,
-                'vehicule_matricule' => 'ABC123',
-                'numero_devis' => 'DEV-' . Str::upper(Str::random(10)),
-                'date_debut' => '2024-05-15',
-                'date_fin' => '2025-05-15',
-                'montant_assurance' => 500.00,
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
-            DB::table('contrats')->insert([
-                'client_id' => 4,
-                'vehicule_matricule' => 'DEF123',
-                'numero_devis' => 'DEV-' . Str::upper(Str::random(10)),
-                'date_debut' => '2024-06-15',
-                'date_fin' => '2025-09-15',
-                'montant_assurance' => 500.00,
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);   
-              DB::table('contrats')->insert([
-                'client_id' => 5,
-                'vehicule_matricule' => 'FGH123',
-                'numero_devis' => 'DEV-' . Str::upper(Str::random(10)),
-                'date_debut' => '2024-05-15',
-                'date_fin' => '2025-02-5',
-                'montant_assurance' => 500.00,
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
-            
-    }
-}
+        Schema::create('contrats', function (Blueprint $table) {
+            $table->id();
+            $table->string('id_contrat')->unique()->collation('utf8mb4_unicode_ci');
+            $table->foreignId('client_id')->constrained('clients');
+           $table->foreignId('id_devis')->constrained('devis');
+           $table->foreignId('id_offre')->constrained('offres');
+            $table->date('date_debut')->nullable();
+            $table->date('date_fin')->nullable();
+            $table->float('montant_assurance');
+            $table->timestamps();
+            $table->collation = 'utf8mb4_unicode_ci'; 
+        });
 
+        // Create the trigger with explicit collation handling
+        DB::unprepared('
+            CREATE TRIGGER generate_id_contrat BEFORE INSERT ON contrats
+            FOR EACH ROW
+            BEGIN
+                DECLARE nouvel_id INT;
+                DECLARE current_year CHAR(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                SET current_year = DATE_FORMAT(CURRENT_DATE, "%y");
+                SET nouvel_id = (SELECT IFNULL(MAX(CAST(SUBSTRING(id_contrat, 4) AS UNSIGNED)), 0) + 1 
+                                 FROM contrats 
+                                 WHERE SUBSTRING(id_contrat, 2, 2) = current_year COLLATE utf8mb4_unicode_ci);
+                SET NEW.id_contrat = CONCAT("C", current_year, LPAD(nouvel_id, 4, "0")) COLLATE utf8mb4_unicode_ci;
+            END
+        ');
+
+        // Insert initial data with explicit string handling
+        DB::table('contrats')->insert([
+            'client_id' => 5,
+            'id_devis' => 2,
+            'id_offre'=> 2,
+            'date_debut' => Carbon::create('2024', '05', '15'),
+            'date_fin' => Carbon::create('2025', '05', '15'),
+            'montant_assurance' => 500.00,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        DB::table('contrats')->insert([
+            'client_id' => 3,
+            'id_devis' => 1,
+            'id_offre'=> 2,
+            'date_debut' => Carbon::create('2024', '06', '15'),
+            'date_fin' => Carbon::create('2025', '09', '15'),
+            'montant_assurance' => 600.00,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+    }
 
     /**
      * Reverse the migrations.
@@ -68,5 +70,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('contrats');
+        DB::unprepared('DROP TRIGGER IF EXISTS generate_id_contrat');
     }
 };

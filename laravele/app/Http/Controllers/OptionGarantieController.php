@@ -12,10 +12,17 @@ class OptionGarantieController extends Controller
      */
     public function index()
     {
-        return  OptionGarantie::all(["id",'nomOptionGarantie']);
+        return  OptionGarantie::all(["id",'nom','valeur']);
 
     }
+    public function afficherOptionGarantieAvecNomGarantie($id)
+    {
+        // Récupérer l'option de garantie avec le nom de la garantie associée
+        $optionGarantie = OptionGarantie::with('garantie')->findOrFail($id);
 
+        // Retourner les données au format JSON
+        return response()->json($optionGarantie, 200);
+    }
     /**
      * Show the form for creating a new resource.
      */

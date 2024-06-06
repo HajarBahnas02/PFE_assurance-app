@@ -9,10 +9,13 @@
         <i class="fas fa-tachometer-alt"></i> Tableau de bord
       </li>
       <li class="item-admin" @click="selectSection('non-traites')">
-        <i class='fas fa-file-contract'></i> Contrats Non Traités
+        <i class='fas fa-file-contract'></i> Devis Non Traités
       </li>
       <li class="item-admin" @click="selectSection('traites')">
-        <i class="fa-solid fa-file-signature"></i> Contrats Traités
+        <i class="fa-solid fa-file-signature"></i> Devis Traités
+      </li>
+      <li class="item-admin" @click="selectSection('contrats')">
+        <i class="fas fa-user"></i> Contrats Clients
       </li>
       <li class="item-admin last" @click.prevent="logout">
         <i class="fa fa-sign-out"></i> Déconnexion

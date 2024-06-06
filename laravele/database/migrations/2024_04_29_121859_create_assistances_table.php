@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('assistances', function (Blueprint $table) {
             $table->id();
             $table->string('nomAssistance');
-          
             $table->timestamps();
         });
           

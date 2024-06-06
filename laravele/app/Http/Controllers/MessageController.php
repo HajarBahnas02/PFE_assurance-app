@@ -1,25 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Offre;
-use App\Models\TypeGarantie;
 
+use App\Models\message;
 use Illuminate\Http\Request;
 
-class OffreController extends Controller
+class MessageController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-       // return Offre::all([ 'nomOffre', 'montant']);
-        //$offres = Offre::with('garanties')->get();
-        $offres = Offre::with('garanties')->get();
-
-        return response()->json(['offres' => $offres], 200);
-
-        // Retourner la liste des offres avec leurs garanties
+        //
     }
 
     /**
@@ -41,7 +34,7 @@ class OffreController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Offre $offre)
+    public function show(message $message)
     {
         //
     }
@@ -49,7 +42,7 @@ class OffreController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Offre $offre)
+    public function edit(message $message)
     {
         //
     }
@@ -57,7 +50,7 @@ class OffreController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Offre $offre)
+    public function update(Request $request, message $message)
     {
         //
     }
@@ -65,7 +58,7 @@ class OffreController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Offre $offre)
+    public function destroy(message $message)
     {
         //
     }

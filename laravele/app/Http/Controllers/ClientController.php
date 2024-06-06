@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 use App\Models\Ville;
 use App\Models\Client;
+use App\Models\Devis;
+use App\Models\Contrat;
 use App\Services\TwilioService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 use Symfony\Contracts\Service\Attribute\Required;
 
@@ -44,27 +47,8 @@ class ClientController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Message WhatsApp envoyé avec succès au client.']);
     }
     /*
-      Store a newly created resource in storage.
-    
-    public function store(Request $request,$id)
-    {
-        $validated = $request->validate([
-            'nom' => 'required|string|max:255',
-            'prenom' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:clients',
-            'telephone' => 'required|string|max:20|unique:clients',
-            'ville_id' => 'required|exists:villes,id',
-            'cin' => 'required|string|unique:clients,cin',
-            'password' => 'required|string|min:8',
-        ]);
-
-        $client = Client::findOrFail($id);
-        $client->cin = $request->input('cin');
-        $client->password = bcrypt($request->input('password')); // Encrypt the password
-        $client->save();
-        return response()->json(["message" => "Client ajouté avec succès!"], 201);
-    } */
-    public function store(Request $request)
+   } */
+   public function store(Request $request)
     {
         $validatedData = $request->validate([
             'nom' => 'required|string|max:35',
@@ -72,11 +56,21 @@ class ClientController extends Controller
             'email' => 'required|string|email|max:255|unique:clients',
             'telephone' => 'required|string|max:20|unique:clients',
             'ville_id' => 'required|exists:villes,id',
-            'date_naissance'=>'required',
+            'date_naissance' => 'required|date',
+            'password' => 'required|string|min:8|same:confirmPassword',
         ]);
-    
-        $client = Client::create($validatedData);
-    
+
+        // Créez un nouveau client
+        $client = Client::create([
+            'nom' => $validatedData['nom'],
+            'prenom' => $validatedData['prenom'],
+            'email' => $validatedData['email'],
+            'telephone' => $validatedData['telephone'],
+            'ville_id' => $validatedData['ville_id'],
+            'date_naissance' => $validatedData['date_naissance'],
+            'password' => $validatedData['password'], // Le mutateur de mot de passe hash le mot de passe automatiquement
+        ]);
+
         return response()->json(['message' => 'Client ajouté avec succès!', 'client' => $client], 201);
     }
     public function getVilles()
@@ -112,36 +106,55 @@ class ClientController extends Controller
     {
         //
     }
- 
-  /*  public function update(Request $request)
+    public function getDevis($clientId)
     {
-        // Récupère l'utilisateur actuellement authentifié
-        $client = Auth::user();
-
-        // Met à jour les informations du client avec les données fournies dans la requête,
-        // sauf le mot de passe
-        $client->update($request->except('password'));
-
-        // Vérifie si la requête contient un champ 'password'
-        if ($request->has('password')) {
-            // Si un mot de passe est fourni, il est haché avant d'être enregistré
-            $client->password = bcrypt($request->password);
-            // Sauvegarde l'instance du client avec le mot de passe mis à jour
-            $client->save();
-        }
-
-        // Retourne la réponse en JSON avec les informations mises à jour du client
-        return response()->json($client);
-    }*/
-
-    /*
-      Update the specified resource in storage.
-    
-    public function update(Request $request, Client $client)
-    {
+        // Récupérer tous les devis associés au client spécifié
+        $devis = Devis::where('client_id', $clientId)->get();
         
+        // Retourner les devis au format JSON
+        return response()->json(['devis' => $devis]);
     }
- */
+    public function setPassword(Request $request, $id)
+    {
+        // Valider la requête
+        $request->validate([
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+    
+        // Trouver le client associé
+        $client = Client::findOrFail($id);
+    
+        // Mettre à jour le mot de passe du client
+        $client->password = Hash::make($request->password);
+        $client->save();
+    
+        // Répondre avec une confirmation
+        return response()->json(['message' => 'Mot de passe enregistré avec succès'], 200);
+    }
+    public function getContrats($clientId)
+    {
+        // Récupérer tous les contrats associés au client spécifié
+        $contrats = Contrat::where('client_id', $clientId)->get();
+    
+        foreach ($contrats as $contrat) {
+            // Récupérer le devis associé au contrat
+            $devis = Devis::with('vehicule')->find($contrat->id_devis);
+    
+            // Assurez-vous que le devis existe
+            if ($devis) {
+                // Ajoutez les informations du devis et du véhicule au contrat
+                $contrat->devis = $devis;
+                $contrat->matricule = $devis->matricule;
+    
+                // Si vous avez besoin d'accéder aux informations du véhicule, vous pouvez le faire comme suit
+                if ($devis->vehicule) {
+                    $contrat->vehicule = $devis->vehicule;
+                }
+            }
+        }
+        return response()->json(['contrats' => $contrats]);
+    }
+  
     /**
      * Remove the specified resource from storage.
      */

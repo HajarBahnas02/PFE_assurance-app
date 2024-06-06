@@ -5,10 +5,11 @@ use App\Models\Administrateur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Client; 
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-    public function check(Request $request)
+    public function checks(Request $request)
     {
         $credentials = $request->validate([
             'email' => ['required'],
@@ -39,7 +40,32 @@ class LoginController extends Controller
             return response()->json(['status' => false, 'errors' => $errors], 400);
         }
     }
-
+    public function check(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+    
+        $email = $request->input('email');
+        $password = $request->input('password');
+    
+        // Vérifier si l'email appartient à un client
+        $client = Client::where('email', $email)->first();
+        // Vérifier si l'email appartient à un administrateur
+        $admin = Administrateur::where('email', $email)->first();
+    
+        if ($client && Hash::check($password, $client->password)) {
+            // Authentifier le client
+            Auth::login($client);
+            return response()->json(['message' => 'Connexion réussie.'], 200);
+        } elseif ($admin && Hash::check($password, $admin->password)) {
+            Auth::login($admin);
+            return response()->json(['message' => 'Connexion réussie.'], 200);
+        } else {
+            return response()->json(['errors' => ['wrong_password' => 'Mot de passe incorrect']], 401);
+        }
+    }
     public function adminLogin(Request $request)
     {
         $credentials = $request->validate([
@@ -48,7 +74,7 @@ class LoginController extends Controller
         ]);
 
         if (Auth::guard('administrateur')->attempt($credentials)) {
-    /** @var \App\Models\Client $user **/
+    /** @var \App\Models\Administrateur $user **/
     $user = Auth::guard('administrateur')->user();
             if ($user->role != 1) {
                 Auth::guard('administrateur')->logout();

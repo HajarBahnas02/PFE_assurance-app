@@ -12,12 +12,14 @@ use App\Http\Controllers\TypeMotorisationController;
 use App\Http\Controllers\VilleController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ContratController;
+use App\Http\Controllers\TypeGarantieController;
 use App\Http\Controllers\DevisController;
 use App\Http\Controllers\MontantProposeController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\TarificationController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\DevisGarantiesController;
 use App\Models\Offre;
 use App\Http\Controllers\LogoutController;
 use App\Models\OptionAssistance;
@@ -25,6 +27,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\EspaceClientController;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Mailer\Transport\Smtp\Auth\LoginAuthenticator;
+use App\Http\Controllers\OptionGarantieController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -51,7 +54,6 @@ Route::get('optionsAssistances', [OptionAssistanceController::class, 'index']);
 Route::get('/assistances/{assistanceId}/optionsAssistances', [AssistanceController::class, 'optionsAssistances']);
 Route::get('optionsAssistances/{id}/description', [OptionAssistanceController::class, 'getDescription']);
 Route::get('clients', [ClientController::class, 'index']);
-Route::post('login', [LoginController::class, 'check']);
 Route::post('resetPassword', [LoginController::class, 'reset']);
 Route::post('/client/login', [LoginController::class, 'check']);
 Route::post('/admin/login', [LoginController::class, 'adminLogin']);
@@ -81,7 +83,7 @@ Route::post('/clients_form', [ClientController::class, 'store']);
 
 
 
-////////////////////
+////////////////////  
 
 Route::get('/admin/clients-devis-non-traités', [DevisController::class, 'getDevisNonTraites']);
 Route::get('/admin/clients-devis-traités', [DevisController::class, 'getDevisTraites']);
@@ -95,7 +97,7 @@ Route::post('/clients/{client}/send-whatsapp', [ClientController::class, 'sendWh
 //Email
 Route::get('/tarification/{client}/{devis}', [TarificationController::class, 'show'])->name('tarification.show');
 ////Email 
-Route::post('/send-email/{clientId}', [EmailController::class, 'sendEmailToClient']);
+Route::post('/send-email', [EmailController::class, 'sendEmailToClient']);
 //Réccupération des montants
 Route::get('/devis/{idDevis}/montants', [DevisController::class, 'getMontants']);
 
@@ -121,4 +123,24 @@ Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
 //Route::middleware('auth:sanctum')->get('/client', [ClientController::class, 'show']);
 Route::middleware('auth:sanctum')->get('/espace-client/info', [EspaceClientController::class,'getInfoClient']);
 Route::post('/logout', [LogoutController::class, 'logout']);
+Route::get('/option-garanties', [OptionGarantieController::class, 'index']);
+//enregistrer mot de passe
+Route::post('/clients/set-password/{id}', [ClientController::class, 'setPassword']) ;
+Route::middleware('auth:sanctum')->get('/espace-client/info', [EspaceClientController::class,'getInfoClient']);
+//Route::get('/espace-client/infos', [EspaceClientController::class,'getClientInfo']);
+Route::get('/clients/{id}/infos', [EspaceClientController::class, 'getClientInfo']);
+Route::get('/clients/{clientId}/contrats', [ClientController::class, 'getContrats']);
+Route::get('/clients/{clientId}/devis', [ClientController::class, 'getDevis']);
+Route::get('/contrats', [ContratController::class, 'index']);
+Route::get('/garanties/{id}/options', [TypeGarantieController::class, 'getOptions']);
 
+
+///use
+Route::post('/send-whatsap', [WhatsAppController::class, 'sendMessag']);
+
+
+Route::post('/valider-devis', [DevisController::class,'validerDevis']);
+
+Route::post('/creer-contrats', [ContratController::class, 'store']);
+Route::get('/garanties', [TypeGarantieController::class, 'index']);
+Route::post('/devis_garanties', [DevisGarantiesController::class, 'store']);

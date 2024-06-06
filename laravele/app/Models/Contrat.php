@@ -15,24 +15,11 @@ class Contrat extends Model
         'client_id',
         'vehicule_matricule',
         'numero_devis',
+        'id_offre',
         'date_debut',
         'date_fin',
         'montant_assurance',
     ];
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($contrat) {
-            $contrat->numero_devis = static::generateNumeroDevis();
-        });
-    }
-
-    private static function generateNumeroDevis()
-    {
-        return 'DEV-' . Str::upper(Str::random(10));
-    }
-
     
     public function client()
     {
@@ -43,4 +30,9 @@ class Contrat extends Model
     {
         return $this->belongsTo(Vehicule::class, 'vehicule_matricule', 'matricule');
     }
+    public function devis()
+    {
+        return $this->belongsTo(Devis::class);
+    }
+
 }

@@ -33,6 +33,16 @@ return new class extends Migration
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        DB::table('administrateurs')->insert([
+            'nom' => 'administateur',
+            'prenom' => 'admin',
+            'cin' => 'CB342880',
+            'email' => 'h.bahnas@edu.umi.ac.ma',
+            'telephone' => '012356789',
+            'password' => bcrypt('tanjiro'), 
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     /**

@@ -30,9 +30,7 @@
               </div>
             </div>
             
-          </div>
-          
-      
+          </div>     
           <h2 v-if="selectedSection === 'non-traites' || selectedSection === null">Contrats avec Véhicules Non Traités</h2>
           <table v-if="selectedSection === 'non-traites' || selectedSection === null" id="contrats-non-traites" class="display" style="width: 100%">
             <thead>
@@ -81,19 +79,55 @@
                 <td>{{ contrat.client_prenom }}</td>
                 <td>{{ contrat.client_telephone }}</td>
                 <td>{{ contrat.client_email }}</td>
-                <td>{{ contrat.matricule }}</td>
+                <td>{{ contrat.matricule }}</td> 
                 <td>{{ contrat.date_debut }}</td>
               </tr>
             </tbody>
           </table>
-            <Modal :isVisible="showForm" @close="closeForm">
-              <form @submit.prevent="traiterContrat" class="styled-form">
-                <h2>Traiter Contrat</h2>
-                <div class="form-group">
-                  <input type="hidden" v-model="selectedContrat.id_client" readonly />
-                </div>
-               
+          <div v-if="selectedSection === 'contrats'">
+
+          <h2>Liste des contrats</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID Contrat</th>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Téléphone</th>
+          <th>Email</th>
+          <th>Matricule </th>
+          <th>Date de Début</th>
+          <th>Date de Fin</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(contrat, index) in contrats" :key="index">
+          <td>{{ contrat.id_contrat }}</td>
+          <td>{{ contrat.nom }}</td>
+          <td>{{ contrat.prenom }}</td>
+          <td>{{ contrat.telephone }}</td>
+          <td>{{ contrat.email }}</td>
+          <td>{{ contrat.matricule }}</td>
+          <td>{{ contrat.date_debut }}</td>
+          <td>{{ contrat.date_fin }}</td>
+        </tr>
+      </tbody>
+    </table>
+        </div>
+          <Modal :isVisible="showForm" @close="closeForm">
+            <form @submit.prevent="traiterContrat" class="styled-form">
+              <h2>Traiter Contrat</h2>
+              <div class="form-group">
+                <input type="hidden" v-model="selectedContrat.id_client" readonly />
+              </div>
+                 
+              <!-- Page 1: Informations du client -->
+              <div v-if="currentPage === 1">
                 <div class="form-row">
+                  <div class="form-group">
+                    <label>ID Devis:</label>
+                    <input type="text" v-model="selectedContrat.id_dev" readonly />
+                  </div>
                   <div class="form-group">
                     <label>ID Devis:</label>
                     <input type="text" v-model="selectedContrat.id_devis" readonly />
@@ -125,6 +159,10 @@
                     <input type="date" v-model="clientInfo.date_naissance" readonly />
                   </div>
                 </div>
+              </div>
+  
+              <!-- Page 2: Informations du véhicule -->
+              <div v-if="currentPage === 2">
                 <div class="form-row">
                   <div class="form-group">
                     <label>Matricule Véhicule:</label>
@@ -181,9 +219,17 @@
                     <input type="number" v-model="montant_premium" min="0" required />
                   </div>
                 </div>
-                <button type="submit" @click="sendEmailToClient(selectedContrat.id_client)">Mettre à jour le statut</button>
-              </form>
+              </div>
+  
+              <!-- Navigation Buttons -->
+              <div class="form-row">
+                <button type="button" @click="prevPage" v-if="currentPage > 1">Précédent</button>
+                <button type="button" class="btn-right" @click="nextPage" v-if="currentPage < totalPages">Suivant</button>
+                <button  type="submit" class="btn-right" v-if="currentPage === totalPages" >Mettre à jour le statut</button>
+              </div>
+            </form>
           </Modal>
+  
         </div>
       </div>
       <div v-if="loading" class="spinner-overlay">
@@ -192,8 +238,246 @@
     </div>
     
   </template>
-  
+ <script>
+import axios from "../router/axios-config.js";
+import Sidebar from "./Sidebar.vue";
+import Modal from "./Modal.vue";
+
+export default {
+  name: "ContratsTable",
+  components: {
+    Sidebar,
+    Modal,
+  },
+  data() {
+    return {
+      currentPage: 1,
+      totalPages: 2,
+      montant_initial: 0,
+      montant_essentiel: 0,
+      montant_premium: 0,
+      contratsNonTraites: [],
+      contratsTraites: [],
+      showForm: false,
+      selectedContrat: null,
+      selectedSection: null,
+      vehiculeInfo: {
+        matricule: "",
+        puissanceFiscale: 0,
+        dateMiseEnCirculation: "",
+        valeurNeuve: 0,
+        valeurVenale: 0,
+        marque_nom: "",
+        modele_nom: "",
+        type_motorisation_nom: "",
+        contrats: [],
+      },
+      clientInfo: {
+        ville_nom: "",
+        date_naissance: "",
+      },
+      dateActuelle: new Date().toLocaleDateString(),
+      loading: false,
+    };
+  },
+  mounted() {
+    this.fetchContratsNonTraites();
+    this.fetchContratsTraites();
+    this.fetchContrats();
+  },
+  computed: {
+    displayedNonTraites() {
+      return this.selectedSection === 'non-traites'
+        ? this.contratsNonTraites
+        : this.contratsNonTraites.slice(0, 3);
+    },
+    displayedTraites() {
+      return this.selectedSection === 'traites'
+        ? this.contratsTraites
+        : this.contratsTraites.slice(0, 3);
+    },
+  },
+  methods: {
+    async fetchContrats() {
+      try {
+        const response = await axios.get('/contrats');
+        this.contrats = response.data;
+      } catch (error) {
+        console.error('Erreur lors de la récupération des contrats:', error);
+      }
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
+    prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    fetchContratsNonTraites() {
+      this.loading = true;
+      axios
+        .get("admin/clients-devis-non-traités")
+        .then((response) => {
+      this.contratsNonTraites = response.data.map(contrat => ({
+        ...contrat,
+        id_client: contrat.id_client,
+        id_devis: contrat.id_devis,
+        id_dev:contrat.id_dev
+      }));
+    })
+        .catch((error) => {
+          console.error("There was an error fetching the non-traite contracts!", error);
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    fetchContratsTraites() {
+      this.loading = true;
+      axios
+        .get("admin/clients-devis-traités")
+        .then((response) => {
+          this.contratsTraites = response.data;
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the traite contracts!", error);
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    showTraiterForm(contrat) {
+      this.selectedContrat = contrat;
+      this.fetchVehiculeInfo(contrat.matricule);
+      this.fetchClientInfo(contrat.id_client);
+      this.showForm = true;
+    },
+    fetchClientInfo(id_client) {
+      axios
+        .get(`clients/${id_client}`)
+        .then((response) => {
+          this.clientInfo = { ...this.clientInfo, ...response.data };
+          console.log("Client Info:", this.clientInfo);
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the client info!", error);
+        });
+    },
+    fetchVehiculeInfo(matricule) {
+      axios
+        .get(`/vehicules/${matricule}`)
+        .then((response) => {
+          if (Array.isArray(response.data) && response.data.length > 0) {
+            const vehiculeData = response.data[0];
+            console.log("Full response data:", vehiculeData);
+            this.vehiculeInfo = vehiculeData;
+            if (this.vehiculeInfo.modele_id) {
+              this.fetchModelName(this.vehiculeInfo.modele_id);
+            }
+            if (this.vehiculeInfo.marque_id) {
+              console.log("Marque ID:", this.vehiculeInfo.marque_id);
+              this.fetchMarqueName(this.vehiculeInfo.marque_id);
+            }
+            if (this.vehiculeInfo.type_motorisation_id) {
+              this.fetchTypeMotorisation(this.vehiculeInfo.type_motorisation_id);
+            }
+          } else {
+            console.log("The response data is not an array or the array is empty.");
+          }
+        })
+        .catch((error) => {
+          console.error("Une erreur s'est produite lors de la récupération des informations du véhicule !", error);
+        });
+    },
+    fetchMarqueName(marqueId) {
+      axios
+        .get(`marques/${marqueId}/nom`)
+        .then((response) => {
+          console.log("Marque Name Response:", response.data);
+          this.vehiculeInfo.marque_nom = response.data;
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the marque name!", error);
+        });
+    },
+    fetchModelName(modeleId) {
+      axios
+        .get(`models/${modeleId}/nom`)
+        .then((response) => {
+          this.vehiculeInfo.modele_nom = response.data;
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the model name!", error);
+        });
+    },
+    fetchTypeMotorisation(typeMotorisationId) {
+      axios
+        .get(`TypeMotorisation/${typeMotorisationId}/nom`)
+        .then((response) => {
+          this.vehiculeInfo.type_motorisation_nom = response.data;
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the type motorisation!", error);
+        });
+    },
+    closeForm() {
+      this.showForm = false;
+      this.selectedContrat = null;
+      this.vehiculeInfo = {};
+    },
+    async traiterContrat() {
+      this.loading = true;
+      const formData = {
+        montant_initial: this.montant_initial,
+        montant_essentiel: this.montant_essentiel,
+        montant_premium: this.montant_premium,
+      };
+      
+      try {
+        const vehiculeResponse = await axios.put(`/vehicules-statut/${this.selectedContrat.matricule}`, { timeout: 10000 });
+        console.log("Vehicule status updated successfully!", vehiculeResponse.data);
+
+      /*  const emailResponse = await axios.post(`/send-email/${this.selectedContrat.id_client}`);
+        console.log("Email sent successfully!", emailResponse.data);
+        alert("Email envoyé avec succès au client.");*/
+        const emailResponse = await axios.post(`/send-email`, {
+         id_client: idClient,
+         id_devis: idDevis
+    });
+    console.log("Email sent successfully!", emailResponse.data);
+    alert("Email envoyé avec succès au client.");
+
+        const devisResponse = await axios.put(`/devis/${this.selectedContrat.id_devis}`, formData);
+        console.log("Devis updated successfully!", devisResponse.data);
+        alert("Les montants ont été enregistrés avec succès.");
+
+        this.closeForm();
+        this.fetchContratsNonTraites();
+        this.fetchContratsTraites();
+      } catch (error) {
+        console.error("An error occurred while processing the contract:", error);
+        alert("Une erreur s'est produite lors du traitement du contrat.");
+      } finally {
+        this.loading = false;
+      }
+    },
+    handleSelect(section) {
+      this.selectedSection = section;
+    },
+    goToProfile() {
+      this.$router.push("/admin-profile");
+    },
+  },
+};
+</script>
+ 
   <style scoped>
+  .btn-right {
+    float: right;
+  }
   .spinner-overlay {
     position: fixed;
     top: 0;
@@ -437,224 +721,3 @@
     background-color: #006bb8;
   }
   </style>
-  
-  <script>
-  import axios from "../router/axios-config.js";
-  import Sidebar from "./Sidebar.vue";
-  import Modal from "./Modal.vue";
-  
-  export default {
-    name: "ContratsTable",
-    components: {
-      Sidebar,
-      Modal,
-    },
-    data() {
-      return {
-        montant_initial: 0,
-        montant_essentiel: 0,
-        montant_premium: 0,
-        contratsNonTraites: [],
-        contratsTraites: [],
-        showForm: false,
-        selectedContrat: null,
-        selectedSection: null,
-        vehiculeInfo: {
-          matricule: "",
-          puissanceFiscale: 0,
-          dateMiseEnCirculation: "",
-          valeurNeuve: 0,
-          valeurVenale: 0,
-          marque_nom: "",
-          modele_nom: "",
-          type_motorisation_nom: "",
-        },
-        clientInfo: {
-          ville_nom:"",
-          date_naissance:"",
-        },
-        dateActuelle: new Date().toLocaleDateString(),
-        loading: false,
-      };
-    },
-    mounted() {
-      this.fetchContratsNonTraites();
-      this.fetchContratsTraites();
-    },
-    computed: {
-      displayedNonTraites() {
-        return this.selectedSection === 'non-traites'
-          ? this.contratsNonTraites
-          : this.contratsNonTraites.slice(0, 3);
-      },
-      displayedTraites() {
-        return this.selectedSection === 'traites'
-          ? this.contratsTraites
-          : this.contratsTraites.slice(0, 3);
-      },
-    },
-    methods: {
-      fetchContratsNonTraites() {
-        this.loading = true;
-        axios
-          .get("admin/clients-devis-non-traités")
-          .then((response) => {
-            this.contratsNonTraites = response.data;
-          })
-          .catch((error) => {
-            console.error("There was an error fetching the non-traite contracts!", error);
-          })
-          .finally(() => {
-        this.loading = false;
-      });
-      },
-      fetchContratsTraites() {
-        this.loading = true;
-
-        axios
-          .get("admin/clients-devis-traités")
-          .then((response) => {
-            this.contratsTraites = response.data;
-          })
-          .catch((error) => {
-            console.error("There was an error fetching the traite contracts!", error);
-          })
-          .finally(() => {
-        this.loading = false;
-      });
-      },
-      showTraiterForm(contrat) {
-        this.selectedContrat = contrat;
-        this.fetchVehiculeInfo(contrat.matricule);
-        this.fetchClientInfo(contrat.id_client);
-        this.showForm = true;
-      },
-      fetchClientInfo(id_client) {
-        axios
-          .get(`clients/${id_client}`)
-          .then((response) => {
-            this.clientInfo = { ...this.clientInfo, ...response.data };
-          console.log("Client Info:", this.clientInfo);
-            console.log(id_client);
-        
-          })
-          .catch((error) => {
-            console.error("There was an error fetching the client info!", error);
-          });
-      },
-      fetchVehiculeInfo(matricule) {
-        axios
-          .get(`/vehicules/${matricule}`)
-          .then((response) => {
-            if (Array.isArray(response.data) && response.data.length > 0) {
-          const vehiculeData = response.data[0];        
-          console.log("Full response data:", vehiculeData);
-          this.vehiculeInfo = vehiculeData;       
-          if (this.vehiculeInfo.modele_id) {
-            this.fetchModelName(this.vehiculeInfo.modele_id);
-          }
-          if (this.vehiculeInfo.marque_id) {
-              console.log("Marque ID:", this.vehiculeInfo.marque_id);
-              this.fetchMarqueName(this.vehiculeInfo.marque_id);
-            }
-          if (this.vehiculeInfo.type_motorisation_id) {
-            this.fetchTypeMotorisation(this.vehiculeInfo.type_motorisation_id);
-          }
-        } else {
-          console.log("The response data is not an array or the array is empty.");
-        }
-      })
-      .catch((error) => {
-        console.error("Une erreur s'est produite lors de la récupération des informations du véhicule !", error);
-      });
-  },
-  fetchMarqueName(marqueId) {
-        axios
-          .get(`marques/${marqueId}/nom`)
-          .then((response) => {
-            console.log("Marque Name Response:", response.data);
-            this.vehiculeInfo.marque_nom = response.data;
-          })
-          .catch((error) => {
-            console.error("There was an error fetching the marque name!", error);
-          });
-      },
-      fetchModelName(modeleId) {
-        axios
-          .get(`models/${modeleId}/nom`)
-          .then((response) => {
-            this.vehiculeInfo.modele_nom = response.data;
-          })
-          .catch((error) => {
-            console.error("There was an error fetching the model name!", error);
-          });
-      },
-      fetchTypeMotorisation(typeMotorisationId) {
-        axios
-          .get(`TypeMotorisation/${typeMotorisationId}/nom`)
-          .then((response) => {
-            this.vehiculeInfo.type_motorisation_nom = response.data;
-          })
-          .catch((error) => {
-            console.error("There was an error fetching the type motorisation!", error);
-          });
-      },
-      closeForm() {
-        this.showForm = false;
-        this.selectedContrat = null;
-        this.vehiculeInfo = {};
-      },
-      traiterContrat() {
-        this.loading = true;
-        const formData = {
-          montant_initial: this.montant_initial,
-          montant_essentiel: this.montant_essentiel,
-          montant_premium: this.montant_premium,
-        };
-        axios.put(`/vehicules-statut/${this.selectedContrat.matricule}`, {}, { timeout: 10000 }) // 10 secondes
-  .then((response) => {
-    console.log("Vehicule status updated successfully!", response.data);
-  })
-  .catch((error) => {
-    console.error("There was an error updating the vehicule status!", error);
-  }) 
-  .finally(() => {
-        this.loading = false;
-      });
-        axios
-          .put(`/devis/${this.selectedContrat.id_devis}`, formData)
-          .then((response) => {
-            alert("Les montants ont été enregistrés avec succès.");
-            this.closeForm();
-            this.fetchContratsNonTraites();
-            this.fetchContratsTraites();
-          })
-          .catch((error) => {
-            console.error("There was an error updating the vehicule status!", error);
-          });
-  
-      },
-      sendEmailToClient(clientI) {
-        console.log(clientI);
-        axios
-          .post(`/send-email/${clientI}`)
-          .then((response) => {
-            alert("Email envoyé avec succès au client.");
-          })
-          .catch((error) => {
-            console.error("Une erreur s'est produite lors de l'envoi de l'email.", error);
-          })
-          .finally(() => {
-        this.loading = false;
-      });
-      },
-      handleSelect(section) {
-        this.selectedSection = section;
-      },
-      goToProfile() {
-        this.$router.push("/admin-profile");
-      },
-    },
-  };
-  </script>
-  

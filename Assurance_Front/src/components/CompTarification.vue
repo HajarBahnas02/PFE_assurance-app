@@ -21,6 +21,15 @@
                   </span>
                   <span><strong>{{ garantie }}</strong></span>
               </li>
+             <!--
+              Les options des garanties sont affichées ici:
+              <p class="">option garantie</p>
+              <ul>
+                <li v-for="(option_garantie,i) in offre.option_garanties" : key="i">
+                  <spna>
+                    <span><strong>{{ option_garantie }}</strong></span>
+              </ul>
+             -->     
               <div>
                   <p class="info"><strong>Assistances </strong></p>
                   <ul class="features">
@@ -62,7 +71,15 @@
           </ul>
           <div class="action">
               <button class="button" @click="selectOffre(offre)">Sélectionner</button>
-            </div> 
+            </div>
+            <div>
+              <label for="options">Options de Garantie</label>
+              <select v-model="selectedOption" @change="updateSelectedOption" id="options">
+                <option value="">Sélectionnez une option</option>
+                <option v-for="option in options" :key="option.id" :value="option.id">{{ option.nom }}</option>
+              </select>
+            </div>
+
       </div>
   </div></div>
   <div class="parent-container">
@@ -82,7 +99,8 @@
             <span><strong>{{ garantie }}</strong></span>
           </li>
         </ul> 
-        <button class="btn">Valider</button>
+        <button class="btn" @click="validerOffre">Valider</button>
+
     </div>
 </div>    
 <div v-if="chargementEnCours" class="loading-container">
@@ -104,12 +122,16 @@ import Layout from "../views-home/Layout.vue";
 import Footer from "../views-home/Footer.vue";
 
 export default {
+  props: ['selectedGarantieId'],
+
   components: {
     Footer,
     Layout,
   },
   data() {
     return {
+      options: [],
+      selectedOption: '',
       chargementEnCours: false, // Initialiser à faux pour cacher le logo
       offres: [],
       montants: {},
@@ -121,6 +143,7 @@ export default {
     selectedOffre: null, // Offre sélectionnée
 
     };
+    
   },
   props: {
     clientId: {
@@ -248,6 +271,35 @@ handleRadioChange(index, selectedAssistanceId) {
       index
     );
   },
+  /*
+   async setPasswordRedirect() {
+      //console.log("Rediriger vers la page de définition du mot de passe");
+      //this.$router.push(`/set-password/${this.clientId}`);
+      try {
+                const response = await axios.post('/devis', {
+                    // Envoyez les données nécessaires pour valider le devis
+                });
+                console.log(response.data.message);
+                // Optionnel: Vous pouvez ajouter une alerte ou une notification de succès ici
+            } catch (error) {
+                console.error('Erreur lors de la validation du devis:', error);
+            }
+    },*/
+    async validerOffre(){
+      try {
+        const response = await axios.post('/creer-contrats', {
+          client_id: this.clientId,
+          montant_assurance: this.selectedOffre.montant,
+          offre_id: this.selectedOffre.id,
+          devis_id: this.$route.params.devisId,
+        }); 
+        console.log(response.data.message);   
+        this.$router.push(`/espace-client/${this.clientId}`);
+
+      } catch (error) {
+        console.error('Erreur lors de la validation du devis:', error);
+      }
+    } 
   },
 };
 </script>

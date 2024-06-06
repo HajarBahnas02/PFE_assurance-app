@@ -16,4 +16,25 @@ class EspaceClientController extends Controller
         
         return response()->json(['status' => true, 'clientInfo' => $clientInfo]);
     }
+
+    public function getClientInfo($id)
+    {
+        // Récupérer les informations du client par son ID
+        $client = Client::find($id);
+    
+        if (!$client) {
+            return response()->json(['error' => 'Client not found'], 404);
+        }
+    
+        $client->load('ville');
+    
+        $villeNom = $client->ville->nomVille;
+    
+        // Ajouter le nom de la ville aux informations du client
+        $clientInfo = $client->toArray();
+        $clientInfo['ville_nom'] = $villeNom;
+    
+        return response()->json(['clientInfo' => $clientInfo], 200);
+    }
+
 }

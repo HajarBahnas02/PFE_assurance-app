@@ -17,19 +17,18 @@ class TypeGarantie extends Model
         'dureeGarantie'
     ];
 
- /* hadi   public function garantiesSelectionnees()
-    {
-        return $this->hasMany(GarantiesSelectionnees::class, 'garantie_id');
-    }
-    public function offres()
-    {
-        return $this->hasMany(GarantiesSelectionnees::class, 'garantie_id');
-    }*/
+ 
     public function offres()
     {
         return $this->belongsToMany(Offre::class);
+        
     }
    
-    
+    // Dans le modèle Garantie
+public function optionsGaranties()
+{
+    return $this->hasMany(OptionGarantie::class, 'garantie_id');
+}
+
    
 }

@@ -162,17 +162,14 @@ export default {
   },
   methods: {
     async login() {
-     
       if (!this.credentials.email || !this.credentials.password) {
-        this.error.general = 'Veuillez remplir tous les champs obligatoires.';
+        this.error.general = 'Veuillez remplir tous les champs sont obligatoires.';
         return;
       }
-
       try {
         const response = await axios.post('/admin/login', this.credentials);
-        // Gérer la réponse
         console.log(response.data);
-        this.$router.push({ name: "espace-admin" });
+        this.$router.push('/espace-admin');
 
       } catch (error) {
         // Gérer les erreurs

@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 use App\Models\Client;
+use App\Models\Contrat;
 use App\Models\Devis;
 use App\Models\Offre;
 use App\Models\Vehicule;
+use App\Notifications\DevisEnCours;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+
+
 class DevisController extends Controller
 {
     /**
@@ -44,9 +50,9 @@ class DevisController extends Controller
                 $query->where('statut', 'non-traitee');
             })
             ->get(['id', 'client_id', 'matricule', 'numero_devis', 'date_debut']);
-
         $data = $devis->map(function ($devis) {
             return [
+                'id_dev' => $devis->id,
                 'id_devis' => $devis->numero_devis,
                 'id_client'=>$devis->client->id,
                 'client_nom' => $devis->client->nom,
@@ -70,6 +76,7 @@ class DevisController extends Controller
 
         $data = $devis->map(function ($devis) {
             return [
+                'id_dev'=>$devis->id,
                 'id_devis' => $devis->numero_devis,
                 'client_nom' => $devis->client->nom,
                 'client_prenom' => $devis->client->prenom,
@@ -154,17 +161,7 @@ public function ajouter(Request $request, $numero_devis)
 
     return response()->json(['message' => 'Montants du devis mis à jour avec succès!']);
 }
-public function update_status($matricule)
-{
-    $vehicule = Vehicule::where('matricule', $matricule)->first();
-    if ($vehicule) {
-        $vehicule->statut = 'traitee';
-        $vehicule->save();
-        Mail::to($vehicule->client->email)->send(new DevisTraiteMail($vehicule->client));
-        return response()->json(['message' => 'Statut mis à jour avec succès et email envoyé au client.']);
-    }
-    return response()->json(['message' => 'Véhicule non trouvé.'], 404);
-}
+
     
     public function create()
     {
@@ -238,5 +235,32 @@ public function update_status($matricule)
     public function destroy(Devis $devis)
     {
         //
+    }
+    public function validerDevis(Request $request)
+    {
+        $user = Auth::user();
+
+        // Valider les données reçues
+        $validatedData = $request->validate([
+            'matricule' => 'required|string|max:50',
+            'id_devis' => 'required|integer',
+            'montant_assurance' => 'required|numeric',
+        ]);
+
+        // Créer un nouveau contrat
+        $contrat = new Contrat();
+        $contrat->client_id = $user->id;
+        $contrat->id_contrat = uniqid();
+        $contrat->matricule = $validatedData['matricule'];
+        $contrat->id_devis = $validatedData['id_devis'];
+        $contrat->date_debut = Carbon::now();
+        $contrat->date_fin = Carbon::now()->addMonths(6);
+        $contrat->montant_assurance = $validatedData['montant_assurance'];
+        $contrat->save();
+
+        // Envoyer la notification
+        $user->notify(new DevisEnCours());
+
+        return response()->json(['message' => 'Devis validé et notification envoyée']);
     }
 }

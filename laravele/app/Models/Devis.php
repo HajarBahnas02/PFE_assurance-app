@@ -22,12 +22,11 @@ class Devis extends Model
     protected $dispatchesEvents = [
         'created' => DevisCreated::class,
     ];
-    private static function generateNumeroDevis()
+ /*   private static function generateNumeroDevis()
     {
         return 'DEV-' . Str::upper(Str::random(10));
     }
-
-    
+*/
     public function client()
     {
         return $this->belongsTo(Client::class);
@@ -37,4 +36,5 @@ class Devis extends Model
     {
         return $this->belongsTo(Vehicule::class, 'matricule', 'matricule');
     }
+ 
 }
