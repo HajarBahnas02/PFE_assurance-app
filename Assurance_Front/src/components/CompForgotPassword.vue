@@ -52,7 +52,7 @@ export default {
     
     if (response.status === 200) {
         this.message = response.data.message;
-        alert("email envoyé")
+        alert("email envoyé");
       } else {
         this.error = "Une erreur s'est produite. Veuillez réessayer.";
       } 

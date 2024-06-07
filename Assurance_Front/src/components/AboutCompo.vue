@@ -6,7 +6,6 @@
       <div class="tittle">
         <h2>Obtenir votre devis en quelques minutes</h2>
       </div>
-     
       <!-- Form Fields -->
         <fieldset v-if="activeStep === 0">
           <h1>Types de Garanties</h1>

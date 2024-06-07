@@ -64,32 +64,28 @@
           </div>
       </div>
 
-      <div class="box" @click="showCards">
-        <routerLink to="/AssHabitation.vue" class="box">
+      <div class="box">
+        
           <img class="image-devis" src="../assets/home-icon.svg" alt="Image 1" />
           <h3 class="title-devis">Assurance Habitation</h3>
-        </routerLink>
+     
       </div>
 
-      <div class="box" @click="showCards">
-        <routerLink to="/AssSanteInter.vue" class="box">
+      <div class="box" >
+        
           <img class="image-devis" src="../assets/health-insurance.svg" alt="Image 1" />
           <h3 class="title-devis">Assurance Santé Internationale</h3>
-        </routerLink>
+       
       </div>
 
-      <div class="box" @click="showCards">
-        <routerLink to="/AssSanteInter.vue" class="box">
+      <div class="box">
           <img class="image-devis" src="../assets/health-care.svg" alt="Image 1" />
 
           <h3 class="title-devis">Assurance Santé Individuelle</h3>
-        </routerLink>
       </div>
-      <div class="box" @click="showCards">
-        <routerLink to="/AssSanteInter.vue" class="box">
+      <div class="box">
           <img class="image-devis" src="../assets/prevoyance-icon.svg" alt="Image 1" />
           <h3 class="title-devis">Assurance Prévoyance</h3>
-        </routerLink>
       </div>
     </div>
   </div>

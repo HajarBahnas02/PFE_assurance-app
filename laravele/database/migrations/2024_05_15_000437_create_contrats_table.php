@@ -25,7 +25,6 @@ return new class extends Migration
             $table->collation = 'utf8mb4_unicode_ci'; 
         });
 
-        // Create the trigger with explicit collation handling
         DB::unprepared('
             CREATE TRIGGER generate_id_contrat BEFORE INSERT ON contrats
             FOR EACH ROW

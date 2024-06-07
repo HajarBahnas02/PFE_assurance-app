@@ -5,22 +5,22 @@
         <a> <img src="../assets/logo.png" width="50px" height="50px" alt="logo" /></a>
       </li>
       <li>
-        <router-link id="link" class="link" to="/corporate"> Produits</router-link>
+        <router-link id="link" class="link" to=""> Produits</router-link>
       </li>
       <li>
-        <router-link id="link" class="link" to="/corporate">
+        <router-link id="link" class="link" to="">
           En cas de sinistre</router-link
         >
       </li>
       <li>
-        <router-link id="link" class="link" to="/corporate"
+        <router-link id="link" class="link" to=""
           >Questions fréquentes</router-link
         >
       </li>
     </ul>
     <div class="right-liens">
       <div class="buttons">
-        <router-link to="#" class="linkHeader">
+        <router-link to="" class="linkHeader">
           <button>
             <i> <img src="../assets/left.svg" /> </i>Site Particulier
           </button></router-link >

@@ -6,22 +6,22 @@
       </div>
 
       <ul class="links">
-        <router-link to="/facebook">
+        <router-link to="">
           <img class="logo" style="margin-top:8px" src="../assets/facebook-icon.svg" alt="Facebook logo" />
         </router-link>
-        <router-link to="/youtube">
+        <router-link to="">
           <img class="logo"  style="margin-top:8px" src="../assets/yout-icon.svg" alt="Youtube logo" />
         </router-link>
-        <router-link to="/insta">
+        <router-link to="">
           <img class="logo" style="margin-top:8px" src="../assets/insta-icon.svg" alt="Instagram logo" />
         </router-link>
       </ul>
       <div class="buttons">
-       <router-link class="link" to="/location"> <img src="../assets/location.svg" class="logo" style="margin-right:3px" alt="Location logo" />
+       <router-link class="link" to=""> <img src="../assets/location.svg" class="logo" style="margin-right:3px" alt="Location logo" />
         Localisation</router-link>
      
         
-        <router-link class="link" to="/contact">
+        <router-link class="link" to="">
           <img src="../assets/contact.svg" class="logo"  style="margin-right:8px" alt="Location logo" />
           Contact</router-link>
           <router-link class="link" to="/login-admin">
