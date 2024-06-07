@@ -181,7 +181,7 @@ public function ajouter(Request $request, $numero_devis)
         ]);
 
         // Générer le numéro de devis
-        $numeroDevis = 'DEV-' . time(); // Vous pouvez utiliser un format différent si nécessaire
+        $numeroDevis = 'D-' . time(); // Vous pouvez utiliser un format différent si nécessaire
 
         // Créer un nouvel objet devis avec les données validées et le numéro de devis généré
         $devis = new Devis();
@@ -194,7 +194,13 @@ public function ajouter(Request $request, $numero_devis)
         $devis->save();
 
         // Répondre avec un message de succès
-        return response()->json(['message' => 'Devis créé avec succès', 'numero_devis' => $numeroDevis]);
+        return response()->json([
+            'message' => 'Devis créé avec succès',
+            'numero_devis' => $numeroDevis,
+            'id' => $devis->id
+        ]);
+  
+  
     }
 
     /**
@@ -263,4 +269,15 @@ public function ajouter(Request $request, $numero_devis)
 
         return response()->json(['message' => 'Devis validé et notification envoyée']);
     }
+    public function getGarantiesOptions($devisId)
+    {
+        // Récupérer le devis
+        $devis = Devis::findOrFail($devisId);
+    
+        // Récupérer les types de garanties avec leurs options
+        $typesGaranties = $devis->typeGaranties()->with(['options', 'optionsGaranties'])->get();
+    
+        return $typesGaranties;
+    }
+
 }

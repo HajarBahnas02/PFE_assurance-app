@@ -84,7 +84,6 @@
 
 <script>
 import axios from "../router/axios-config.js";
-
 import Footer from "../views-home/Footer.vue";
 import Layout from "../views-home/Layout.vue";
 export default {

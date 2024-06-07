@@ -6,18 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+  
     public function up(): void
     {
         Schema::create('devis_garanties', function (Blueprint $table) {
             $table->id();
             $table->foreignId('garantie_id')->constrained('type_garanties');
             $table->foreignId('devis_id')->constrained('devis');
+            $table->unsignedBigInteger('option_id')->nullable(); // Changer la colonne pour qu'elle soit nullable
+            $table->foreign('option_id')->references('id')->on('option_garanties')->onDelete('set null'); // Ajouter la contrainte de clé étrangère           
             $table->timestamps();
         });
-        
     }
 
     /**

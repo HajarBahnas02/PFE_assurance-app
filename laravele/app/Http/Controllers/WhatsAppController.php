@@ -1,77 +1,61 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Twilio\Rest\Client;
-use App\Models\Message;
-use Illuminate\Support\Facades\Log;
+use Twilio\Rest\Client as TwilioClient;
+use App\Models\Client as AppClient;
+use App\Models\Devis;
 
 class WhatsAppController extends Controller
 {
-    public function sendMessag(Request $request)
+    public function sendMessage(Request $request)
     {
-        Log::info('Received request to send WhatsApp message', $request->all());
+        $clientId = $request->input('clientId');
+        $devisId = $request->input('devisId');
 
-        // Validation des données
-        $request->validate([
-            'phone' => 'required|string',
-            'message' => 'required|string',
-        ]);
+        // Récupérer le client avec l'ID fourni
+        $appClient = AppClient::find($clientId);
 
-        // Normalisation du numéro de téléphone
-        $userPhone = $this->normalizePhoneNumber($request->input('phone'));
-        $message = $request->input('message');
 
-        // Log des données validées
-        Log::info('Validated input', ['phone' => $userPhone, 'message' => $message]);
+        if (!$appClient) {
+            return response()->json(['message' => 'Client non trouvé.'], 404);
+        }
 
-        // Récupération des identifiants Twilio
-        $sid = env('TWILIO_SID');
-        $token = env('TWILIO_AUTH_TOKEN');
-        $companyPhone = env('TWILIO_WHATSAPP_COMPANY_PHONE'); // Numéro de téléphone de l'entreprise
+        // Récupérer le devis avec l'ID fourni
+        $devis = Devis::find($devisId);
 
-        Log::info('Twilio credentials', ['sid' => $sid, 'from' => $companyPhone]);
+        if (!$devis) {
+            return response()->json(['message' => 'Devis non trouvé.'], 404);
+        }
 
-        // Instanciation du client Twilio
-        $client = new Client($sid, $token);
+        // Construire le texte du message avec le lien
+        $devisNumero = $devis->numero_devis;
+        $baseUrl = 'http://localhost:5173/tarifications/' . $clientId . '/dev' . $devisNumero;
+        $message = "Bonjour! Votre devis est prêt. Vous pouvez le consulter en suivant ce lien : $baseUrl";
+
+        // Informations d'authentification Twilio
+        $accountSid = env('TWILIO_SID');
+        $authToken = env('TWILIO_AUTH_TOKEN');
+        $twilioNumber = env('TWILIO_WHATSAPP_NUMBER');
 
         try {
-            // Envoi du message via Twilio
-            $client->messages->create(
-                'whatsapp:' . $companyPhone, // Destinataire (numéro de l'entreprise)
+            // Initialiser le client Twilio
+            $twilioClient = new TwilioClient($accountSid, $authToken);
+
+            // Envoyer le message WhatsApp
+            $twilioClient->messages->create(
+                "whatsapp:212650359007", // Numéro de téléphone du destinataire
                 [
-                    'from' => 'whatsapp:' . $userPhone, // Expéditeur (numéro de téléphone du client)
-                    'body' => $message // Contenu du message
+                    "from" => "whatsapp:$twilioNumber", // Numéro de téléphone Twilio
+                    "body" => $message, // Corps du message
                 ]
             );
 
-            // Enregistrement du message dans la base de données
-            Message::create([
-                'phone' => $userPhone,
-                'message' => $message
-            ]);
-
-            // Réponse succès
-            return response()->json(['status' => 'Message sent successfully']);
+            // Réponse JSON
+            return response()->json(['message' => 'Message WhatsApp envoyé avec succès.']);
         } catch (\Exception $e) {
-
-            Log::error('Failed to send WhatsApp message', ['error' => $e->getMessage()]);
-
-            return response()->json(['status' => 'Failed to send message', 'error' => $e->getMessage()], 500);
+            // En cas d'erreur, retourner un message d'erreur
+            return response()->json(['error' => 'Une erreur s\'est produite lors de l\'envoi du message WhatsApp.', 'error_detail' => $e->getMessage()], 500);
         }
-    }
-
-    private function normalizePhoneNumber($phone)
-    {
-        // Retirer les espaces, tirets, parenthèses et autres caractères non numériques
-        $phone = preg_replace('/\D+/', '', $phone);
-
-        // Ajouter le signe plus si absent
-        if (substr($phone, 0, 1) !== '+') {
-            $phone = '+' . $phone;
-        }
-
-        return $phone;
     }
 }

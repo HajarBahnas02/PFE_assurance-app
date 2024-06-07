@@ -51,22 +51,19 @@ class LoginController extends Controller
         $password = $request->input('password');
     
         // Vérifier si l'email appartient à un client
-        $client = Client::where('email', $email)->first();
-        // Vérifier si l'email appartient à un administrateur
-        $admin = Administrateur::where('email', $email)->first();
-    
-        if ($client && Hash::check($password, $client->password)) {
-            // Authentifier le client
-            Auth::login($client);
-            return response()->json(['message' => 'Connexion réussie.'], 200);
-        } elseif ($admin && Hash::check($password, $admin->password)) {
-            Auth::login($admin);
-            return response()->json(['message' => 'Connexion réussie.'], 200);
+        $user = Client::where('email', $email)->first() ?? Administrateur::where('email', $email)->first();
+
+        if ($user && Hash::check($password, $user->password)) {
+            Auth::login($user);
+            $token = $user->createToken('auth_token')->plainTextToken;
+            return response()->json(['message' => 'Connexion réussie.', 'token' => $token, 'client_id' => $user->id], 200);
+        } elseif (!$user) {
+            return response()->json(['errors' => ['email_not_exist' => 'Email n\'existe pas']], 404);
         } else {
             return response()->json(['errors' => ['wrong_password' => 'Mot de passe incorrect']], 401);
         }
     }
-    public function adminLogin(Request $request)
+        public function adminLogin(Request $request)
     {
         $credentials = $request->validate([
             'email' => ['required'],

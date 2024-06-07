@@ -9,12 +9,8 @@ class devis_garanties extends Model
 {
     use HasFactory;
     protected $table = 'devis_garanties';
+    protected $fillable = ['garantie_id', 'devis_id', 'option_id'];
 
-    protected $fillable = [
-        'devis_id',
-        'garantie_id',
-        // Ajoutez d'autres colonnes si nécessaire
-    ];
 
     // Si vous ne souhaitez pas de colonnes created_at et updated_at dans cette table
     public $timestamps = false;

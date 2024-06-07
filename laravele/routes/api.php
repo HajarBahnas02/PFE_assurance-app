@@ -91,7 +91,7 @@ Route::post('/enregistrer', [DevisController::class, 'store']);
 //devis-Montants
 Route::put('/devis/{id}', [DevisController::class, 'ajouter']);
 Route::get('marques/{id}/nom', [MarqueController::class, 'getMarqueName']);
-Route::post('/send-whatsapp', [WhatsAppController::class, 'sendMessage']);
+Route::post('/send-whatssap', [WhatsAppController::class, 'sendMessage']);
 Route::post('/send-message', 'YourController@sendMessage');
 Route::post('/clients/{client}/send-whatsapp', [ClientController::class, 'sendWhatsAppMessage']);
 //Email
@@ -144,3 +144,4 @@ Route::post('/valider-devis', [DevisController::class,'validerDevis']);
 Route::post('/creer-contrats', [ContratController::class, 'store']);
 Route::get('/garanties', [TypeGarantieController::class, 'index']);
 Route::post('/devis_garanties', [DevisGarantiesController::class, 'store']);
+Route::get('/getGarantiesOptions/{devisId}', [DevisController::class, 'getGarantiesOptions']);

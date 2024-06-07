@@ -11,6 +11,7 @@ class TypeGarantie extends Model
     
     use HasFactory;
     protected $fillable = [
+        'id',
         'nomGarantie',
         'description',
         'prixGarantie',
@@ -28,6 +29,17 @@ class TypeGarantie extends Model
 public function optionsGaranties()
 {
     return $this->hasMany(OptionGarantie::class, 'garantie_id');
+}
+
+ 
+public function options()
+{
+    return $this->hasMany(OptionGarantie::class, 'garantie_id');
+}
+
+public function devis()
+{
+    return $this->belongsToMany(Devis::class, 'devis_garanties', 'garantie_id', 'devis_id');
 }
 
    

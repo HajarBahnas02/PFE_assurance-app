@@ -429,41 +429,51 @@ export default {
       this.vehiculeInfo = {};
     },
     async traiterContrat() {
-      this.loading = true;
-      const formData = {
-        montant_initial: this.montant_initial,
-        montant_essentiel: this.montant_essentiel,
-        montant_premium: this.montant_premium,
-      };
-      
-      try {
-        const vehiculeResponse = await axios.put(`/vehicules-statut/${this.selectedContrat.matricule}`, { timeout: 10000 });
-        console.log("Vehicule status updated successfully!", vehiculeResponse.data);
+  this.loading = true;
+  const formData = {
+    montant_initial: this.montant_initial,
+    montant_essentiel: this.montant_essentiel,
+    montant_premium: this.montant_premium,
+  };
 
-      /*  const emailResponse = await axios.post(`/send-email/${this.selectedContrat.id_client}`);
-        console.log("Email sent successfully!", emailResponse.data);
-        alert("Email envoyé avec succès au client.");*/
-        const emailResponse = await axios.post(`/send-email`, {
-         id_client: idClient,
-         id_devis: idDevis
-    });
+  try {
+    // Mettre à jour le statut du véhicule
+    const vehiculeResponse = await axios.put(`/vehicules-statut/${this.selectedContrat.matricule}`, { timeout: 10000 });
+    console.log("Vehicule status updated successfully!", vehiculeResponse.data);
+        // Mettre à jour les montants
+    const devisResponse = await axios.put(`/devis/${this.selectedContrat.id_devis}`, formData);
+    console.log("Devis updated successfully!", devisResponse.data);
+    alert("Les montants ont été enregistrés avec succès.");
+
+
+    // Envoyer l'email au client
+    const emailResponse = await axios.post(`send-email`, {
+      clientId: this.selectedContrat.id_client,
+      devisId: this.selectedContrat.id_dev
+    },{ timeout: 3000 });
     console.log("Email sent successfully!", emailResponse.data);
     alert("Email envoyé avec succès au client.");
 
-        const devisResponse = await axios.put(`/devis/${this.selectedContrat.id_devis}`, formData);
-        console.log("Devis updated successfully!", devisResponse.data);
-        alert("Les montants ont été enregistrés avec succès.");
 
-        this.closeForm();
-        this.fetchContratsNonTraites();
-        this.fetchContratsTraites();
-      } catch (error) {
-        console.error("An error occurred while processing the contract:", error);
-        alert("Une erreur s'est produite lors du traitement du contrat.");
-      } finally {
-        this.loading = false;
-      }
-    },
+    //Envoyer le message whtssap
+    const whatsappResponse = await axios.post(`/send-whatssap`, {
+      clientId: this.selectedContrat.id_client,
+      devisId: this.selectedContrat.id_dev
+    },{timeout: 3000});
+    console.log("WhatsApp message sent successfully!", whatsappResponse.data);
+    alert("Message WhatsApp envoyé avec succès au client.");
+    // Mettre à jour les montants dans le devis
+  
+    this.closeForm();
+    this.fetchContratsNonTraites();
+    this.fetchContratsTraites();
+  } catch (error) {
+    console.error("An error occurred while processing the contract:", error);
+    alert("Une erreur s'est produite lors du traitement du contrat.");
+  } finally {
+    this.loading = false;
+  }
+},
     handleSelect(section) {
       this.selectedSection = section;
     },

@@ -29,7 +29,7 @@
                   <spna>
                     <span><strong>{{ option_garantie }}</strong></span>
               </ul>
-             -->     
+               
               <div>
                   <p class="info"><strong>Assistances </strong></p>
                   <ul class="features">
@@ -66,8 +66,7 @@
                       <p><Strong>Description de l'option d'assistance:</Strong> {{ selectedOptionAssistanceDescriptions[index] }}</p>
                     </div>
                   </div>
-                </div>
-        
+                </div> -->  
           </ul>
           <div class="action">
               <button class="button" @click="selectOffre(offre)">Sélectionner</button>
@@ -110,8 +109,6 @@
   </div>
 </div>
 </div>
-
-
   <Footer />
 
 </template>

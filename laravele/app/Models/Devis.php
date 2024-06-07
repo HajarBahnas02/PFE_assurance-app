@@ -37,4 +37,10 @@ class Devis extends Model
         return $this->belongsTo(Vehicule::class, 'matricule', 'matricule');
     }
  
+    public function typeGaranties()
+    {
+        return $this->belongsToMany(TypeGarantie::class, 'devis_garanties', 'devis_id', 'garantie_id')
+                    ->withPivot('option_id')
+                    ->withTimestamps();
+    }    
 }

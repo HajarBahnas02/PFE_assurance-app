@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Devis;
 use App\Models\devis_garanties;
+use App\Models\devis_option_garanties;
 use Illuminate\Http\Request;
 
 class DevisGarantiesController extends Controller
@@ -25,23 +26,37 @@ class DevisGarantiesController extends Controller
 
     public function store(Request $request)
     {
-        {
-            // Récupérer l'ID du devis et les garanties sélectionnées depuis la requête
+        try {
+            // Récupérer l'ID du devis, les garanties sélectionnées et les options associées depuis la requête
             $devisId = $request->input('devis_id');
             $selectedGaranties = $request->input('selectedGaranties');
-        
-            // Parcourir les garanties sélectionnées et les enregistrer dans la table devis_garanties
+            $selectedOptions = $request->input('selectedOptions');
+    
+            // Parcourir les garanties sélectionnées
             foreach ($selectedGaranties as $garantieId) {
-                devis_garanties::create([
+                // Créer la garantie dans la table devis_garanties
+                $devisGarantie = devis_garanties::create([
                     'devis_id' => $devisId,
                     'garantie_id' => $garantieId,
                 ]);
+    
+                // Vérifier si une option est associée à cette garantie
+                if (isset($selectedOptions[$garantieId])) {
+                    // Enregistrer l'option associée à la garantie dans la même ligne de la table devis_garanties
+                    $devisGarantie->option_id = $selectedOptions[$garantieId];
+                    $devisGarantie->save();
+                }
             }
-        
+    
             // Retourner une réponse appropriée
-            return response()->json(['message' => 'Garanties enregistrées avec succès.']);
-        } }
-   
+            return response()->json(['message' => 'Garanties et options enregistrées avec succès.']);
+        } catch (\Exception $e) {
+            // En cas d'erreur, retourner un message d'erreur
+            return response()->json(['error' => 'Erreur lors de l\'enregistrement des garanties et options.'], 500);
+        }
+    }
+    
+
     public function show(devis_garanties $devis_garanties)
     {
         //

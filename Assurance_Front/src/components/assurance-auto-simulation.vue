@@ -77,7 +77,7 @@
             <input type="number" v-model="form.valeurVenale" />
             <span v-if="errors.valeurVenale" class="error">{{ errors.valeurVenale }}</span>
           </div></div>
-          <button type="button" @click="validateStep1">Suivant</button>
+          <button type="button" @click="nextStep">Suivant</button>
         </fieldset>
         <fieldset v-if="activeStep === 1">
           <h3>Informations Client</h3>
@@ -135,7 +135,7 @@
             <span v-if="errorsCl.confirmPassword" class="error">{{ errorsCl.confirmPassword }}</span>
         </div></div>
           <button type="button" @click="prevStep" class="previous_button">Précédent</button>
-          <button type="button" @click="validateStep2">Suivant</button>
+          <button type="button" @click="nextStep">Suivant</button>
 
         
         </fieldset>
@@ -144,19 +144,59 @@
           <div v-for="garantie in garanties" :key="garantie.id" class="garantie">
             <input type="checkbox" :id="'garantie-' + garantie.id" v-model="selectedGaranties" :value="garantie.id">
             <label :for="'garantie-' + garantie.id">{{ garantie.nomTypeGarantie }}</label>
-            
             <div v-if="garantie.options_garanties.length" class="garantie-options">
               <label :for="'options-' + garantie.id">Options:</label>
               <select v-model="selectedOptions[garantie.id]" :id="'options-' + garantie.id">
+                <option :value="null">Aucune option</option>
                 <option v-for="option in garantie.options_garanties" :key="option.id" :value="option.id">
                   {{ option.nom }}
                 </option>
               </select>
             </div>
           </div>
+          <div>
+            <p class="info"><strong>Assistances </strong></p>
+            <ul class="features">
+              <li v-for="assistance in assistances" :key="assistance.id">
+                <input
+                class="assistance-check"
+                  type="radio"
+                  :id="'assistance-' + assistance.id + '-' + index"
+                  :name="'assistance-offre-' + index"
+                  v-model="selectedAssistanceIds[index]"
+                  :value="assistance.id"
+                  @change="handleRadioChange(index, assistance.id)"
+                />
+                <label :for="'assistance-' + assistance.id + '-' + index">{{
+                  assistance.nomAssistance
+                }}</label>
+              </li>
+            </ul>
+            <div v-if="selectedAssistanceIds[index]">
+              <h2>Options d'assistance</h2>
+              <select class="custom-select"
+                v-model="selectedOptionAssistanceIds[index]"
+                @change="handleOptionChange(index)"
+              >
+                <option
+                  v-for="optionAssistance in optionsAssistances[index]"
+                  :key="optionAssistance.id"
+                  :value="optionAssistance.id"
+                >
+                  {{ optionAssistance.nomOptionAssistance }}
+                </option>
+              </select>
+              <div v-if="selectedOptionAssistanceDescriptions[index]" class="selected-offre">
+                <p><Strong>Description de l'option d'assistance:</Strong> {{ selectedOptionAssistanceDescriptions[index] }}</p>
+              </div>
+            </div>
+          </div>
           <button type="button" @click="prevStep" class="previous_button">Précédent</button>
-          <button type="submit">Soumettre</button>
-        </fieldset>      </form>
+          <button type="submit" @click="submitForm">Soumettre</button> <!-- Modifier ici -->
+        </fieldset>
+        
+      
+      </form>
     </div>
   </div> <Footer />
 </template>
@@ -174,6 +214,11 @@ export default {
   },
   data() {
     return {
+      assistances: [], // Liste des assistances
+    selectedAssistanceIds: [], // ID des assistances sélectionnées pour chaque offre
+    optionsAssistances: [], // Options d'assistance pour chaque assistance sélectionnée
+    selectedOptionAssistanceIds: [], // ID des options d'assistance sélectionnées pour chaque offre
+    selectedOptionAssistanceDescriptions: [],
       form: {
         matricule: "",
         puissanceFiscale: "",
@@ -212,6 +257,10 @@ export default {
       activeStep: 0,
     };
   },
+  mounted(){
+    this.fetchAssistances();
+
+  },
   created() {
     this.fetchData();
     this.fetchGaranties();
@@ -234,20 +283,91 @@ export default {
     },
   },
   methods: {
-    submitGaranties(devisId) {
-  // Boucle sur les garanties sélectionnées
-  this.selectedGaranties.forEach(async (garantieId) => {
-    try {
-      const response = await axios.post('/devis_garanties', {
-        garantie_id: garantieId,
-        devis_id: devisId
+    fetchAssistances() {
+    axios
+      .get("/assistances")
+      .then((response) => {
+        this.assistances = response.data;
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la récupération des assistances:", error);
       });
-      console.log('Garantie enregistrée avec succès:', response.data);
-    } catch (error) {
-      console.error('Erreur lors de l\'enregistrement de la garantie:', error);
-    }
-  });
+  },
+  fetchOptionsAssistances(index, assistanceId, selectedOptionAssistanceId) {
+  axios
+    .get(`/assistances/${assistanceId}/optionsAssistances`)
+    .then((response) => {
+      this.optionsAssistances.splice(index, 1, response.data);
+      // Vérifier si l'option d'assistance sélectionnée est définie et est dans la liste d'options
+      if (
+        selectedOptionAssistanceId &&
+        this.optionsAssistances[index].some(option => option.id === selectedOptionAssistanceId)
+      ) {
+        // Récupérer l'index de l'option d'assistance sélectionnée
+        const selectedOptionIndex = this.optionsAssistances[index].findIndex(option => option.id === selectedOptionAssistanceId);
+        // Mettre à jour l'index de l'option d'assistance sélectionnée dans le tableau
+        this.selectedOptionAssistanceIds.splice(index, 1, selectedOptionAssistanceId);
+        // Récupérer et afficher la description de l'option d'assistance sélectionnée
+        this.fetchOptionAssistanceDescription(selectedOptionAssistanceId, index);
+      } else {
+        // Si aucune option d'assistance n'est sélectionnée ou si elle n'est pas dans la liste d'options, afficher la description de la première option
+        const firstOptionId = this.optionsAssistances[index][0].id;
+        this.selectedOptionAssistanceIds.splice(index, 1, firstOptionId);
+        this.fetchOptionAssistanceDescription(firstOptionId, index);
+      }
+    })
+    .catch((error) => {
+      console.error(
+        "Erreur lors de la récupération des options d'assistance:",
+        error
+      );
+    });
 },
+fetchOptionAssistanceDescription(optionAssistanceId, index) {
+  axios
+    .get(`/optionsAssistances/${optionAssistanceId}/description`)
+    .then((response) => {
+      // Extraire directement la description de la réponse
+      this.selectedOptionAssistanceDescriptions[index] = response.data.description;
+      console.log(this.selectedOptionAssistanceDescriptions[index]);
+    })
+    .catch((error) => {
+      console.error(
+        "Erreur lors de la récupération de la description de l'option d'assistance:",
+        error
+      );
+    });
+},
+handleRadioChange(index, selectedAssistanceId) {
+    this.selectedAssistanceIds.splice(index, 1, selectedAssistanceId);
+    this.fetchOptionsAssistances(index, selectedAssistanceId);
+  },
+  handleOptionChange(index) {
+    this.fetchOptionAssistanceDescription(
+      this.selectedOptionAssistanceIds[index],
+      index
+    );
+  },
+    async submitGaranties() {
+      try {
+        const response = await axios.post('/devis_garanties', {
+          devis_id: this.devisId, // Assurez-vous que devisId est défini dans votre composant
+          selectedGaranties: this.selectedGaranties,
+          selectedOptions: this.selectedOptions
+        });
+        console.log('Réponse du serveur:', response.data);
+      } catch (error) {
+        if (error.response) {
+          console.error('Erreur du serveur:', error.response.data);
+          console.error('Code de statut:', error.response.status);
+        } else if (error.request) {
+          console.error('Aucune réponse reçue:', error.request);
+        } else {
+          console.error('Erreur de configuration de la requête:', error.message);
+        }
+        console.error('Config:', error.config);
+      }
+    },
     validateStep1() {
     this.errors = {};
 
@@ -427,16 +547,16 @@ export default {
                   matricule: this.form.matricule,
                   client_id: clientId,
                   date_debut: this.formDev.dateDebut,
-                  
                 };
                 axios.post('/enregistrer', devisData,{ timeout: 20000 })
-                  .then(devisResponse => {
-                    alert('Devis créé avec succès!');
-                    const devisId = devisResponse.data.devis?.id; // Utilisez l'opérateur optionnel pour éviter les erreurs si devis est indéfini
-                console.log('Devis ID:', devisId);
-                     this.submitGaranties(devisId);
-                    this.resetForm();
-                    this.$router.push({ name: 'espace-client', params: { clientId: clientId } });
+                  .then(response => {
+                     console.log('Devis créé avec succès');
+                    console.log('Devis ID:', response.data.id); // Vérifiez que l'ID est bien récupéré
+                     this.devisId = response.data.id;
+                     this.submitGaranties(response.data.id); // Appel de la méthode submitGaranties
+
+                     //this.resetForm();
+                    //this.$router.push({ name: 'espace-client', params: { clientId: clientId } });
 
                   })
                   .catch((error) => {
@@ -459,6 +579,21 @@ export default {
 
       }
     },
+    async submitGaranties(devisId) {
+    for (let garantieId of this.selectedGaranties) {
+      let optionId = this.selectedOptions[garantieId] || null; // Récupérer l'option sélectionnée ou null si aucune
+      try {
+        const response = await axios.post('/devis_garanties', {
+          garantie_id: garantieId,
+          devis_id: devisId,
+          option_id: optionId
+        });
+        console.log('Garantie enregistrée avec succès:', response.data);
+      } catch (error) {
+        console.error('Erreur lors de l\'enregistrement de la garantie:', error);
+      }
+    }
+  },
     resetForm() {
       this.form = {
         matricule: "",

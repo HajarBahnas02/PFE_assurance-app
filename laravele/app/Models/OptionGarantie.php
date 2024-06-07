@@ -12,6 +12,6 @@ class OptionGarantie extends Model
     public function garantie()
     {
         return $this->belongsTo(TypeGarantie::class, 'garantie_id');
-
     }
+    
 }

@@ -1,14 +1,15 @@
 <template>
   <div class="logbackground">
-  <div class="hdimargin">
-  <Layout />
-    <div class="discolum">
-      <div class="content-login">
-        <div class="titres">
-          <h2 align="center">Bienvenue sur votre nouvel espace client</h2></div>
+    <div class="hdimargin">
+      <Layout />
+      <div class="discolum">
+        <div class="content-login">
+          <div class="titres">
+            <h2 align="center">Bienvenue sur votre nouvel espace client</h2>
+          </div>
           <div class="logicons">
             <div class="item">
-              <img src="../assets/home-login.svg" alt="Auto-icon"/>
+              <img src="../assets/home-login.svg" alt="Auto-icon" />
               <h4>Auto</h4>
             </div>
             <div class="item">
@@ -22,88 +23,101 @@
             <div class="item">
               <img src="../assets/medical-app.svg" alt="Santé-icon" />
               <h4>Santé</h4>
+            </div>
+          </div>
+          <div class="consignes">
+            <div class="consigne">
+              <img src="../assets/to-do-list.svg" alt="Suivez vos dossiers" />
+              <h4>Suivez vos dossiers</h4>
+            </div>
+            <div class="consigne">
+              <img
+                src="../assets/medical-app.svg"
+                alt="Consultez votre adhésion et vos prestations"
+              />
+              <h4>Consultez votre adhésion et vos prestations</h4>
+            </div>
+            <div class="consigne">
+              <img src="../assets/order.svg" alt="Déclarez un sinistre" />
+              <h4>Déclarez un sinistre</h4>
+            </div>
+            <div class="consigne">
+              <img
+                src="../assets/conversation.svg"
+                alt="Contactez votre service client"
+              />
+              <h4>Contactez votre service client</h4>
+            </div>
           </div>
         </div>
-        <div class="consignes">
-          <div class="consigne">
-            <img src="../assets/to-do-list.svg" alt="Auto-icon" />
-            <h4>Suivez vos dossiers</h4>
+        <div class="frm">
+          <div class="form-log">
+            <form @submit.prevent="loginData">
+              <h2 align="center">Se connecter</h2>
+              <div class="input-field">
+                <input type="text" v-model="client.email" required />
+                <label>Login</label>
+              </div>
+              <span v-if="submitted && !client.email" class="error-message"
+                >Champ obligatoire à insérer</span
+              >
+              <span v-if="errors.email_not_exist" class="error-message">{{
+                errors.email_not_exist
+              }}</span>
+              <div class="input-field">
+                <input type="password" v-model="client.password" required />
+                <label>Mot de passe</label>
+              </div>
+              <span v-if="submitted && !client.password" class="error-message"
+                >Champ obligatoire à insérer</span
+              >
+              <span v-if="errors.wrong_password" class="error-message">{{
+                errors.wrong_password
+              }}</span>
+              <div class="forget">
+                <p class="forgot-password text-right">
+                  <router-link to="/mot-de-passe-oublié">Forgot password?</router-link>
+                </p>
+              </div>
+              <button :disabled="loading" type="submit">
+                {{ loading ? "En cours de connexion" : "Se connecter" }}
+              </button>
+            </form>
           </div>
-          <div class="consigne">
-            <img src="../assets/medical-app.svg" alt="Habitation-icon" />
-            <h4>Consultez votre adhésion et vos prestations</h4>
+        </div>
+        <div class="containerHelp">
+          <span class="close-btn" @click="toggleMenu">
+            <i class="fas fa-times"></i>
+          </span>
+          <div class="media-icons">
+            <a href="#" style="background: #0e76a8">
+              <i class="fas fa-question-circle"></i>
+              <span class="tooltip" style="color: #0e76a8">Question fréquentes</span>
+            </a>
+            <a href="#" style="background: #ff0000">
+              <i class="fa-solid fa-location-dot"></i>
+              <span class="tooltip" style="color: #ff0000">Localiser agence</span>
+            </a>
+            <a href="#" style="background: #ea4689">
+              <i class="fa fa-address-book"></i>
+              <span class="tooltip" style="color: #ea4689">Contacts utiles</span>
+            </a>
+            <a href="#" style="background: #8e36ff">
+              <i class="fa-solid fa-phone"></i>
+              <span class="tooltip" style="color: #8e36ff">Contacter nous</span>
+            </a>
           </div>
-          <div class="consigne">
-            <img src="../assets/order.svg" alt="Epargne-icon" />
-            <h4>Déclarez un sinistre</h4>
-          </div>
-          <div class="consigne">
-            <img src="../assets/conversation.svg" alt="Santé-icon" />
-            <h4>Contactez votre service client</h4>
-          </div>
-          </div>
-      </div>
-      <div class="frm">
-     <div class="form-log">
-          <form @submit.prevent="loginData">
-            <h2 align="center">Se connecter</h2>
-            <div class="input-field">
-              <input type="text" v-model="client.email" required /> 
-              <label>Login</label>
-            </div>
-            <span v-if="submitted && !client.email" class="error-message">Champ obligatoire à insérer</span>
-            <span v-if="errors.email_not_exist" class="error-message">{{ errors.email_not_exist }}</span>
-            <div class="input-field">
-              <input type="password" v-model="client.password" required />
-              <label>Mot de passe</label> 
-            </div>
-            <span v-if="submitted && !client.password" class="error-message">Champ obligatoire à insérer</span>
-            <span v-if="errors.wrong_password" class="error-message">{{ errors.wrong_password }}</span>   
-            
-            <div class="forget">
-              <p class="forgot-password text-right">
-                <router-link to="/mot-de-passe-oublié">
-                Forgot password?</router-link></p>
-            </div>
-            <button :disabled="loading" type="submit">
-              {{ loading ? "En cours de connexion" : "Se connecter" }}
-            </button>
-          </form>
         </div>
       </div>
-      <div class="containerHelp">
-        <span class="close-btn" @click="toggleMenu">
-          <i class="fas fa-times"></i>
-        </span>
-        <div class="media-icons">
-          <a href="#" style="background: #0e76a8">
-            <i class="fas fa-question-circle"></i>
-                        <span class="tooltip" style="color: #0e76a8">Question fréquentes</span>
-          </a>
-          <a href="#" style="background: #ff0000">
-            <i class="fa-solid fa-location-dot"></i>
-            <span class="tooltip" style="color: #ff0000">Localiser agence</span>
-          </a>
-          <a href="#" style="background: #ea4689">
-            <i class="fa fa-address-book"></i>
-            <span class="tooltip" style="color: #ea4689">Contacts utiles</span>
-          </a>
-          <a href="#" style="background: #8e36ff">
-            <i class="fa-solid fa-phone"></i>
-                        <span class="tooltip" style="color: #8e36ff">Contacter nous</span>
-          </a>
-        </div>
-      </div>
-      </div>
+    </div>
   </div>
-   </div>
 </template>
-
 
 <script>
 import axios from "../router/axios-config.js";
 import Footer from "../views-home/Footer.vue";
 import Layout from "../views-home/Layout.vue";
+
 export default {
   name: "Login",
   components: {
@@ -117,7 +131,6 @@ export default {
         email: "",
         password: "",
       },
-      remember: false, // Nouvelle propriété pour Se souvenir de moi
       submitted: false,
       errors: {},
     };
@@ -127,21 +140,25 @@ export default {
       this.submitted = true;
       this.loading = true;
 
-      axios.post('/client/login', this.client)
+      axios
+        .post("/client/login", this.client)
         .then(({ data }) => {
-          if (data.status === true) {
-            this.$router.push('/espace-client');
-            localStorage.setItem('auth_token', data.token);
-          } else {
-            // Réinitialiser les erreurs
-            this.errors = data.errors || {};
-            this.resetForm();
-
+          if (data.token) {
+            console.log("Login successful:", data);
+            localStorage.setItem("auth_token", data.token);
+            this.errors = {};
+            this.submitted = false;
+            alert("Login successful");
+            this.$router.push({
+              name: "espace-client",
+              params: { clientId: data.client_id },
+            });
+          } else if (data.errors) {
+            this.errors = data.errors;
           }
         })
-        .catch(error => {
-          // Vérifier si l'erreur est due à une authentification échouée
-          if (error.response && error.response.status === 400) {
+        .catch((error) => {
+          if (error.response) {
             this.errors = error.response.data.errors || {};
           } else {
             console.error("Erreur de connexion:", error);
@@ -152,10 +169,6 @@ export default {
           this.loading = false;
         });
     },
-    resetForm() {
-      this.client.email = "";
-      this.client.password = "";
-    },
     toggleMenu() {
       const closeBtn = document.querySelector(".close-btn");
       closeBtn.classList.toggle("open");
@@ -165,24 +178,24 @@ export default {
 </script>
 <style>
 .error-message {
-  color:red;
+  color: red;
   padding-bottom: 15px;
 }
-  .logbackground {
- background-image: url("../assets/login_background.jpg");
- width: 100%;
- height: 100vh;
- background-size: cover;
- background-position: center;
- background-repeat: no-repeat;
- justify-content: center;
-  }
+.logbackground {
+  background-image: url("../assets/login_background.jpg");
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  justify-content: center;
+}
 .hdimage {
   background-color: bisque;
   display: flex;
   justify-content: center;
 }
-.discolum{
+.discolum {
   display: flex;
   flex-direction: column; /* Disposition en colonne pour les écrans de taille réduite */
   width: 100%;
@@ -192,16 +205,17 @@ export default {
     flex-direction: row; /* Disposition en ligne pour les écrans de taille moyenne et grande */
   }
 }
-.content-login, .frm {
-  flex: 1; 
+.content-login,
+.frm {
+  flex: 1;
 }
 .content-login {
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin: 0 !important;
-  padding-top: 2%  !important;
-  padding-bottom: 3%  !important;
+  padding-top: 2% !important;
+  padding-bottom: 3% !important;
 }
 
 .frm {
@@ -212,12 +226,12 @@ export default {
   font-weight: 400;
 }
 .content-login .logicons {
-    display: flex;
-    flex-wrap:wrap;
-    cursor: text;
-    justify-content: space-between;
-    margin:5%  10% 0% !important;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  cursor: text;
+  justify-content: space-between;
+  margin: 5% 10% 0% !important;
+}
 
 .item {
   display: flex;
@@ -270,7 +284,6 @@ svg {
   flex-direction: column;
   padding-top: 13%;
   justify-content: start;
- 
 }
 .content-login .titres h2 {
   color: #630606;
@@ -280,7 +293,7 @@ svg {
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(8px); 
+  -webkit-backdrop-filter: blur(8px);
 }
 .form-log {
   width: 60%;
@@ -295,13 +308,12 @@ svg {
   border: 1px solid rgba(255, 255, 255, 0.5);
   background-color: rgba(255, 255, 255, 0.5); /* Couleur de fond avec transparence */
   backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(8px); 
+  -webkit-backdrop-filter: blur(8px);
 }
 .frm form {
   width: 80%;
   display: flex;
   flex-direction: column;
-
 }
 form h2 {
   font-size: 2rem;
@@ -332,8 +344,7 @@ form h2 {
   outline: none;
   font-size: 16px;
   color: #461cc6;
-  font:  13.3333px ;
-  
+  font: 13.3333px;
 }
 
 .input-field input:focus ~ label,
@@ -482,6 +493,4 @@ button:hover {
   border-color: #fff;
   background: rgba(255, 255, 255, 0.15);
 }
-
-
 </style>
