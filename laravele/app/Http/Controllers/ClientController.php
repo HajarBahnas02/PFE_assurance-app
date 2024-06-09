@@ -60,7 +60,9 @@ class ClientController extends Controller
             'password' => 'required|string|min:8|same:confirmPassword',
         ]);
 
-        // Créez un nouveau client
+         $hashedPassword = Hash::make($validatedData['password']);
+
+        // Créer un nouveau client avec le mot de passe haché
         $client = Client::create([
             'nom' => $validatedData['nom'],
             'prenom' => $validatedData['prenom'],
@@ -68,7 +70,7 @@ class ClientController extends Controller
             'telephone' => $validatedData['telephone'],
             'ville_id' => $validatedData['ville_id'],
             'date_naissance' => $validatedData['date_naissance'],
-            'password' => $validatedData['password'], // Le mutateur de mot de passe hash le mot de passe automatiquement
+            'password' => $hashedPassword, // Stocker le mot de passe haché
         ]);
 
         return response()->json(['message' => 'Client ajouté avec succès!', 'client' => $client], 201);
@@ -118,7 +120,7 @@ class ClientController extends Controller
     {
         // Valider la requête
         $request->validate([
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:8|confirmed',
         ]);
     
         // Trouver le client associé

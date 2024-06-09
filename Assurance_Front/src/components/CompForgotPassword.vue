@@ -1,31 +1,30 @@
-<!-- resources/js/components/ForgotPassword.vue -->
 <template>
   <div>
-<div>
-  <Layout />
-</div>
-  <div class="cont-pass">
-    <div class="forgot-password-container">
-      <form @submit.prevent="sendResetLink">
-        <h3>Mot de passe oublié</h3>
-        <div class="form-group">
-          <label for="email">Adresse email:</label>
-          <input type="email" v-model="email" id="email" required />
-        </div>
-        <button type="submit">Envoyer le lien de réinitialisation</button>
-        <div v-if="message" class="message">{{ message }}</div>
-        <div v-if="error" class="error">{{ error }}</div>
-      </form>
+    <Layout />
+    <div class="cont-pass">
+      <div class="forgot-password-container">
+        <form @submit.prevent="sendResetLink">
+          <h3>Mot de passe oublié</h3>
+          <div class="form-group">
+            <label for="email">Adresse email:</label>
+            <input type="email" v-model="email" id="email" required />
+          </div>
+          <button type="submit">Envoyer le lien de réinitialisation</button>
+          <div v-if="message" class="message">{{ message }}</div>
+          <div v-if="error" class="error">{{ error }}</div>
+        </form>
+      </div>
     </div>
   </div>
- </div>
 </template>
+
 <script>
 import axios from "../router/axios-config.js";
 import Footer from "../views-home/Footer.vue";
 import Layout from "../views-home/Layout.vue";
+
 export default {
-  name: "Login",
+  name: "ForgotPassword",
   components: {
     Footer,
     Layout,
@@ -39,35 +38,45 @@ export default {
   },
   methods: {
     async sendResetLink() {
-  this.message = "";
-  this.error = "";
+      this.message = "";
+      this.error = "";
 
-  // Afficher l'email dans la console avant l'envoi
-  console.log("Email à envoyer:", this.email);
+      // Afficher l'email dans la console avant l'envoi
+      console.log("Email à envoyer:", this.email);
 
-  try {
-    const response = await axios.post("/forgot-password", {
-      email: this.email,
-    });
-    
-    if (response.status === 200) {
-        this.message = response.data.message;
-        alert("email envoyé");
-      } else {
-        this.error = "Une erreur s'est produite. Veuillez réessayer.";
-      } 
-     } catch (error) {
-    if (error.response && error.response.data) {
-      this.error = error.response.data.message;
-    } else {
-      this.error = "Une erreur s'est produite. Veuillez réessayer.";
-    }
-  }
-},
+      try {
+        const response = await axios.post("/forgot-password", {
+          email: this.email,
+        },{timeout: 10000});
 
-}
+        if (response.status === 200) {
+          this.message = response.data.message;
+          alert("Email envoyé");
+        } else {
+          this.error = "Une erreur s'est produite. Veuillez réessayer.";
+        }
+      } catch (error) {
+        if (error.response && error.response.data) {
+          this.error = error.response.data.message;
+        } else {
+          this.error = "Une erreur s'est produite. Veuillez réessayer.";
+        }
+      }
+    },
+  },
 };
 </script>
+
+<style scoped>
+.message {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+</style>
+
 
 <style scoped>
 .forgot-password-container {

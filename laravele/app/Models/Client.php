@@ -39,6 +39,7 @@ class Client extends Authenticatable implements CanResetPassword
             $this->attributes['password'] = bcrypt($password);
         }
     }
+    
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];

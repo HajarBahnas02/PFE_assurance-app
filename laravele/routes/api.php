@@ -144,4 +144,7 @@ Route::post('/valider-devis', [DevisController::class,'validerDevis']);
 Route::post('/creer-contrats', [ContratController::class, 'store']);
 Route::get('/garanties', [TypeGarantieController::class, 'index']);
 Route::post('/devis_garanties', [DevisGarantiesController::class, 'store']);
+Route::post('/devis/{devisId}', [DevisGarantiesController::class, 'show']);
+
 Route::get('/getGarantiesOptions/{devisId}', [DevisController::class, 'getGarantiesOptions']);
+Route::get('/devis/{devisId}/garanties', [DevisGarantiesController::class, 'show']);

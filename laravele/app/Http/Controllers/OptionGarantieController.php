@@ -13,7 +13,6 @@ class OptionGarantieController extends Controller
     public function index()
     {
         return  OptionGarantie::all(["id",'nom','valeur']);
-
     }
     public function afficherOptionGarantieAvecNomGarantie($id)
     {
@@ -42,11 +41,25 @@ class OptionGarantieController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(OptionGarantie $optionGarantie)
+    public function show($id)
     {
-        //
-    }
+        try {
+            // Charger l'option garantie avec sa relation garantie
+            $optionGarantie = OptionGarantie::with('garantie')->findOrFail($id);
+            
+            // Extraire le nom de l'option de la relation garantie
+            $nomOption = $optionGarantie->garantie->nom;
 
+            // Ajouter le nom de l'option à la réponse JSON
+            $optionGarantie->nomOption = $nomOption;
+
+            // Retourner la réponse JSON
+            return response()->json($optionGarantie);
+        } catch (\Exception $e) {
+            // En cas d'erreur, retourner un message d'erreur
+            return response()->json(['error' => 'Option garantie non trouvée.'], 404);
+        }
+    }
     /**
      * Show the form for editing the specified resource.
      */

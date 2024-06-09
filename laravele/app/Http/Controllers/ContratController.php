@@ -104,25 +104,26 @@ class ContratController extends Controller
     {
         $request->validate([
             'client_id' => 'required|exists:clients,id',
-            'devis_id' => 'required|exists:devis,id',
+            'numero_devis' => 'required|exists:devis,numero_devis',
             'offre_id' => 'required|exists:offres,id',
             'montant_assurance' => 'required|numeric',
         ]);
     
-        // Récupérer le devis associé au contrat
-        $devis = Devis::findOrFail($request->devis_id);
-    
+        // Récupérer le devis associé au numéro de devis
+        $devis = Devis::where('numero_devis', $request->numero_devis)->firstOrFail();
+        
         // Créer un nouveau contrat
         $contrat = new Contrat();
         $contrat->id_contrat = $devis->numero_devis; // Utilisez le numéro de devis récupéré depuis le devis
         $contrat->client_id = $request->client_id;
-        $contrat->id_devis = $request->devis_id;
+        $contrat->id_devis = $devis->id;
         $contrat->id_offre = $request->offre_id;
         $contrat->montant_assurance = $request->montant_assurance;
         $contrat->save();
     
         return response()->json(['message' => 'Contrat créé avec succès.']);
     }
+    
 
     /**
      * Display the specified resource.

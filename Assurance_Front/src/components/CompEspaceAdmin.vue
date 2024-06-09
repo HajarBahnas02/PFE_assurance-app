@@ -220,12 +220,22 @@
                   </div>
                 </div>
               </div>
+              <div v-if="currentPage === 3">
+                <div class="form-group">
+                  <label>Garanties:</label>
+                  <ul>
+                    <li v-for="(garantie, index) in garanties" :key="index">
+                      {{ garantie.nomTypeGarantie }} - {{ garantie.optionNom }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
   
               <!-- Navigation Buttons -->
-              <div class="form-row">
-                <button type="button" @click="prevPage" v-if="currentPage > 1">Précédent</button>
-                <button type="button" class="btn-right" @click="nextPage" v-if="currentPage < totalPages">Suivant</button>
-                <button  type="submit" class="btn-right" v-if="currentPage === totalPages" >Mettre à jour le statut</button>
+              <div class="form-actions">
+                <button type="button" v-if="currentPage > 1" @click="previousPage">Précédent</button>
+                <button type="button" v-if="currentPage < 3" @click="nextPage">Suivant</button>
+                <button type="submit" v-if="currentPage === 3">Enregistrer</button>
               </div>
             </form>
           </Modal>
@@ -261,6 +271,8 @@ export default {
       showForm: false,
       selectedContrat: null,
       selectedSection: null,
+      garanties: [],
+
       vehiculeInfo: {
         matricule: "",
         puissanceFiscale: 0,
@@ -306,11 +318,11 @@ export default {
         console.error('Erreur lors de la récupération des contrats:', error);
       }
     },
-    nextPage() {
-      if (this.currentPage < this.totalPages) {
-        this.currentPage++;
-      }
-    },
+  nextPage() {
+    if (this.currentPage < 3) {
+      this.currentPage++;
+    }
+  },
     prevPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
@@ -353,6 +365,7 @@ export default {
       this.selectedContrat = contrat;
       this.fetchVehiculeInfo(contrat.matricule);
       this.fetchClientInfo(contrat.id_client);
+      this.getGaranties(contrat.id_dev);
       this.showForm = true;
     },
     fetchClientInfo(id_client) {
@@ -364,6 +377,15 @@ export default {
         })
         .catch((error) => {
           console.error("There was an error fetching the client info!", error);
+        });
+    },
+    getGaranties(devisId) {
+      axios.get(`/devis/${devisId}/garanties`)
+        .then(response => {
+          this.garanties = response.data;
+        })
+        .catch(error => {
+          console.error(error);
         });
     },
     fetchVehiculeInfo(matricule) {
@@ -437,32 +459,33 @@ export default {
   };
 
   try {
-    // Mettre à jour le statut du véhicule
-    const vehiculeResponse = await axios.put(`/vehicules-statut/${this.selectedContrat.matricule}`, { timeout: 10000 });
-    console.log("Vehicule status updated successfully!", vehiculeResponse.data);
+   
         // Mettre à jour les montants
     const devisResponse = await axios.put(`/devis/${this.selectedContrat.id_devis}`, formData);
     console.log("Devis updated successfully!", devisResponse.data);
     alert("Les montants ont été enregistrés avec succès.");
-
+ 
+    //Envoyer le message whtssap
+    const whatsappResponse = await axios.post(`/send-whatssap`, {
+      clientId: this.selectedContrat.id_client,
+      devisId: this.selectedContrat.id_dev
+    },  {timeout: 10000}, );
+    console.log("WhatsApp message sent successfully!", whatsappResponse.data);
+    alert("Message WhatsApp envoyé avec succès au client.");
 
     // Envoyer l'email au client
     const emailResponse = await axios.post(`send-email`, {
       clientId: this.selectedContrat.id_client,
       devisId: this.selectedContrat.id_dev
-    },{ timeout: 3000 });
+    },{timeout: 10000});
+    console.log(emailResponse.data);
     console.log("Email sent successfully!", emailResponse.data);
     alert("Email envoyé avec succès au client.");
 
-
-    //Envoyer le message whtssap
-    const whatsappResponse = await axios.post(`/send-whatssap`, {
-      clientId: this.selectedContrat.id_client,
-      devisId: this.selectedContrat.id_dev
-    },{timeout: 3000});
-    console.log("WhatsApp message sent successfully!", whatsappResponse.data);
-    alert("Message WhatsApp envoyé avec succès au client.");
-    // Mettre à jour les montants dans le devis
+    
+     // Mettre à jour le statut du véhicule
+     const vehiculeResponse = await axios.put(`/vehicules-statut/${this.selectedContrat.matricule}`, { timeout: 10000 });
+    console.log("Vehicule status updated successfully!", vehiculeResponse.data);
   
     this.closeForm();
     this.fetchContratsNonTraites();

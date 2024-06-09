@@ -228,6 +228,8 @@ export default {
         marque_id: "",
         modele_id: "",
         type_motorisation_id: "",
+        garanties: [],
+
       },
       formCl: {
         nom: "",
@@ -348,26 +350,31 @@ handleRadioChange(index, selectedAssistanceId) {
       index
     );
   },
-    async submitGaranties() {
-      try {
-        const response = await axios.post('/devis_garanties', {
-          devis_id: this.devisId, // Assurez-vous que devisId est défini dans votre composant
-          selectedGaranties: this.selectedGaranties,
-          selectedOptions: this.selectedOptions
-        });
-        console.log('Réponse du serveur:', response.data);
-      } catch (error) {
-        if (error.response) {
-          console.error('Erreur du serveur:', error.response.data);
-          console.error('Code de statut:', error.response.status);
-        } else if (error.request) {
-          console.error('Aucune réponse reçue:', error.request);
-        } else {
-          console.error('Erreur de configuration de la requête:', error.message);
-        }
-        console.error('Config:', error.config);
-      }
-    },
+/*  async submitGaranties() {
+  try {
+
+    const garantiesData = {
+      devis_id: this.devisId,
+      selectedGaranties: this.selectedGaranties,
+      selectedOptions: this.selectedOptions
+    };
+
+    // Envoi de la requête avec les données formatées
+    const response = await axios.post('/devis_garanties', garantiesData);
+    console.log('Réponse du serveur:', response.data);
+  } catch (error) {
+    // Gestion des erreurs
+    if (error.response) {
+      console.error('Erreur du serveur:', error.response.data);
+      console.error('Code de statut:', error.response.status);
+    } else if (error.request) {
+      console.error('Aucune réponse reçue:', error.request);
+    } else {
+      console.error('Erreur de configuration de la requête:', error.message);
+    }
+    console.error('Config:', error.config);
+  }
+},*/
     validateStep1() {
     this.errors = {};
 
@@ -554,10 +561,9 @@ handleRadioChange(index, selectedAssistanceId) {
                     console.log('Devis ID:', response.data.id); // Vérifiez que l'ID est bien récupéré
                      this.devisId = response.data.id;
                      this.submitGaranties(response.data.id); // Appel de la méthode submitGaranties
-
-                     //this.resetForm();
-                    //this.$router.push({ name: 'espace-client', params: { clientId: clientId } });
-
+                    alert('Devis créé avec succès!');
+                    //router.push('/');
+                    this.$router.push({ name: 'espace-client', params: { clientId: clientId } });
                   })
                   .catch((error) => {
                     console.error("Erreur lors de la création du devis:", error);
@@ -580,20 +586,37 @@ handleRadioChange(index, selectedAssistanceId) {
       }
     },
     async submitGaranties(devisId) {
+  try {
+    // Création d'un objet pour stocker les garanties formatées
+    const garantiesData = {
+      devis_id: devisId,
+      selectedGaranties: this.selectedGaranties,
+      selectedOptions: {}
+    };
+
+    // Parcourir les garanties sélectionnées et ajouter les options associées à l'objet garantiesData
     for (let garantieId of this.selectedGaranties) {
-      let optionId = this.selectedOptions[garantieId] || null; // Récupérer l'option sélectionnée ou null si aucune
-      try {
-        const response = await axios.post('/devis_garanties', {
-          garantie_id: garantieId,
-          devis_id: devisId,
-          option_id: optionId
-        });
-        console.log('Garantie enregistrée avec succès:', response.data);
-      } catch (error) {
-        console.error('Erreur lors de l\'enregistrement de la garantie:', error);
-      }
+      garantiesData.selectedOptions[garantieId] = this.selectedOptions[garantieId] || null;
     }
-  },
+
+    // Envoi de la requête avec les données formatées
+    const response = await axios.post('/devis_garanties', garantiesData);
+    console.log('Réponse du serveur:', response.data);
+    console.log('Réponse');
+  } catch (error) {
+    if (error.response) {
+      console.error('Erreur du serveur:', error.response.data);
+      console.error('Code de statut:', error.response.status);
+    } else if (error.request) {
+      console.error('Aucune réponse reçue:', error.request);
+    } else {
+      console.error('Erreur de configuration de la requête:', error.message);
+    }
+    console.error('Config:', error.config);
+  }
+}
+
+,
     resetForm() {
       this.form = {
         matricule: "",
@@ -645,7 +668,7 @@ fieldset h3{
   margin-right: 0; /* Remove right margin from the last form group */
 }
 .multi_step_form {
-  background: #bbc4bd;
+  background: linear-gradient(45deg, #298cc5, #f5f5f5);
   display: block;
   overflow: hidden;
 }
@@ -666,7 +689,7 @@ select {
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
-  background-color: #f0eaee !important;
+  background-color: #bbe1f5 !important;
   border: 1px solid #040404;
   border-radius: 4px;
   box-sizing: border-box;

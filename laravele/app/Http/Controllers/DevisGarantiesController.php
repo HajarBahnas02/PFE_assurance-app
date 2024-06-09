@@ -5,6 +5,8 @@ use App\Models\Devis;
 use App\Models\devis_garanties;
 use App\Models\devis_option_garanties;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class DevisGarantiesController extends Controller
 {
@@ -57,10 +59,19 @@ class DevisGarantiesController extends Controller
     }
     
 
-    public function show(devis_garanties $devis_garanties)
+    public function show($devisId)
     {
-        //
+        $garanties = DB::table('devis_garanties')
+            ->join('type_garanties', 'devis_garanties.garantie_id', '=', 'type_garanties.id')
+            ->leftJoin('option_garanties', 'devis_garanties.option_id', '=', 'option_garanties.id')
+            ->where('devis_garanties.devis_id', $devisId)
+            ->select('type_garanties.nomTypeGarantie', 'option_garanties.nom as optionNom')
+            ->get();
+
+        return response()->json($garanties);
     }
+
+    
 
     /**
      * Show the form for editing the specified resource.

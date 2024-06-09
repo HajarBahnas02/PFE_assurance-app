@@ -26,4 +26,10 @@ class devis_garanties extends Model
     {
         return $this->belongsTo(TypeGarantie::class, 'garantie_id');
     }
+    public function optionGarantie()
+    {
+        return $this->belongsTo(OptionGarantie::class, 'option_id');
+    }
+
+    
 }

@@ -9,54 +9,33 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-    public function checks(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => ['required'],
-            'password' => ['required'],
-        ]);
-
-        if (Auth::guard('client')->attempt($credentials)) {
-                 /** @var \App\Models\Client $user **/
-                 $user = Auth::guard('client')->user();
-
-            if ($user->role != 0) {
-                Auth::guard('client')->logout();
-                return response()->json(['status' => false, 'error' => 'Accès non autorisé pour les administrateurs'], 401);
-            }
-
-            $clientName = $user->nom . ' ' . $user->prenom;
-            $token = $user->createToken('auth_token')->plainTextToken;
-            return response()->json(['status' => true, 'clientName' => $clientName, 'token' => $token]);
-        } else {
-            $errors = [];
-            $client = Client::where('email', $credentials['email'])->first();
-            if (!$client) {
-                $errors['email_not_exist'] = 'Email n\'existe pas';
-            } else {
-                $errors['wrong_password'] = 'Mot de passe incorrect';
-            }
-
-            return response()->json(['status' => false, 'errors' => $errors], 400);
-        }
-    }
+  
     public function check(Request $request)
     {
+        // Validation des entrées
         $request->validate([
             'email' => 'required|email',
             'password' => 'required'
         ]);
-    
+
         $email = $request->input('email');
         $password = $request->input('password');
-    
-        // Vérifier si l'email appartient à un client
+
+        // Recherche de l'utilisateur dans les tables clients et administrateurs
         $user = Client::where('email', $email)->first() ?? Administrateur::where('email', $email)->first();
 
         if ($user && Hash::check($password, $user->password)) {
+            // Authentification de l'utilisateur
             Auth::login($user);
+
+            // Générer un token d'authentification 
             $token = $user->createToken('auth_token')->plainTextToken;
-            return response()->json(['message' => 'Connexion réussie.', 'token' => $token, 'client_id' => $user->id], 200);
+
+            return response()->json([
+                'message' => 'Connexion réussie.',
+                'token' => $token,
+                'client_id' => $user->id
+            ], 200);
         } elseif (!$user) {
             return response()->json(['errors' => ['email_not_exist' => 'Email n\'existe pas']], 404);
         } else {

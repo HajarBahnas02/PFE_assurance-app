@@ -2,6 +2,7 @@
   <div>
    
     <Layout /> <div class="tarification">
+      <div class="offers-container">
   <div class="plan" v-for="(offre, index) in offres" :key="index">
       <div class="inner">
           <span class="pricing">
@@ -68,17 +69,17 @@
                   </div>
                 </div> -->  
           </ul>
-          <div class="action">
+          <div class="action button-container">
               <button class="button" @click="selectOffre(offre)">Sélectionner</button>
             </div>
-            <div>
+        <!--    <div>
               <label for="options">Options de Garantie</label>
               <select v-model="selectedOption" @change="updateSelectedOption" id="options">
                 <option value="">Sélectionnez une option</option>
                 <option v-for="option in options" :key="option.id" :value="option.id">{{ option.nom }}</option>
               </select>
-            </div>
-
+            </div>-->
+</div>
       </div>
   </div></div>
   <div class="parent-container">
@@ -288,11 +289,11 @@ handleRadioChange(index, selectedAssistanceId) {
           client_id: this.clientId,
           montant_assurance: this.selectedOffre.montant,
           offre_id: this.selectedOffre.id,
-          devis_id: this.$route.params.devisId,
+          numero_devis: this.$route.params.devisId,
         }); 
-        console.log(response.data.message);   
-        this.$router.push(`/espace-client/${this.clientId}`);
-
+        console.log(response.data.message);
+        alert("contrat créer avec succés")   
+       this.$router.push(`/`);
       } catch (error) {
         console.error('Erreur lors de la validation du devis:', error);
       }
@@ -302,6 +303,29 @@ handleRadioChange(index, selectedAssistanceId) {
 </script>
 
 <style>
+.plan {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center; /* Center the button horizontally */
+  margin-top: auto; /* Push the button to the bottom */
+}
+.offers-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping for flexibility */
+  align-items: flex-start; /* Align items to the start */
+  gap: 20px; /* Adjust gap as needed */
+}
+.button-container {
+  display: flex;
+  justify-content: center; /* Center the buttons horizontally */
+  gap: 10px; /* Optional: Add space between buttons */
+}
 .loading-container {
   display: flex;
   justify-content: center;
