@@ -16,9 +16,9 @@ return new class extends Migration
             $table->id();
             $table->string('nom');
             $table->string('prenom');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->date('date_naissance');
-            $table->string('telephone')->unique(); 
+            $table->string('telephone'); 
             $table->foreignId('ville_id')->constrained('villes');
             $table->string('cin')->unique()->nullable();
             $table->string('password')->nullable();

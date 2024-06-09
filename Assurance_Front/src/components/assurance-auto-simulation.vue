@@ -77,7 +77,7 @@
             <input type="number" v-model="form.valeurVenale" />
             <span v-if="errors.valeurVenale" class="error">{{ errors.valeurVenale }}</span>
           </div></div>
-          <button type="button" @click="nextStep">Suivant</button>
+          <button type="button" @click="validateStep1">Suivant</button>
         </fieldset>
         <fieldset v-if="activeStep === 1">
           <h3>Informations Client</h3>
@@ -135,7 +135,7 @@
             <span v-if="errorsCl.confirmPassword" class="error">{{ errorsCl.confirmPassword }}</span>
         </div></div>
           <button type="button" @click="prevStep" class="previous_button">Précédent</button>
-          <button type="button" @click="nextStep">Suivant</button>
+          <button type="button" @click="validateStep2">Suivant</button>
 
         
         </fieldset>
@@ -154,43 +154,7 @@
               </select>
             </div>
           </div>
-          <div>
-            <p class="info"><strong>Assistances </strong></p>
-            <ul class="features">
-              <li v-for="assistance in assistances" :key="assistance.id">
-                <input
-                class="assistance-check"
-                  type="radio"
-                  :id="'assistance-' + assistance.id + '-' + index"
-                  :name="'assistance-offre-' + index"
-                  v-model="selectedAssistanceIds[index]"
-                  :value="assistance.id"
-                  @change="handleRadioChange(index, assistance.id)"
-                />
-                <label :for="'assistance-' + assistance.id + '-' + index">{{
-                  assistance.nomAssistance
-                }}</label>
-              </li>
-            </ul>
-            <div v-if="selectedAssistanceIds[index]">
-              <h2>Options d'assistance</h2>
-              <select class="custom-select"
-                v-model="selectedOptionAssistanceIds[index]"
-                @change="handleOptionChange(index)"
-              >
-                <option
-                  v-for="optionAssistance in optionsAssistances[index]"
-                  :key="optionAssistance.id"
-                  :value="optionAssistance.id"
-                >
-                  {{ optionAssistance.nomOptionAssistance }}
-                </option>
-              </select>
-              <div v-if="selectedOptionAssistanceDescriptions[index]" class="selected-offre">
-                <p><Strong>Description de l'option d'assistance:</Strong> {{ selectedOptionAssistanceDescriptions[index] }}</p>
-              </div>
-            </div>
-          </div>
+          
           <button type="button" @click="prevStep" class="previous_button">Précédent</button>
           <button type="submit" @click="submitForm">Soumettre</button> <!-- Modifier ici -->
         </fieldset>
@@ -646,7 +610,7 @@ handleRadioChange(index, selectedAssistanceId) {
 </script>
 
 <style scoped>
-@charset "UTF-8";
+
 /*font Variables*/
 /*Color Variables*/
 @import url("https://fonts.googleapis.com/css?family=Roboto:300i,400,400i,500,700,900");

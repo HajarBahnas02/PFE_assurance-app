@@ -7,7 +7,7 @@
             <a href="#">Aujourd'hui: {{ dateActuelle }}</a>
           </div>
           <div class="navbar-menu">
-            <a href="#" @click.prevent="goToProfile">Mon Compte</a>
+            <a href="#" >Mon Compte</a>
           </div>
         </nav>
         <div :class="{ 'disable-interactions': showForm }" class="content">
@@ -162,7 +162,7 @@
               </div>
   
               <!-- Page 2: Informations du véhicule -->
-              <div v-if="currentPage === 2">
+              <div v-if="currentPage === 3">
                 <div class="form-row">
                   <div class="form-group">
                     <label>Matricule Véhicule:</label>
@@ -220,7 +220,7 @@
                   </div>
                 </div>
               </div>
-              <div v-if="currentPage === 3">
+              <div v-if="currentPage === 2">
                 <div class="form-group">
                   <label>Garanties:</label>
                   <ul>
@@ -323,7 +323,7 @@ export default {
       this.currentPage++;
     }
   },
-    prevPage() {
+  previousPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
       }
@@ -482,7 +482,6 @@ export default {
     console.log("Email sent successfully!", emailResponse.data);
     alert("Email envoyé avec succès au client.");
 
-    
      // Mettre à jour le statut du véhicule
      const vehiculeResponse = await axios.put(`/vehicules-statut/${this.selectedContrat.matricule}`, { timeout: 10000 });
     console.log("Vehicule status updated successfully!", vehiculeResponse.data);
@@ -499,9 +498,6 @@ export default {
 },
     handleSelect(section) {
       this.selectedSection = section;
-    },
-    goToProfile() {
-      this.$router.push("/admin-profile");
     },
   },
 };

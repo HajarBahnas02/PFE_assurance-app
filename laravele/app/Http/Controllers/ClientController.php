@@ -53,8 +53,8 @@ class ClientController extends Controller
         $validatedData = $request->validate([
             'nom' => 'required|string|max:35',
             'prenom' => 'required|string|max:35',
-            'email' => 'required|string|email|max:255|unique:clients',
-            'telephone' => 'required|string|max:20|unique:clients',
+            'email' => 'required|string|email|max:255',
+            'telephone' => 'required|string|max:20',
             'ville_id' => 'required|exists:villes,id',
             'date_naissance' => 'required|date',
             'password' => 'required|string|min:8|same:confirmPassword',

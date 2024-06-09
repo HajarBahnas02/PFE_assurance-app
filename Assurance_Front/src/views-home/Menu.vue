@@ -159,7 +159,7 @@
       <p>Chosissez l'offre qui vous conviennet en toute libérté</p>
     </div>
     <div class="floating-div">
-      <img src="../assets/paiFrau.png" alt="grid" />
+      <img src="../assets/paiFrau.png" width="299px" height="25" alt="grid" />
       <b>Choix de mode de paiment</b>
       <p>Cash, chèque ou espèce. Profitez de ce qui vous convient le mieux.</p>
     </div>
@@ -917,6 +917,7 @@ button {
 }
 
 .formule p {
+  align-items: center !important;
   font-family: "Montserrat", sans-serif;
   font-size: 28px;
   font-weight: bold;

@@ -23,6 +23,7 @@
     "devextreme-vue": "^23.2.5",
     "jquery": "^3.7.1",
     "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
     "primevue": "^3.52.0",
     "vue": "^3.4.23",
     "vue-class-component": "^8.0.0-rc.1",

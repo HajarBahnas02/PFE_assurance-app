@@ -5,7 +5,7 @@
       <span class="logo-text">Shahed</span>
     </div>
     <ul class="sidebar-list">
-      <li class="item-admin" @click="selectSection('about')">
+      <li class="item-admin" @click="selectSection('admin')">
         <i class="fas fa-tachometer-alt"></i> Tableau de bord
       </li>
       <li class="item-admin" @click="selectSection('non-traites')">
@@ -29,8 +29,8 @@
 export default {
   methods: {
     selectSection(section) {
-      if (section === 'about') {
-        this.$router.push('/about'); // Naviguer vers la route du tableau de bord
+      if (section === 'admin') {
+        this.$router.push('/espace-admin'); // Naviguer vers la route du tableau de bord
         this.$router.go(0); // Rafraîchir la page actuelle
       } else {
         this.$emit('select', section);

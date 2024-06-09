@@ -144,6 +144,8 @@ import axios from '../router/axios-config.js';
 import jsPDF from 'jspdf';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import 'jspdf-autotable';
+
 export default {
   setup() {       
             toast.success('Votre devis est en cours de traitement,vous recevez dans quelques instants votre tarficications par votre email',{
@@ -201,39 +203,88 @@ export default {
     selectSection(section) {
       this.selectedSection = section;
     },
-    generatePDF(contrat) {
+    getBase64ImageFromUrl(url, callback) {
+    var img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.onload = function() {
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        canvas.height = this.naturalHeight;
+        canvas.width = this.naturalWidth;
+        ctx.drawImage(this, 0, 0);
+        var dataURL = canvas.toDataURL('image/png');
+        callback(dataURL);
+    };
+    img.src = url;
+},
+generatePDF(contrat) {
       const doc = new jsPDF();
-    
-    //  const logo = new Image();
-     // logo.src='../assets/logo.png';
- 
-    //doc.addImage(logo, 'PNG', 10, 10, 40, 40); // (image, type, positionX, positionY, largeur, hauteur)
 
-    doc.setFontSize(16);
-    doc.text("Contrat assurance automobile Shahed", 60, 30); // (texte, positionX, positionY)
-    
+      doc.setTextColor(0, 0, 255);
+      doc.setFontSize(16);
+      doc.text("Contrat assurance automobile Shahed", doc.internal.pageSize.getWidth() / 2, 40, null, null, 'center');
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(12);
+
+      // Informations du Client
+      doc.text("Informations du Client", 10, 50);
+
+      const clientInfo = [
       
-     doc.setFontSize(12);
-      doc.text("Informations du Client", 10, 10);
-      doc.text(`Nom: ${this.clientInfo.nom}`, 10, 20);
-      doc.text(`Prénom: ${this.clientInfo.prenom}`, 10, 30);
-      doc.text(`Email: ${this.clientInfo.email}`, 10, 40);
-      doc.text(`Téléphone: ${this.clientInfo.telephone}`, 10, 60);
-      doc.text(`Ville: ${this.clientInfo.ville_nom}`, 10, 70);
-      doc.text(`Date de naissance: ${this.clientInfo.date_naissance}`, 10, 70);
-      doc.text("Détails du Contrat", 10, 80);
-    doc.text(`ID Contrat: ${contrat.id_contrat}`, 10, 90);
-    doc.text(`Date Début: ${contrat.date_debut}`, 10, 100);
-    doc.text(`Date Début: ${contrat.montant_assurance}`, 10, 100);
-    doc.text(`Date Fin: ${contrat.date_fin}`, 10, 110);
-      doc.text("Détails de véhicule", 10, 150);
-      doc.text(`Matricule: ${contrat.devis.matricule}`, 10, 150);
-    doc.text(`Puissance fiscale: ${contrat.devis.vehicule.puissanceFiscale}`, 10, 160);
-    doc.text(`Date de mise en circulation: ${contrat.devis.vehicule.dateMiseEnCirculation}`, 10, 170);
-    doc.text(`Valeur Neuve: ${contrat.devis.vehicule.valeurNeuve}`, 10, 180);
-    doc.text(`Valeur Vénalr: ${contrat.devis.vehicule.valeurVenale}`, 10, 190);
+        ["Nom", this.clientInfo.nom],
+        ["Prénom", this.clientInfo.prenom],
+        ["Email", this.clientInfo.email],
+        ["Téléphone", this.clientInfo.telephone],
+        ["Ville", this.clientInfo.ville_nom],
+        ["Date de naissance", this.clientInfo.date_naissance]
+      ];
+
+      doc.autoTable({
+        startY: 60,
+        head: [clientInfo[0]],
+        body: clientInfo.slice(1),
+      });
+
+      // Détails du Contrat
+      doc.text("Détails du Contrat", 10, doc.lastAutoTable.finalY + 10);
+
+      const contratDetails = [
+        ["ID Contrat", contrat.id_contrat],
+        ["Date Début", contrat.date_debut],
+        ["Montant Assurance", contrat.montant_assurance],
+        ["Date Fin", contrat.date_fin]
+      ];
+
+      doc.autoTable({
+        startY: doc.lastAutoTable.finalY + 20,
+        head: [contratDetails[0]],
+        body: contratDetails.slice(1),
+      });
+
+      // Détails de Véhicule
+      doc.text("Détails de véhicule", 10, doc.lastAutoTable.finalY + 10);
+
+      const vehicleDetails = [
+        ["Matricule", contrat.devis.matricule],
+        ["Puissance fiscale", contrat.devis.vehicule.puissanceFiscale],
+        ["Date de mise en circulation", contrat.devis.vehicule.dateMiseEnCirculation],
+        ["Valeur Neuve", contrat.devis.vehicule.valeurNeuve],
+        ["Valeur Vénale", contrat.devis.vehicule.valeurVenale]
+      ];
+
+      doc.autoTable({
+        startY: doc.lastAutoTable.finalY + 20,
+        head: [vehicleDetails[0]],
+        body: vehicleDetails.slice(1),
+      });
+
+      // Signature et logo de Shahed
+      doc.text("Signature", doc.internal.pageSize.getWidth() - 60, doc.internal.pageSize.getHeight() - 40);
+      doc.text("Shahed Assurance", doc.internal.pageSize.getWidth() - 60, doc.internal.pageSize.getHeight() - 30);
+
       doc.save(`contrat_${contrat.id_contrat}.pdf`);
     },
+
     logout() {
       localStorage.removeItem('auth_token');
       this.$router.push('/login');

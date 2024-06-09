@@ -34,7 +34,6 @@
   overflow-y: auto;
   max-height: 80vh;
 }
-
 .close {
   position: absolute;
   top: 10px;
