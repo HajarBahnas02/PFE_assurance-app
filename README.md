@@ -1,4 +1,4 @@
-# Shahed Assurance – Application Web de Gestion d’Assurance Automobile
+# Application Web de Gestion d’Assurance Automobile
 
 ##  Présentation du projet
 Ce projet a été réalisé dans le cadre d’un stage de fin d’études au sein de **Octobot Consulting & Training** à Fès.  
