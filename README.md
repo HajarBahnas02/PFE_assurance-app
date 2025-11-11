@@ -2,7 +2,7 @@
 
 ##  Présentation du projet
 Ce projet a été réalisé dans le cadre d’un stage de fin d’études au sein de **Octobot Consulting & Training** à Fès.  
-Il a pour objectif de développer une application web complète pour **Shahed Assurance**, une entreprise spécialisée dans les contrats automobiles.  
+Il a pour objectif de développer une application web complète pour une entreprise spécialisée dans les contrats automobiles.  
 
 ---
 
